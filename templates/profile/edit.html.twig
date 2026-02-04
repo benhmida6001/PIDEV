@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .form-control {
+            background-color: #e8f5e8;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: #c8e6c9;
+            border-color: #388e3c;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            color: #1b5e20;
+        }
+        
+        .form-label {
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Modifier mon profil</h3>
+                </div>
+                <div class="card-body">
+                    {{ form_start(profileForm) }}
+                        <div class="mb-4">
+                            {{ form_label(profileForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(profileForm.email, {'attr': {'class': 'form-control'}}) }}
+                            {% if profileForm.email.vars.errors|length > 0 %}
+                                <div class="text-danger mt-1">
+                                    {% for error in profileForm.email.vars.errors %}
+                                        <small>{{ error.message }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            {{ form_label(profileForm.profilePicture, 'Photo de profil', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(profileForm.profilePicture, {'attr': {'class': 'form-control'}}) }}
+                            {% if profileForm.profilePicture.vars.errors|length > 0 %}
+                                <div class="text-danger mt-1">
+                                    {% for error in profileForm.profilePicture.vars.errors %}
+                                        <small>{{ error.message }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if app.user.profilePicture %}
+                            <div class="mb-4">
+                                <label class="form-label">Photo actuelle</label>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" alt="Photo actuelle" 
+                                         class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('app_profile') }}" class="btn btn-secondary">
+                                 Retour au profil
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                Enregistrer les modifications
+                            </button>
+                        </div>
+                    {{ form_end(profileForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

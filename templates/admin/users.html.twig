@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration Utilisateurs - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table thead {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary {
+            border-color: #4caf50;
+            color: #4caf50;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+        
+        .btn-outline-warning {
+            border-color: #ff9800;
+            color: #ff9800;
+        }
+        
+        .btn-outline-warning:hover {
+            background-color: #ff9800;
+            border-color: #ff9800;
+        }
+        
+        .btn-outline-danger {
+            border-color: #f44336;
+            color: #f44336;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: #f44336;
+            border-color: #f44336;
+        }
+        
+        .bg-primary {
+            background-color: #4caf50 !important;
+        }
+        
+        .bg-success {
+            background-color: #66bb6a !important;
+        }
+        
+        .bg-info {
+            background-color: #26a69a !important;
+        }
+        
+        .bg-warning {
+            background-color: #ffa726 !important;
+        }
+        
+        .bg-danger {
+            background-color: #ef5350 !important;
+        }
+        
+        .bg-secondary {
+            background-color: #78909c !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <a href="{{ path('app_dashboard') }}" class="btn btn-outline-light mb-2">
+                 Retour au tableau de bord
+            </a>
+            <h1 style="color: white;">Gestion des Utilisateurs</h1>
+        </div>
+        <div>
+            <span class="badge bg-primary">{{ users|length }} utilisateurs</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Liste des utilisateurs</h5>
+        </div>
+        <div class="card-body">
+            {% if users|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Rôles</th>
+                                <th>Date de création</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ user.id }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>{{ user.email }}</strong>
+                                        {% if app.user.email == user.email %}
+                                            <span class="badge bg-info ms-2">Vous</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            {% if role != 'ROLE_USER' %}
+                                                <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'warning' }}" style="background-color: {{ role == 'ROLE_ADMIN' ? '#ef5350' : '#ffa726' }} !important;">
+                                                    {{ role == 'ROLE_ADMIN' ? 'Admin' : role }}
+                                                </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if user.roles|length == 1 %}
+                                            <span class="badge bg-primary" style="background-color: #4caf50 !important;">User</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="text-muted">
+                                            <i class="fas fa-calendar"></i> 
+                                            Il y a peu de temps
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ path('app_profile') }}" class="btn btn-sm btn-outline-primary" title="Voir le profil">
+                                                Voir
+                                            </a>
+                                            {% if app.user.email != user.email %}
+                                                <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning" title="Modifier les rôles">
+                                                    Modifier
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-danger" title="Supprimer">
+                                                    delete
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <div style="font-size: 3rem; opacity: 0.5;"></div>
+                    <h4 class="text-muted">Aucun utilisateur trouvé</h4>
+                    <p class="text-muted">Commencez par inviter des membres à rejoindre la plateforme.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-primary" style="color: #4caf50 !important;">{{ users|length }}</h3>
+                    <p class="text-muted">Total Utilisateurs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-success" style="color: #66bb6a !important;">{{ users|filter(u => 'ROLE_ADMIN' in u.roles)|length }}</h3>
+                    <p class="text-muted">Administrateurs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-info" style="color: #26a69a !important;">{{ users|filter(u => 'ROLE_ADMIN' not in u.roles)|length }}</h3>
+                    <p class="text-muted">Utilisateurs standards</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

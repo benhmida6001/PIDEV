@@ -1,0 +1,250 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Nuages et étoiles animés */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            opacity: 0.4;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+        }
+        
+        .form-control {
+            background-color: #e8f5e8;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: #c8e6c9;
+            border-color: #388e3c;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            color: #1b5e20;
+        }
+        
+        .form-control::placeholder {
+            color: #81c784;
+        }
+        
+        .form-label {
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+        
+        .welcome-text {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
+        
+        .register-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        .text-link {
+            color: #388e3c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .text-link:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
+        
+        .invalid-feedback {
+            color: #d32f2f;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% block navbar %}{% endblock %}
+    
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    
+    <!-- Étoiles animées -->
+    <div class="stars">
+        <div class="star" style="width: 2px; height: 2px; top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="star" style="width: 3px; height: 3px; top: 15%; left: 80%; animation-delay: 0.5s;"></div>
+        <div class="star" style="width: 2px; height: 2px; top: 25%; left: 60%; animation-delay: 1s;"></div>
+        <div class="star" style="width: 1px; height: 1px; top: 35%; left: 30%; animation-delay: 1.5s;"></div>
+        <div class="star" style="width: 2px; height: 2px; top: 45%; left: 70%; animation-delay: 2s;"></div>
+        <div class="star" style="width: 3px; height: 3px; top: 55%; left: 25%; animation-delay: 2.5s;"></div>
+        <div class="star" style="width: 1px; height: 1px; top: 65%; left: 85%; animation-delay: 0.3s;"></div>
+        <div class="star" style="width: 2px; height: 2px; top: 75%; left: 40%; animation-delay: 0.8s;"></div>
+        <div class="star" style="width: 2px; height: 2px; top: 85%; left: 65%; animation-delay: 1.3s;"></div>
+        <div class="star" style="width: 3px; height: 3px; top: 90%; left: 15%; animation-delay: 1.8s;"></div>
+    </div>
+    
+    <!-- Nuages -->
+    <div class="cloud" style="width: 100px; height: 40px; top: 20%; left: 10%; animation: float 20s infinite;"></div>
+    <div class="cloud" style="width: 80px; height: 35px; top: 40%; left: 70%; animation: float 25s infinite;"></div>
+    <div class="cloud" style="width: 120px; height: 45px; top: 60%; left: 20%; animation: float 30s infinite;"></div>
+    
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="auth-container p-5">
+                <div class="text-center mb-4">
+                    <div class="welcome-text">GREENCORE</div>
+                    <h2 class="h4 register-title">CRÉER UN COMPTE</h2>
+                </div>
+
+                {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate', 'id': 'registrationForm'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre email'}}) }}
+                        {% if registrationForm.email.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in registrationForm.email.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
+                        {% if registrationForm.plainPassword.first.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in registrationForm.plainPassword.first.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form_label(registrationForm.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirmez votre mot de passe'}}) }}
+                        {% if registrationForm.plainPassword.second.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in registrationForm.plainPassword.second.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if registrationForm.plainPassword.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {% for error in registrationForm.plainPassword.vars.errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" form="registrationForm" class="btn btn-primary btn-lg">
+                            S'inscrire
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{{ path('app_login') }}" class="text-link">
+                            Se connecter
+                        </a>
+                    </div>
+                {{ form_end(registrationForm) }}
+
+                <div class="text-center mt-4">
+                    <div class="mb-2">
+                        <a href="{{ path('app_home') }}" class="text-link">
+                            Retour 
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(20px) translateY(-10px); }
+            50% { transform: translateX(-10px) translateY(5px); }
+            75% { transform: translateX(15px) translateY(-5px); }
+        }
+    </style>
+{% endblock %}
