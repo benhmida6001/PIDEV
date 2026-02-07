@@ -1,43 +1,87 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/operation/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Operation index{% endblock %}
+{% block title %}Operations{% endblock %}
 
 {% block body %}
-    <h1>Operation index</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Operations</h1>
+        <a href="{{ path('app_operation_new') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create New Operation
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>StartDate</th>
-                <th>EndDate</th>
-                <th>ReturnImage</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for operation in operations %}
-            <tr>
-                <td>{{ operation.id }}</td>
-                <td>{{ operation.type }}</td>
-                <td>{{ operation.status }}</td>
-                <td>{{ operation.startDate ? operation.startDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ operation.endDate ? operation.endDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ operation.returnImage }}</td>
-                <td>
-                    <a href="{{ path('app_operation_show', {'id': operation.id}) }}">show</a>
-                    <a href="{{ path('app_operation_edit', {'id': operation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
 
-    <a href="{{ path('app_operation_new') }}">Create new</a>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Material</th>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for operation in operations %}
+                <tr>
+                    <td>{{ operation.id }}</td>
+                    <td>
+                        <strong>{{ operation.material ? operation.material.name : 'N/A' }}</strong>
+                    </td>
+                    <td>
+                        {{ operation.user ? operation.user.email : 'N/A' }}
+                    </td>
+                    <td>
+                        {% set typeClass = operation.type == 'borrow' ? 'primary' : 'warning' %}
+                        <span class="badge bg-{{ typeClass }}">
+                            {{ operation.type|title }}
+                        </span>
+                    </td>
+                    <td>
+                        {% set statusClass = {
+                            'pending': 'secondary',
+                            'accepted': 'success',
+                            'refused': 'danger',
+                            'completed': 'info'
+                        } %}
+                        <span class="badge bg-{{ statusClass[operation.status] ?? 'secondary' }}">
+                            {{ operation.status|title }}
+                        </span>
+                    </td>
+                    <td>{{ operation.startDate ? operation.startDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ operation.endDate ? operation.endDate|date('Y-m-d') : 'N/A' }}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <a href="{{ path('app_operation_show', {'id': operation.id}) }}" 
+                               class="btn btn-info">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ path('app_operation_edit', {'id': operation.id}) }}" 
+                               class="btn btn-warning">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">No operations found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

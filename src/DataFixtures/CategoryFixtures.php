@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -15,16 +16,15 @@ class CategoryFixtures extends Fixture
             'Event Equipment',
             'Others'
         ];
-    
+
         foreach ($categories as $name) {
             $category = new Category();
             $category->setName($name);
             $manager->persist($category);
         }
-    
+
         $manager->flush();
     }
-    
 }
 
 

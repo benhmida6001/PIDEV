@@ -1,3 +1,4 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/base.html.twig #}
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -5,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}GREENCORE{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🌍</text></svg>">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
         {% block stylesheets %}
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
             <style>
@@ -77,8 +79,25 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('app_materiel_index') }}">
+                                        <i class="bi bi-box"></i> Materials
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('app_operation_index') }}">
+                                        <i class="bi bi-arrow-repeat"></i> Operations
+                                    </a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ path('app_category_index') }}">
+                                            <i class="bi bi-tags"></i> Categories
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ path('app_dashboard') }}">
-                                         Tableau de bord
+                                        📊 Tableau de bord
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -86,7 +105,7 @@
                                         {% if app.user and app.user.profilePicture %}
                                             <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" alt="Photo de profil" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover; margin-right: 8px;">
                                         {% else %}
-                                            <span style="font-size: 1.2rem; margin-right: 8px;"></span>
+                                            <span style="font-size: 1.2rem; margin-right: 8px;">👤</span>
                                         {% endif %}
                                         Profil
                                     </a>
@@ -94,13 +113,13 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ path('app_admin_users') }}">
-                                            Administration
+                                            🔧 Administration
                                         </a>
                                     </li>
                                 {% endif %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('app_logout') }}">
-                                         Déconnexion
+                                        🚪 Déconnexion
                                     </a>
                                 </li>
                             </ul>
