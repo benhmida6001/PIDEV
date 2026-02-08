@@ -32,4 +32,20 @@ class Category
 
         return $this;
     }
+
+    public function getNameInFrench(): string
+{
+    $translations = [
+        'Camping Equipment' => 'Équipement de Camping',
+        'Cleaning Tools' => 'Outils de Nettoyage',
+        'Recycling Equipment' => 'Équipement de Recyclage',
+        'Event Equipment' => 'Équipement d\'Événement',
+        'Transportation' => 'Transport',
+        'Safety Equipment' => 'Équipement de Sécurité',
+        'Communication' => 'Communication',
+        'Other' => 'Autre',
+    ];
+
+    return $translations[$this->name] ?? $this->name;
+}
 }

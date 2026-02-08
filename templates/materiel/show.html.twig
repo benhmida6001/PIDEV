@@ -1,46 +1,296 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/materiel/show.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Materiel{% endblock %}
+{% block title %}{{ materiel.name }} - Détails{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .detail-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    
+    .detail-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px 15px 0 0;
+    }
+    
+    .detail-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    
+    .info-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .info-label {
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 5px;
+    }
+    
+    .info-value {
+        font-size: 1.1rem;
+    }
+    
+    .owner-card {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <h1>Materiel</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_materiel_index') }}">Matériels</a></li>
+                    <li class="breadcrumb-item active">{{ materiel.name }}</li>
+                </ol>
+            </nav>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ materiel.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ materiel.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ materiel.description }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ materiel.quantity }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ materiel.image }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ materiel.status }}</td>
-            </tr>
-            <tr>
-                <th>AvailableQuantity</th>
-                <td>{{ materiel.availableQuantity }}</td>
-            </tr>
-        </tbody>
-    </table>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
 
-    <a href="{{ path('app_materiel_index') }}">back to list</a>
+            <!-- Main Card -->
+            <div class="detail-card">
+                <div class="detail-header">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h1 class="mb-2">{{ materiel.name }}</h1>
+                            <p class="mb-0">
+                                <span class="badge bg-light text-dark">
+                                    <i class="bi bi-tag"></i> {{ materiel.category.name }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            {% set statusClass = {
+                                'excellent': 'success',
+                                'good': 'primary',
+                                'acceptable': 'warning',
+                                'to_check': 'danger'
+                            } %}
+                            {% set statusLabel = {
+                                'excellent': 'Excellent',
+                                'good': 'Bon',
+                                'acceptable': 'Acceptable',
+                                'to_check': 'À Vérifier'
+                            } %}
+                            <span class="badge bg-{{ statusClass[materiel.status] ?? 'secondary' }} fs-6">
+                                {{ statusLabel[materiel.status] ?? materiel.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-    <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}">edit</a>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <!-- Image Section -->
+                        <div class="col-md-6 mb-4">
+                            {% if materiel.image %}
+                                <img src="{{ asset('uploads/' ~ materiel.image) }}" 
+                                     alt="{{ materiel.name }}" 
+                                     class="detail-image">
+                            {% else %}
+                                <div class="detail-image d-flex align-items-center justify-content-center bg-light">
+                                    <i class="bi bi-image text-muted" style="font-size: 5rem;"></i>
+                                </div>
+                            {% endif %}
+                        </div>
 
-    {{ include('materiel/_delete_form.html.twig') }}
+                        <!-- Details Section -->
+                        <div class="col-md-6">
+                            <!-- Visibility Status -->
+                            {% if not materiel.visible %}
+                                <div class="alert alert-warning mb-3">
+                                    <i class="bi bi-eye-slash-fill"></i> <strong>Masqué</strong> - 
+                                    Ce matériel n'est pas visible par la communauté
+                                </div>
+                            {% endif %}
+
+                            <!-- Description -->
+                            <div class="info-section">
+                                <div class="info-label">
+                                    <i class="bi bi-file-text"></i> Description
+                                </div>
+                                <div class="info-value">
+                                    {{ materiel.description ?? 'Aucune description fournie' }}
+                                </div>
+                            </div>
+
+                            <!-- Quantities -->
+                            <div class="info-section">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="info-label">
+                                            <i class="bi bi-box-seam"></i> Quantité Totale
+                                        </div>
+                                        <div class="info-value">
+                                            <span class="badge bg-primary fs-5">{{ materiel.quantity }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="info-label">
+                                            <i class="bi bi-check-circle"></i> Disponible
+                                        </div>
+                                        <div class="info-value">
+                                            <span class="badge bg-success fs-5">{{ materiel.availableQuantity }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Transport -->
+                            <div class="info-section">
+                                <div class="info-label">
+                                    <i class="bi bi-truck"></i> Transport
+                                </div>
+                                <div class="info-value">
+                                    {% if materiel.transport %}
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i> Transport Disponible
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">
+                                            <i class="bi bi-x-circle"></i> Transport Non Disponible
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Owner -->
+                            <div class="owner-card">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">Propriétaire</div>
+                                        <div>{{ materiel.owner.email }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="{{ path('app_materiel_index') }}" class="btn btn-secondary btn-lg">
+        <i class="bi bi-arrow-left"></i> Retour à la liste
+    </a>
+    
+    <div class="btn-group" role="group">
+        {% if app.user and materiel.owner.id == app.user.id %}
+            <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}" class="btn btn-warning btn-lg">
+                <i class="bi bi-pencil"></i> Modifier
+            </a>
+            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash"></i> Supprimer
+            </button>
+        {% endif %}
+        
+        {% if app.user and (materiel.owner.id == app.user.id or 'ROLE_ADMIN' in app.user.roles) %}
+            <button type="button" 
+                    class="btn btn-lg {{ materiel.visible ? 'btn-secondary' : 'btn-success' }}"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#visibilityModal">
+                <i class="bi bi-eye{{ materiel.visible ? '-slash' : '' }}"></i>
+                {{ materiel.visible ? 'Masquer' : 'Rendre Visible' }}
+            </button>
+        {% endif %}
+        
+        {# Add action buttons for non-owners #}
+        {% if app.user and materiel.owner.id != app.user.id and materiel.visible and materiel.availableQuantity > 0 %}
+            <a href="{{ path('app_operation_new', {type: 'borrow', materiel: materiel.id}) }}" 
+               class="btn btn-primary btn-lg">
+                <i class="bi bi-box-arrow-in-down"></i> Emprunter
+            </a>
+            <a href="{{ path('app_operation_new', {type: 'repair', materiel: materiel.id}) }}" 
+               class="btn btn-info btn-lg">
+                <i class="bi bi-tools"></i> Réparer
+            </a>
+        {% endif %}
+    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle"></i> Confirmer la suppression
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer <strong>{{ materiel.name }}</strong> ?</p>
+                <p class="text-danger"><strong>Cette action est irréversible !</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                {{ include('materiel/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visibility Toggle Modal -->
+<div class="modal fade" id="visibilityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header {{ materiel.visible ? 'bg-warning' : 'bg-success' }} text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-eye{{ materiel.visible ? '-slash' : '' }}"></i>
+                    {{ materiel.visible ? 'Masquer le matériel' : 'Rendre le matériel visible' }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {% if materiel.visible %}
+                    <p>Êtes-vous sûr de vouloir <strong>masquer</strong> ce matériel de la communauté ?</p>
+                    <p class="text-muted small">Il ne sera plus visible par les autres utilisateurs.</p>
+                {% else %}
+                    <p>Êtes-vous sûr de vouloir <strong>rendre visible</strong> ce matériel à la communauté ?</p>
+                    <p class="text-muted small">Il sera visible par tous les utilisateurs.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form method="post" action="{{ path('app_materiel_toggle_visibility', {'id': materiel.id}) }}" style="display: inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ materiel.id) }}">
+                    <button type="submit" class="btn {{ materiel.visible ? 'btn-warning' : 'btn-success' }}">
+                        <i class="bi bi-check-circle"></i> Confirmer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

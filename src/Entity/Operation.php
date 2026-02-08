@@ -1,8 +1,10 @@
 <?php
+// filepath: /c:/Users/bahae/Documents/BenH/PIDEV/src/Entity/Operation.php
 
 namespace App\Entity;
 
 use App\Repository\OperationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OperationRepository::class)]
@@ -16,25 +18,31 @@ class Operation
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column]
+    private ?int $quantity = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $status = 'pending';
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column]
-    private ?\DateTime $startDate = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTime $endDate = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $returnImage = null;
+    #[ORM\ManyToOne(targetEntity: Materiel::class)]
+#[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+private ?Materiel $materiel = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Materiel $material = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $requester = null;
 
     public function getId(): ?int
     {
@@ -49,7 +57,28 @@ class Operation
     public function setType(string $type): static
     {
         $this->type = $type;
+        return $this;
+    }
 
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): static
+    {
+        $this->quantity = $quantity;
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
         return $this;
     }
 
@@ -61,67 +90,61 @@ class Operation
     public function setStatus(string $status): static
     {
         $this->status = $status;
-
         return $this;
     }
 
-    public function getStartDate(): ?\DateTime
+    public function getStartDate(): ?\DateTimeInterface
     {
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTime $startDate): static
+    public function setStartDate(\DateTimeInterface $startDate): static
     {
         $this->startDate = $startDate;
-
         return $this;
     }
 
-    public function getEndDate(): ?\DateTime
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTime $endDate): static
+    public function setEndDate(\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
-
         return $this;
     }
 
-    public function getReturnImage(): ?string
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->returnImage;
+        return $this->createdAt;
     }
 
-    public function setReturnImage(?string $returnImage): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->returnImage = $returnImage;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 
-    public function getMaterial(): ?Materiel
+    public function getMateriel(): ?Materiel
     {
-        return $this->material;
+        return $this->materiel;
     }
 
-    public function setMaterial(?Materiel $material): static
+    public function setMateriel(?Materiel $materiel): static
     {
-        $this->material = $material;
-
+        $this->materiel = $materiel;
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getRequester(): ?User
     {
-        return $this->user;
+        return $this->requester;
     }
 
-    public function setUser(?User $user): static
+    public function setRequester(?User $requester): static
     {
-        $this->user = $user;
-
+        $this->requester = $requester;
         return $this;
     }
 }

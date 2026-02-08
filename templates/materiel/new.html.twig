@@ -1,11 +1,271 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/materiel/new.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}New Materiel{% endblock %}
+{% block title %}Ajouter du Matériel{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .form-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .form-section h5 {
+        color: #667eea;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #667eea;
+    }
+    
+    .image-preview {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 10px;
+        margin-top: 10px;
+        display: none;
+    }
+    
+    .custom-file-upload {
+        border: 2px dashed #667eea;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    
+    .custom-file-upload:hover {
+        background: #f0f4ff;
+        border-color: #4facfe;
+    }
+    
+    .custom-file-upload i {
+        font-size: 3rem;
+        color: #667eea;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Materiel</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- Header -->
+            <div class="card mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <div class="card-body text-center py-4">
+                    <h2 class="mb-2">🎁 Ajouter du Matériel</h2>
+                    <p class="mb-0">Partagez votre matériel avec la communauté</p>
+                </div>
+            </div>
 
-    {{ include('materiel/_form.html.twig') }}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
 
-    <a href="{{ path('app_materiel_index') }}">back to list</a>
+            <!-- Form -->
+            <div class="card">
+                <div class="card-body p-4">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        
+                        <!-- Informations Générales -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-info-circle"></i> Informations Générales</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form_row(form.name, {
+                                        'label': 'Nom du matériel',
+                                        'attr': {'class': 'form-control', 'placeholder': 'Ex: Tente de camping 4 places'}
+                                    }) }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form_row(form.category, {
+                                        'label': 'Catégorie',
+                                        'attr': {'class': 'form-select'}
+                                    }) }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_row(form.description, {
+                                    'label': 'Description',
+                                    'attr': {
+                                        'class': 'form-control', 
+                                        'rows': 4, 
+                                        'placeholder': 'Décrivez votre matériel en détail...'
+                                    }
+                                }) }}
+                            </div>
+                        </div>
+
+                        <!-- Quantité et État -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-box-seam"></i> Quantité et État</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    {{ form_row(form.quantity, {
+                                        'label': 'Quantité totale',
+                                        'attr': {'class': 'form-control', 'min': 0}
+                                    }) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_row(form.availableQuantity, {
+                                        'label': 'Quantité disponible',
+                                        'attr': {'class': 'form-control', 'min': 0}
+                                    }) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_row(form.status, {
+                                        'label': 'État du matériel',
+                                        'attr': {'class': 'form-select'}
+                                    }) }}
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="bi bi-lightbulb"></i> <strong>Astuce :</strong> 
+                                La quantité disponible doit être inférieure ou égale à la quantité totale.
+                            </div>
+                        </div>
+
+                        <!-- Options de Partage -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-share"></i> Options de Partage</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check form-switch">
+                                        {{ form_widget(form.transport, {
+                                            'attr': {'class': 'form-check-input', 'role': 'switch'}
+                                        }) }}
+                                        {{ form_label(form.transport, 'Je peux assurer le transport', {
+                                            'label_attr': {'class': 'form-check-label'}
+                                        }) }}
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-truck"></i> Cochez si vous pouvez livrer le matériel
+                                    </small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check form-switch">
+                                        {{ form_widget(form.visible, {
+                                            'attr': {'class': 'form-check-input', 'role': 'switch'}
+                                        }) }}
+                                        {{ form_label(form.visible, 'Visible par la communauté', {
+                                            'label_attr': {'class': 'form-check-label'}
+                                        }) }}
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-eye"></i> Décochez pour masquer temporairement
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="form-section">
+                            <h5><i class="bi bi-image"></i> Photo du Matériel</h5>
+                            
+                            <div class="custom-file-upload" id="fileUploadArea">
+                                <i class="bi bi-cloud-upload"></i>
+                                <p class="mb-2 mt-3"><strong>Cliquez pour télécharger une image</strong></p>
+                                <p class="text-muted small mb-0">JPG, PNG ou GIF (max. 5 Mo)</p>
+                            </div>
+                            
+                            <div style="display: none;">
+                                {{ form_widget(form.image, {
+                                    'attr': {'id': 'materiel_image'}
+                                }) }}
+                            </div>
+                            
+                            <img id="imagePreview" class="image-preview img-thumbnail" alt="Aperçu de l'image">
+                            
+                            {{ form_errors(form.image) }}
+                        </div>
+
+                        <!-- Hidden fields -->
+                        {{ form_rest(form) }}
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                            <a href="{{ path('app_materiel_index') }}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-arrow-left"></i> Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-check-circle"></i> Ajouter le Matériel
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <!-- Help Card -->
+            <div class="card mt-3 border-info">
+                <div class="card-body">
+                    <h6 class="text-info"><i class="bi bi-question-circle"></i> Besoin d'aide ?</h6>
+                    <p class="small mb-0">
+                        📌 Remplissez tous les champs pour que votre matériel soit bien référencé.<br>
+                        📌 Une photo claire aide les autres utilisateurs à identifier votre matériel.<br>
+                        📌 Vous pourrez modifier ces informations à tout moment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get elements
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('materiel_image');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    // Click event for upload area
+    if (fileUploadArea && fileInput) {
+        fileUploadArea.addEventListener('click', function(e) {
+            e.preventDefault();
+            fileInput.click();
+        });
+    }
+    
+    // File change event for preview
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            previewImage(this);
+        });
+    }
+    
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                
+                // Update upload area text
+                fileUploadArea.innerHTML = `
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                    <p class="mb-2 mt-3"><strong>Image sélectionnée !</strong></p>
+                    <p class="text-muted small mb-0">Cliquez pour changer l'image</p>
+                `;
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+});
+</script>
 {% endblock %}

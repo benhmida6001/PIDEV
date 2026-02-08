@@ -1,49 +1,772 @@
 {# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/materiel/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Materials{% endblock %}
+{% block title %}Ressources Communautaires{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .hero-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .action-card {
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        color: white;
+        height: 100%;
+    }
+    
+    .action-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .action-card.borrow {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .action-card.donate {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .action-card.repair {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .action-card .emoji {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 15px;
+    }
+    
+    .action-card h3 {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .search-filter-section {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        position: relative;
+    }
+
+    .search-box input {
+        padding-left: 45px;
+        border-radius: 25px;
+        border: 2px solid #667eea;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #667eea;
+        font-size: 1.2rem;
+    }
+
+    .filter-badge {
+        cursor: pointer;
+        padding: 8px 15px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .filter-badge:hover {
+        transform: scale(1.05);
+    }
+
+    .filter-badge.active {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .drawer-toggle {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 10px;
+        border-radius: 10px 0 0 10px;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-weight: bold;
+    }
+
+    .drawer-toggle:hover {
+        right: 5px;
+        box-shadow: -6px 0 15px rgba(0,0,0,0.3);
+    }
+
+    .drawer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.show {
+        display: block;
+        opacity: 1;
+    }
+
+    .social-drawer {
+        position: fixed;
+        right: -450px;
+        top: 0;
+        width: 450px;
+        height: 100vh;
+        background: white;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+        z-index: 1050;
+        transition: right 0.3s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .social-drawer.open {
+        right: 0;
+    }
+
+    .drawer-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .drawer-close {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .drawer-close:hover {
+        background: rgba(255,255,255,0.3);
+        transform: rotate(90deg);
+    }
+
+    .drawer-tabs {
+        display: flex;
+        background: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .drawer-tab {
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: #6c757d;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .drawer-tab.active {
+        color: #667eea;
+        background: white;
+    }
+
+    .drawer-tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #667eea;
+    }
+
+    .drawer-tab:hover:not(.active) {
+        background: rgba(102, 126, 234, 0.1);
+    }
+
+    .drawer-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+    }
+
+    .drawer-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .drawer-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .drawer-content::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 4px;
+    }
+
+    .demand-item {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .demand-item:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+
+    .demand-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 10px;
+    }
+
+    .demand-material {
+        font-weight: bold;
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .demand-status {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-approved {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-rejected {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .demand-meta {
+        display: flex;
+        gap: 15px;
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 8px;
+    }
+
+    .demand-meta i {
+        margin-right: 5px;
+    }
+
+    .drawer-footer {
+        padding: 15px;
+        border-top: 1px solid #dee2e6;
+        text-align: center;
+        background: #f8f9fa;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #6c757d;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+
+
+    /* 3-Dot Menu Styles */
+    .material-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+    }
+
+    .dots-menu-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .dots-menu-btn:hover {
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: scale(1.1);
+    }
+
+    .dots-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        min-width: 180px;
+        display: none;
+        margin-top: 5px;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
+    .dots-menu.show {
+        display: block;
+        animation: menuSlideIn 0.2s ease;
+    }
+
+    @keyframes menuSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .dots-menu-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        background: white;
+        width: 100%;
+        text-align: left;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .dots-menu-item:hover {
+        background: #f8f9fa;
+    }
+
+    .dots-menu-item i {
+        font-size: 1.1rem;
+        width: 20px;
+    }
+
+    .dots-menu-item.borrow {
+        color: #667eea;
+    }
+
+    .dots-menu-item.borrow:hover {
+        background: rgba(102, 126, 234, 0.1);
+    }
+
+    .dots-menu-item.repair {
+        color: #4facfe;
+    }
+
+    .dots-menu-item.repair:hover {
+        background: rgba(79, 172, 254, 0.1);
+    }
+
+    .card {
+         position: relative;
+    }
+
+        
+</style>
+{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Materials</h1>
-        <a href="{{ path('app_materiel_new') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Create New Material
-        </a>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>🌍 Ressources de la Communauté</h1>
+        <p>
+            Partagez, empruntez ou réparez du matériel pour soutenir les activités environnementales.<br>
+            Même si vous ne pouvez pas participer physiquement, vous pouvez contribuer en partageant ou en réparant les ressources des autres.
+        </p>
     </div>
 
     {% for message in app.flashes('success') %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ message }}
+            <i class="bi bi-check-circle-fill"></i> {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     {% endfor %}
 
-    <div class="card">
+    <!-- Action Cards -->
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <a href="{{ path('app_operation_new', {type: 'borrow'}) }}" class="text-decoration-none">
+                <div class="action-card borrow">
+                    <span class="emoji">📦</span>
+                    <h3>Emprunter</h3>
+                    <p>J'ai besoin de matériel pour un projet</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="{{ path('app_materiel_new') }}" class="text-decoration-none">
+                <div class="action-card donate">
+                    <span class="emoji">🎁</span>
+                    <h3>Donner / Partager</h3>
+                    <p>Je veux partager mon matériel avec la communauté</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="{{ path('app_operation_new', {type: 'repair'}) }}" class="text-decoration-none">
+                <div class="action-card repair">
+                    <span class="emoji">🔧</span>
+                    <h3>Réparer</h3>
+                    <p>Je veux réparer du matériel endommagé</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- View Toggle and User Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <!-- Empty for spacing -->
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-success active filter-btn" data-filter="all">
+                            <i class="bi bi-globe"></i> Tout le Matériel
+                        </button>
+                        <button type="button" class="btn btn-outline-info filter-btn" data-filter="my">
+                            <i class="bi bi-person"></i> Mon Équipement
+                        </button>
+                        <button type="button" class="btn btn-outline-warning filter-btn" data-filter="community">
+                            <i class="bi bi-people"></i> Communauté
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary active" id="gridViewBtn">
+                            <i class="bi bi-grid-3x3-gap"></i> Grille
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="listViewBtn">
+                            <i class="bi bi-list"></i> Liste
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Advanced Filters -->
+    <div class="search-filter-section">
+    <div class="row">
+        <!-- Search Bar -->
+        <div class="col-md-{{ isAdmin ? '4' : '6' }} mb-3">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" 
+                       id="searchInput" 
+                       class="form-control" 
+                       placeholder="Rechercher du matériel..."
+                       autocomplete="off">
+            </div>
+        </div>
+
+
+   <!-- Category Filter -->
+        <div class="col-md-{{ isAdmin ? '3' : '3' }} mb-3">
+                    <select id="categoryFilter" class="form-select">
+                            <option value="">🏷️ Toutes les Catégories</option>
+                         {% for category in categories %}
+                             <option value="{{ category.id }}">{{ category.nameInFrench }}</option>
+                         {% endfor %}
+</select>
+        </div>
+
+            <!-- Status Filter -->
+            <div class="col-md-3 mb-3">
+                <select id="statusFilter" class="form-select">
+                    <option value="">📊 Tous les États</option>
+                    <option value="excellent">✨ Excellent</option>
+                    <option value="good">✅ Bon</option>
+                    <option value="acceptable">⚠️ Acceptable</option>
+                    <option value="to_check">🔍 À Vérifier</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- User Filter (Admin Only) -->
+       {% if isAdmin %}
+  <div class="col-md-2 mb-3">
+    <select id="userFilter" class="form-select">
+        <option value="">👤 Tous les Propriétaires</option>
+        {% for user in users %}
+            <option value="{{ user.userId }}">{{ user.email|split('@')[0] }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+
+
+
+
+
+{% endif %}
+    </div>
+
+         <!-- Active Filters Display -->
+    <div id="activeFilters" class="mt-2" style="display: none;">
+        <small class="text-muted">Filtres actifs: </small>
+        <span id="searchBadge" class="filter-badge bg-primary text-white" style="display: none;">
+            <i class="bi bi-search"></i> <span id="searchText"></span>
+            <i class="bi bi-x-circle ms-1" onclick="clearSearch()" style="cursor: pointer;"></i>
+        </span>
+        <span id="categoryBadge" class="filter-badge bg-info text-white" style="display: none;">
+            <i class="bi bi-tag"></i> <span id="categoryText"></span>
+            <i class="bi bi-x-circle ms-1" onclick="clearCategory()" style="cursor: pointer;"></i>
+        </span>
+        <span id="statusBadge" class="filter-badge bg-warning text-dark" style="display: none;">
+            <i class="bi bi-star"></i> <span id="statusText"></span>
+            <i class="bi bi-x-circle ms-1" onclick="clearStatus()" style="cursor: pointer;"></i>
+        </span>
+        {% if isAdmin %}
+        <span id="userBadge" class="filter-badge bg-success text-white" style="display: none;">
+            <i class="bi bi-person"></i> <span id="userText"></span>
+            <i class="bi bi-x-circle ms-1" onclick="clearUser()" style="cursor: pointer;"></i>
+        </span>
+        {% endif %}
+        <button class="btn btn-sm btn-outline-danger ms-2" onclick="clearAllFilters()">
+            <i class="bi bi-x-circle"></i> Effacer Tout
+        </button>
+    </div>
+
+   <!-- Results Count -->
+    <div class="mt-2">
+        <small class="text-muted">
+            <i class="bi bi-box-seam"></i> <span id="resultsCount">{{ materiels|length }}</span> matériel(s) trouvé(s)
+        </small>
+    </div>
+</div>
+
+    <!-- Grid View -->
+    <div id="gridView" class="row">
+    {% for materiel in materiels %}
+        <div class="col-md-4 col-lg-3 mb-4 materiel-item" 
+             data-owner="{{ materiel.owner.id }}" 
+             data-visible="{{ materiel.visible ? '1' : '0' }}"
+             data-name="{{ materiel.name|lower }}"
+             data-category="{{ materiel.category ? materiel.category.id : '' }}"
+             data-category-name="{{ materiel.category ? materiel.category.nameInFrench : '' }}"
+             data-status="{{ materiel.status }}">
+            <div class="card h-100 {{ not materiel.visible ? 'opacity-50 border-secondary' : '' }}">
+                <!-- 3-Dot Menu (only for other users' materials) -->
+                {% if app.user and materiel.owner.id != app.user.id and materiel.visible and materiel.availableQuantity > 0 %}
+                    <div class="material-actions">
+                        <button class="dots-menu-btn" onclick="toggleDotsMenu(event, {{ materiel.id }})">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <div class="dots-menu" id="dotsMenu{{ materiel.id }}">
+                            <a href="{{ path('app_operation_new', {type: 'borrow', materiel: materiel.id}) }}" 
+                               class="dots-menu-item borrow">
+                                <i class="bi bi-box-arrow-in-down"></i>
+                                <span>Emprunter</span>
+                            </a>
+                            <a href="{{ path('app_operation_new', {type: 'repair', materiel: materiel.id}) }}" 
+                               class="dots-menu-item repair">
+                                <i class="bi bi-tools"></i>
+                                <span>Réparer</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div style="height: 200px; overflow: hidden;">
+                    {% if materiel.image %}
+                        <img src="{{ asset('uploads/' ~ materiel.image) }}" 
+                             class="card-img-top" 
+                             alt="{{ materiel.name }}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center bg-light" style="height: 100%;">
+                            <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ materiel.name }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-person"></i> {{ materiel.owner.email }}
+                        </small>
+                    </p>
+                    <div class="mb-2">
+                        {% set statusClass = {
+                            'excellent': 'success',
+                            'good': 'primary',
+                            'acceptable': 'warning',
+                            'to_check': 'danger'
+                        } %}
+                        {% set statusLabel = {
+                            'excellent': 'Excellent',
+                            'good': 'Bon',
+                            'acceptable': 'Acceptable',
+                            'to_check': 'À Vérifier'
+                        } %}
+                        <span class="badge bg-{{ statusClass[materiel.status] ?? 'secondary' }}">
+                            {{ statusLabel[materiel.status] ?? materiel.status }}
+                        </span>
+                        <span class="badge bg-info">{{ materiel.category ? materiel.category.nameInFrench : 'N/A' }}</span>
+                    </div>
+                    <div class="mb-2">
+                        {% if materiel.transport %}
+                            <span class="badge bg-success">
+                                <i class="bi bi-truck"></i> Transport Disponible
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-x-circle"></i> Pas de Transport
+                            </span>
+                        {% endif %}
+                    </div>
+                    {% if not materiel.visible %}
+                        <div class="alert alert-warning py-1 px-2 mb-2">
+                            <small><i class="bi bi-eye-slash"></i> Caché de la communauté</small>
+                        </div>
+                    {% endif %}
+                    <p class="mb-2">
+                        <strong>Disponible:</strong> {{ materiel.availableQuantity }}/{{ materiel.quantity }}
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="{{ path('app_materiel_show', {'id': materiel.id}) }}" 
+                           class="btn btn-sm btn-info flex-fill">
+                            <i class="bi bi-info-circle"></i> Détails
+                        </a>
+                        {% if app.user and materiel.owner.id == app.user.id %}
+                            <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}" 
+                               class="btn btn-sm btn-warning flex-fill">
+                                <i class="bi bi-pencil"></i> Modifier
+                            </a>
+                        {% endif %}
+                        {% if app.user and (materiel.owner.id == app.user.id or 'ROLE_ADMIN' in app.user.roles) %}
+                            <button type="button" 
+                                    class="btn btn-sm {{ materiel.visible ? 'btn-secondary' : 'btn-success' }}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#visibilityModal{{ materiel.id }}">
+                                <i class="bi bi-eye{{ materiel.visible ? '-slash' : '' }}"></i>
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="text-center text-muted py-5">
+                <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                <p class="mb-0">Aucun matériel trouvé</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <!-- List View -->
+    <div id="listView" class="card" style="display: none;">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Image</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Available Qty</th>
-                            <th>Total Qty</th>
-                            <th>Owner</th>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>État</th>
+                            <th>Transport</th>
+                            <th>Visibilité</th>
+                            <th>Dispo</th>
+                            <th>Total</th>
+                            <th>Propriétaire</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody">
                     {% for materiel in materiels %}
-                        <tr>
+                        <tr class="materiel-item {{ not materiel.visible ? 'table-secondary opacity-50' : '' }}" 
+                            data-owner="{{ materiel.owner.id }}" 
+                            data-visible="{{ materiel.visible ? '1' : '0' }}"
+                            data-name="{{ materiel.name|lower }}"
+                            data-category="{{ materiel.category ? materiel.category.id : '' }}"
+                            data-category-name="{{ materiel.category ? materiel.category.name : '' }}"
+                            data-status="{{ materiel.status }}">
                             <td>
                                 {% if materiel.image %}
-                                    <img src="{{ asset('uploads/' ~ materiel.image) }}" alt="{{ materiel.name }}" 
-                                         class="img-thumbnail" style="max-width: 60px; max-height: 60px; object-fit: cover;">
+                                    <img src="{{ asset('uploads/' ~ materiel.image) }}" 
+                                         alt="{{ materiel.name }}" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 60px; max-height: 60px; object-fit: cover;">
                                 {% else %}
-                                    <span class="badge bg-secondary">No image</span>
+                                    <span class="badge bg-secondary">Pas d'image</span>
                                 {% endif %}
                             </td>
                             <td><strong>{{ materiel.name }}</strong></td>
@@ -59,9 +782,37 @@
                                     'acceptable': 'warning',
                                     'to_check': 'danger'
                                 } %}
+                                {% set statusLabel = {
+                                    'excellent': 'Excellent',
+                                    'good': 'Bon',
+                                    'acceptable': 'Acceptable',
+                                    'to_check': 'À Vérifier'
+                                } %}
                                 <span class="badge bg-{{ statusClass[materiel.status] ?? 'secondary' }}">
-                                    {{ materiel.status|replace({'_': ' '})|title }}
+                                    {{ statusLabel[materiel.status] ?? materiel.status }}
                                 </span>
+                            </td>
+                            <td>
+                                {% if materiel.transport %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle"></i> Oui
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        <i class="bi bi-x-circle"></i> Non
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if materiel.visible %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-eye"></i> Visible
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning">
+                                        <i class="bi bi-eye-slash"></i> Caché
+                                    </span>
+                                {% endif %}
                             </td>
                             <td><strong>{{ materiel.availableQuantity }}</strong></td>
                             <td>{{ materiel.quantity }}</td>
@@ -70,22 +821,59 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ path('app_materiel_show', {'id': materiel.id}) }}" 
-                                       class="btn btn-info" title="View">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}" 
-                                       class="btn btn-warning" title="Edit">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                </div>
+        <a href="{{ path('app_materiel_show', {'id': materiel.id}) }}" 
+           class="btn btn-info" title="Détails">
+            <i class="bi bi-info-circle"></i>
+        </a>
+        
+        {% if app.user and materiel.owner.id == app.user.id %}
+            <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}" 
+               class="btn btn-warning" title="Modifier">
+                <i class="bi bi-pencil"></i>
+            </a>
+        {% endif %}
+        
+        {% if app.user and (materiel.owner.id == app.user.id or 'ROLE_ADMIN' in app.user.roles) %}
+            <button type="button" 
+                    class="btn {{ materiel.visible ? 'btn-secondary' : 'btn-success' }}"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#visibilityModal{{ materiel.id }}"
+                    title="{{ materiel.visible ? 'Masquer' : 'Rendre visible' }}">
+                <i class="bi bi-eye{{ materiel.visible ? '-slash' : '' }}"></i>
+            </button>
+        {% endif %}
+        
+        {% if app.user and materiel.owner.id != app.user.id and materiel.visible and materiel.availableQuantity > 0 %}
+            <div class="btn-group btn-group-sm">
+                <button type="button" 
+                        class="btn btn-primary dropdown-toggle" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"
+                        title="Actions">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{{ path('app_operation_new', {type: 'borrow', materiel: materiel.id}) }}">
+                            <i class="bi bi-box-arrow-in-down text-primary"></i> Emprunter
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ path('app_operation_new', {type: 'repair', materiel: materiel.id}) }}">
+                            <i class="bi bi-tools text-info"></i> Réparer
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="8" class="text-center text-muted">
+                            <td colspan="10" class="text-center text-muted">
                                 <i class="bi bi-inbox" style="font-size: 2rem;"></i>
-                                <p class="mb-0">No materials found</p>
+                                <p class="mb-0">Aucun matériel trouvé</p>
                             </td>
                         </tr>
                     {% endfor %}
@@ -95,4 +883,506 @@
         </div>
     </div>
 </div>
+
+
+<!-- Social Activities Drawer Toggle -->
+<div class="drawer-toggle" id="drawerToggle">
+    <i class="bi bi-people-fill"></i> Activités Sociales
+</div>
+
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- Social Activities Drawer -->
+<div class="social-drawer" id="socialDrawer">
+    <!-- Drawer Header -->
+    <div class="drawer-header">
+        <div>
+            <h4 class="mb-0"><i class="bi bi-people-fill"></i> Activités Sociales</h4>
+            <small>Gérez vos demandes et emprunts</small>
+        </div>
+        <button class="drawer-close" id="drawerClose">
+            <i class="bi bi-x"></i>
+        </button>
+    </div>
+
+    <!-- Drawer Tabs -->
+    <div class="drawer-tabs">
+        <button class="drawer-tab active" data-tab="demands">
+            <i class="bi bi-inbox"></i> Demandes Reçues
+            {% if demandsOnMyItems|length > 0 %}
+                <span class="badge bg-danger ms-1">{{ demandsOnMyItems|length }}</span>
+            {% endif %}
+        </button>
+        <button class="drawer-tab" data-tab="history">
+            <i class="bi bi-clock-history"></i> Mon Historique
+        </button>
+    </div>
+
+    <!-- Drawer Content -->
+    <div class="drawer-content">
+        <!-- Demands Tab -->
+        <div class="tab-content active" id="demandsTab">
+            {% if demandsOnMyItems|length > 0 %}
+                {% for operation in demandsOnMyItems %}
+                    <div class="demand-item">
+                        <div class="demand-header">
+                            <div>
+                                <div class="demand-material">{{ operation.materiel.name }}</div>
+                                <small class="text-muted">
+                                    <i class="bi bi-person"></i> {{ operation.requester.email }}
+                                </small>
+                            </div>
+                            <span class="demand-status status-{{ operation.status }}">
+                                {% if operation.status == 'pending' %}
+                                    <i class="bi bi-clock"></i> En Attente
+                                {% elseif operation.status == 'approved' %}
+                                    <i class="bi bi-check-circle"></i> Acceptée
+                                {% elseif operation.status == 'rejected' %}
+                                    <i class="bi bi-x-circle"></i> Refusée
+                                {% else %}
+                                    {{ operation.status }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="demand-meta">
+                            <span>
+                                <i class="bi bi-box"></i> Qté: {{ operation.quantity }}
+                            </span>
+                            <span>
+                                <i class="bi bi-tag"></i>
+                                {% if operation.type == 'borrow' %}
+                                    Emprunt
+                                {% elseif operation.type == 'repair' %}
+                                    Réparation
+                                {% else %}
+                                    {{ operation.type }}
+                                {% endif %}
+                            </span>
+                            <span>
+                                <i class="bi bi-calendar"></i>
+                                {{ operation.createdAt ? operation.createdAt|date('d/m/Y') : '' }}
+                            </span>
+                        </div>
+                        {% if operation.status == 'pending' %}
+                            <div class="mt-3 d-flex gap-2">
+                                <form method="post" action="{{ path('app_operation_approve', {'id': operation.id}) }}" style="flex: 1;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ operation.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-success w-100">
+                                        <i class="bi bi-check-circle"></i> Accepter
+                                    </button>
+                                </form>
+                                <form method="post" action="{{ path('app_operation_reject', {'id': operation.id}) }}" style="flex: 1;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('reject' ~ operation.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-danger w-100">
+                                        <i class="bi bi-x-circle"></i> Refuser
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <p class="mb-0">Aucune demande reçue</p>
+                    <small>Les demandes sur votre matériel apparaîtront ici</small>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- History Tab -->
+        <div class="tab-content" id="historyTab" style="display: none;">
+            {% if myDemands|length > 0 %}
+                {% for operation in myDemands %}
+                    <div class="demand-item">
+                        <div class="demand-header">
+                            <div>
+                                <div class="demand-material">{{ operation.materiel.name }}</div>
+                                <small class="text-muted">
+                                    <i class="bi bi-person"></i> Propriétaire: {{ operation.materiel.owner.email }}
+                                </small>
+                            </div>
+                            <span class="demand-status status-{{ operation.status }}">
+                                {% if operation.status == 'pending' %}
+                                    <i class="bi bi-clock"></i> En Attente
+                                {% elseif operation.status == 'approved' %}
+                                    <i class="bi bi-check-circle"></i> Acceptée
+                                {% elseif operation.status == 'rejected' %}
+                                    <i class="bi bi-x-circle"></i> Refusée
+                                {% else %}
+                                    {{ operation.status }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="demand-meta">
+                            <span>
+                                <i class="bi bi-box"></i> Qté: {{ operation.quantity }}
+                            </span>
+                            <span>
+                                <i class="bi bi-tag"></i>
+                                {% if operation.type == 'borrow' %}
+                                    Emprunt
+                                {% elseif operation.type == 'repair' %}
+                                    Réparation
+                                {% else %}
+                                    {{ operation.type }}
+                                {% endif %}
+                            </span>
+                            <span>
+                                <i class="bi bi-calendar"></i>
+                                {{ operation.createdAt ? operation.createdAt|date('d/m/Y') : '' }}
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-clock-history"></i>
+                    <p class="mb-0">Aucun historique</p>
+                    <small>Vos demandes d'emprunt et de réparation apparaîtront ici</small>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="drawer-footer">
+        <a href="{{ path('app_operation_index') }}" class="btn btn-primary w-100">
+            <i class="bi bi-list-ul"></i> Voir Toutes Mes Activités
+        </a>
+    </div>
+</div>
+
+<!-- Visibility Toggle Modals -->
+{% for materiel in materiels %}
+<div class="modal fade" id="visibilityModal{{ materiel.id }}" tabindex="-1" aria-labelledby="visibilityModalLabel{{ materiel.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header {{ materiel.visible ? 'bg-warning' : 'bg-success' }} text-white">
+                <h5 class="modal-title" id="visibilityModalLabel{{ materiel.id }}">
+                    <i class="bi bi-eye{{ materiel.visible ? '-slash' : '' }}"></i>
+                    {{ materiel.visible ? 'Masquer le matériel' : 'Rendre le matériel visible' }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>{{ materiel.name }}</strong></p>
+                {% if materiel.visible %}
+                    <p>Êtes-vous sûr de vouloir <strong>masquer</strong> ce matériel de la communauté ?</p>
+                    <p class="text-muted small">Il ne sera plus visible par les autres utilisateurs.</p>
+                {% else %}
+                    <p>Êtes-vous sûr de vouloir <strong>rendre visible</strong> ce matériel à la communauté ?</p>
+                    <p class="text-muted small">Il sera visible par tous les utilisateurs.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form method="post" action="{{ path('app_materiel_toggle_visibility', {'id': materiel.id}) }}" style="display: inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ materiel.id) }}">
+                    <button type="submit" class="btn {{ materiel.visible ? 'btn-warning' : 'btn-success' }}">
+                        <i class="bi bi-check-circle"></i> Confirmer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const gridView = document.getElementById('gridView');
+    const listView = document.getElementById('listView');
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const currentUserId = {{ app.user ? app.user.id : 'null' }};
+    const isAdmin = {{ isAdmin ? 'true' : 'false' }};
+
+ // Search and filter elements
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const userFilter = isAdmin ? document.getElementById('userFilter') : null;
+    const activeFiltersDiv = document.getElementById('activeFilters');
+    const resultsCount = document.getElementById('resultsCount');
+
+    let currentOwnerFilter = 'all';
+
+    // View toggle
+    if (gridViewBtn && listViewBtn) {
+        gridViewBtn.addEventListener('click', function() {
+            gridView.style.display = 'flex';
+            listView.style.display = 'none';
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+        });
+
+        listViewBtn.addEventListener('click', function() {
+            gridView.style.display = 'none';
+            listView.style.display = 'block';
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+        });
+    }
+
+    // Owner filter
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentOwnerFilter = this.dataset.filter;
+            applyFilters();
+        });
+    });
+
+    // Real-time search
+    searchInput.addEventListener('input', applyFilters);
+    categoryFilter.addEventListener('change', applyFilters);
+    statusFilter.addEventListener('change', applyFilters);
+    if (userFilter) {
+        userFilter.addEventListener('change', applyFilters);
+    }
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+        const selectedStatus = statusFilter.value;
+        const selectedUser = userFilter ? userFilter.value : '';
+        
+        const items = document.querySelectorAll('.materiel-item');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const ownerId = parseInt(item.dataset.owner);
+            const isVisible = item.dataset.visible === '1';
+            const itemName = item.dataset.name;
+            const itemCategory = item.dataset.category;
+            const itemCategoryName = item.dataset.categoryName;
+            const itemStatus = item.dataset.status;
+
+            // Owner filter
+            let passOwnerFilter = false;
+            if (currentOwnerFilter === 'all') {
+                passOwnerFilter = isVisible;
+            } else if (currentOwnerFilter === 'my') {
+                passOwnerFilter = ownerId === currentUserId;
+            } else if (currentOwnerFilter === 'community') {
+                passOwnerFilter = ownerId !== currentUserId && isVisible;
+            }
+
+            // Search filter (searches in name and category)
+            const passSearchFilter = searchTerm === '' || 
+                itemName.includes(searchTerm) || 
+                (itemCategoryName && itemCategoryName.toLowerCase().includes(searchTerm));
+
+            // Category filter
+            const passCategoryFilter = selectedCategory === '' || itemCategory === selectedCategory;
+
+            // Status filter
+            const passStatusFilter = selectedStatus === '' || itemStatus === selectedStatus;
+
+            // User filter (admin only)
+            const passUserFilter = !selectedUser || ownerId === parseInt(selectedUser);
+
+            // Show/hide item
+            if (passOwnerFilter && passSearchFilter && passCategoryFilter && passStatusFilter && passUserFilter) {
+                item.style.display = '';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        resultsCount.textContent = visibleCount;
+        updateActiveFilters(searchTerm, selectedCategory, selectedStatus, selectedUser);
+    }
+
+    function updateActiveFilters(searchTerm, category, status, user) {
+        const searchBadge = document.getElementById('searchBadge');
+        const categoryBadge = document.getElementById('categoryBadge');
+        const statusBadge = document.getElementById('statusBadge');
+        const userBadge = isAdmin ? document.getElementById('userBadge') : null;
+
+        let hasActiveFilters = false;
+
+        // Search badge
+        if (searchTerm) {
+            searchBadge.style.display = 'inline-block';
+            document.getElementById('searchText').textContent = searchTerm;
+            hasActiveFilters = true;
+        } else {
+            searchBadge.style.display = 'none';
+        }
+
+        // Category badge
+        if (category) {
+            const categoryName = categoryFilter.options[categoryFilter.selectedIndex].text;
+            categoryBadge.style.display = 'inline-block';
+            document.getElementById('categoryText').textContent = categoryName;
+            hasActiveFilters = true;
+        } else {
+            categoryBadge.style.display = 'none';
+        }
+
+        // Status badge
+        if (status) {
+            const statusLabels = {
+                'excellent': 'Excellent',
+                'good': 'Bon',
+                'acceptable': 'Acceptable',
+                'to_check': 'À Vérifier'
+            };
+            statusBadge.style.display = 'inline-block';
+            document.getElementById('statusText').textContent = statusLabels[status] || status;
+            hasActiveFilters = true;
+        } else {
+            statusBadge.style.display = 'none';
+        }
+
+        // User badge (admin only)
+        if (isAdmin && user && userBadge) {
+            const userName = userFilter.options[userFilter.selectedIndex].text;
+            userBadge.style.display = 'inline-block';
+            document.getElementById('userText').textContent = userName;
+            hasActiveFilters = true;
+        } else if (userBadge) {
+            userBadge.style.display = 'none';
+        }
+
+        activeFiltersDiv.style.display = hasActiveFilters ? 'block' : 'none';
+    }
+
+    // Clear filter functions
+    window.clearSearch = function() {
+        searchInput.value = '';
+        applyFilters();
+    };
+
+    window.clearCategory = function() {
+        categoryFilter.value = '';
+        applyFilters();
+    };
+
+    window.clearStatus = function() {
+        statusFilter.value = '';
+        applyFilters();
+    };
+
+    window.clearUser = function() {
+        if (userFilter) {
+            userFilter.value = '';
+            applyFilters();
+        }
+    };
+
+    window.clearAllFilters = function() {
+        searchInput.value = '';
+        categoryFilter.value = '';
+        statusFilter.value = '';
+        if (userFilter) userFilter.value = '';
+        applyFilters();
+    };
+
+
+
+
+
+
+
+
+
+ const drawerToggle = document.getElementById('drawerToggle');
+    const drawerClose = document.getElementById('drawerClose');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const socialDrawer = document.getElementById('socialDrawer');
+    const drawerTabs = document.querySelectorAll('.drawer-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function openDrawer() {
+        socialDrawer.classList.add('open');
+        drawerOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+        socialDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    drawerToggle.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+
+    // Tab switching
+    drawerTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetTab = this.dataset.tab;
+            
+            // Update active tab
+            drawerTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show corresponding content
+            tabContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            if (targetTab === 'demands') {
+                document.getElementById('demandsTab').style.display = 'block';
+            } else if (targetTab === 'history') {
+                document.getElementById('historyTab').style.display = 'block';
+            }
+        });
+    });
+
+    // Close drawer with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && socialDrawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+});
+
+
+// 3-Dot Menu Toggle
+function toggleDotsMenu(event, materielId) {
+    event.stopPropagation();
+    const menu = document.getElementById('dotsMenu' + materielId);
+    const allMenus = document.querySelectorAll('.dots-menu');
+    
+    // Close all other menus
+    allMenus.forEach(m => {
+        if (m !== menu) {
+            m.classList.remove('show');
+        }
+    });
+    
+    // Toggle current menu
+    menu.classList.toggle('show');
+}
+
+// Close menus when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.material-actions')) {
+        document.querySelectorAll('.dots-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+});
+
+// Close menus when pressing Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.dots-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+});
+</script>>
 {% endblock %}

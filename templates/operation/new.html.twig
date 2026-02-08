@@ -1,11 +1,359 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/operation/new.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}New Operation{% endblock %}
+{% block title %}Nouvelle Demande{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .operation-form-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+    }
+
+    .operation-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .operation-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .operation-header.borrow {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .operation-header.repair {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .operation-header h3 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .operation-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.9;
+    }
+
+    .operation-body {
+        padding: 40px;
+        background: #f8f9fa;
+    }
+
+    .form-section {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-section-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-section-title i {
+        color: #667eea;
+        font-size: 1.3rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-control, .form-select {
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+    }
+
+    .alert-info {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        border: none;
+        border-left: 4px solid #2196f3;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+    }
+
+    .alert-info strong {
+        color: #0d47a1;
+    }
+
+    .quantity-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 10px;
+        background: #e8f5e9;
+        border-radius: 8px;
+        font-size: 0.9rem;
+    }
+
+    .quantity-info i {
+        color: #4caf50;
+    }
+
+    .btn-submit {
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-back {
+        padding: 15px 30px;
+        font-size: 1rem;
+        border-radius: 10px;
+        background: white;
+        border: 2px solid #dee2e6;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        border-color: #667eea;
+        color: #667eea;
+        background: rgba(102, 126, 234, 0.05);
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .material-preview {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .material-preview i {
+        font-size: 2.5rem;
+        color: #667eea;
+    }
+
+    .material-preview-info h5 {
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .material-preview-info small {
+        color: #6c757d;
+    }
+
+    .date-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .date-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .invalid-feedback {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.875rem;
+        color: #dc3545;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Operation</h1>
+<div class="operation-form-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="operation-card">
+                    <!-- Header -->
+                    <div class="operation-header {{ operationType }}">
+                        <h3>
+                            {% if operationType == 'borrow' %}
+                                <i class="bi bi-box-arrow-in-down"></i> Demande d'Emprunt
+                            {% else %}
+                                <i class="bi bi-tools"></i> Demande de Réparation
+                            {% endif %}
+                        </h3>
+                        <p>
+                            {% if operationType == 'borrow' %}
+                                Remplissez le formulaire pour emprunter du matériel
+                            {% else %}
+                                Proposez vos services de réparation pour aider la communauté
+                            {% endif %}
+                        </p>
+                    </div>
 
-    {{ include('operation/_form.html.twig') }}
+                    <!-- Body -->
+                    <div class="operation-body">
+                        {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill"></i> {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
 
-    <a href="{{ path('app_operation_index') }}">back to list</a>
+                        {% if preselectedMateriel %}
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                <strong>Matériel sélectionné:</strong> Votre demande concerne "{{ operation.materiel.name }}"
+                            </div>
+                        {% endif %}
+
+                        {{ form_start(form) }}
+                            
+                            <!-- Material Section -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <i class="bi bi-box-seam"></i>
+                                    {% if operationType == 'borrow' %}
+                                        Matériel à Emprunter
+                                    {% else %}
+                                        Matériel à Réparer
+                                    {% endif %}
+                                </div>
+                                
+                                {% if preselectedMateriel %}
+                                    <div class="material-preview">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <div class="material-preview-info">
+                                            <h5>{{ operation.materiel.name }}</h5>
+                                            <small>
+                                                <i class="bi bi-tag"></i> {{ operation.materiel.category ? operation.materiel.category.nameInFrench : 'N/A' }}
+                                                | <i class="bi bi-box"></i> Disponible: {{ operation.materiel.availableQuantity }}/{{ operation.materiel.quantity }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    {{ form_widget(form.materiel, {'attr': {'style': 'display: none;'}}) }}
+                                    <input type="hidden" name="{{ form.materiel.vars.full_name }}" value="{{ operation.materiel.id }}">
+                                {% else %}
+                                    <div class="mb-3">
+                                        {{ form_label(form.materiel, 'Choisissez le matériel') }}
+                                        {{ form_widget(form.materiel) }}
+                                        {{ form_errors(form.materiel) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Quantity and Dates Section -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <i class="bi bi-calendar-range"></i>
+                                    Détails de la Demande
+                                </div>
+                                
+                                <div class="mb-4">
+                                    {{ form_label(form.quantity, 'Quantité nécessaire') }}
+                                    {{ form_widget(form.quantity) }}
+                                    {{ form_errors(form.quantity) }}
+                                    {% if operation.materiel %}
+                                        <div class="quantity-info">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                            <span>
+                                                <strong>Disponible:</strong> {{ operation.materiel.availableQuantity }} unité(s) sur {{ operation.materiel.quantity }} au total
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="date-row">
+                                    <div>
+                                        {{ form_label(form.startDate, 'Date de début') }}
+                                        {{ form_widget(form.startDate) }}
+                                        {{ form_errors(form.startDate) }}
+                                    </div>
+                                    <div>
+                                        {{ form_label(form.endDate, 'Date de fin') }}
+                                        {{ form_widget(form.endDate) }}
+                                        {{ form_errors(form.endDate) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Description Section -->
+                            <div class="form-section">
+                                <div class="form-section-title">
+                                    <i class="bi bi-chat-left-text"></i>
+                                    Informations Complémentaires
+                                </div>
+                                <div class="mb-3">
+                                    {{ form_label(form.description, 'Décrivez votre demande (optionnel)') }}
+                                    {{ form_widget(form.description) }}
+                                    {{ form_errors(form.description) }}
+                                    <small class="text-muted">
+                                        <i class="bi bi-lightbulb"></i>
+                                        {% if operationType == 'borrow' %}
+                                            Expliquez pourquoi vous avez besoin de ce matériel, pour quel projet, etc.
+                                        {% else %}
+                                            Décrivez le problème et ce que vous pouvez faire pour le réparer.
+                                        {% endif %}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <a href="{{ path('app_materiel_index') }}" class="btn btn-back">
+                                    <i class="bi bi-arrow-left"></i> Retour
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    <i class="bi bi-send-fill"></i> Envoyer la Demande
+                                </button>
+                            </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
