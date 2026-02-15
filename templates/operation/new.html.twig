@@ -278,7 +278,11 @@
                                     <div class="mb-3">
                                         {{ form_label(form.materiel, 'Choisissez le matériel') }}
                                         {{ form_widget(form.materiel) }}
-                                        {{ form_errors(form.materiel) }}
+                                        {% if form.materiel.vars.errors|length > 0 %}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.materiel.vars.errors %}{{ error.message }}{% endfor %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>
@@ -293,7 +297,11 @@
                                 <div class="mb-4">
                                     {{ form_label(form.quantity, 'Quantité nécessaire') }}
                                     {{ form_widget(form.quantity) }}
-                                    {{ form_errors(form.quantity) }}
+                                    {% if form.quantity.vars.errors|length > 0 %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.quantity.vars.errors %}{{ error.message }}{% endfor %}
+                                        </div>
+                                    {% endif %}
                                     {% if operation.materiel %}
                                         <div class="quantity-info">
                                             <i class="bi bi-info-circle-fill"></i>
@@ -308,12 +316,20 @@
                                     <div>
                                         {{ form_label(form.startDate, 'Date de début') }}
                                         {{ form_widget(form.startDate) }}
-                                        {{ form_errors(form.startDate) }}
+                                        {% if form.startDate.vars.errors|length > 0 %}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.startDate.vars.errors %}{{ error.message }}{% endfor %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     <div>
                                         {{ form_label(form.endDate, 'Date de fin') }}
                                         {{ form_widget(form.endDate) }}
-                                        {{ form_errors(form.endDate) }}
+                                        {% if form.endDate.vars.errors|length > 0 %}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.endDate.vars.errors %}{{ error.message }}{% endfor %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -327,7 +343,11 @@
                                 <div class="mb-3">
                                     {{ form_label(form.description, 'Décrivez votre demande (optionnel)') }}
                                     {{ form_widget(form.description) }}
-                                    {{ form_errors(form.description) }}
+                                    {% if form.description.vars.errors|length > 0 %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.description.vars.errors %}{{ error.message }}{% endfor %}
+                                        </div>
+                                    {% endif %}
                                     <small class="text-muted">
                                         <i class="bi bi-lightbulb"></i>
                                         {% if operationType == 'borrow' %}

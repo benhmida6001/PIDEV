@@ -7,7 +7,11 @@
 
     {% if form.vars.errors|length > 0 %}
         <div class="alert alert-danger">
-            {{ form_errors(form) }}
+            <ul class="mb-0">
+                {% for error in form.vars.errors %}
+                    <li class="invalid-feedback d-block">{{ error.message }}</li>
+                {% endfor %}
+            </ul>
         </div>
     {% endif %}
 

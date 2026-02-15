@@ -57,6 +57,55 @@
                     background-color: #4caf50;
                     color: white;
                 }
+                /* Validation error styling (make form validation messages clearly visible) */
+                .invalid-feedback {
+                    color: #dc3545 !important;
+                }
+                .text-danger {
+                    color: #dc3545 !important;
+                }
+                .form-control.is-invalid {
+                    border-color: #dc3545;
+                    box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.12);
+                }
+                /* Additional selectors for different form error output structures */
+                .form-errors,
+                ul.form-errors,
+                .form-error-message,
+                .form-errors li {
+                    color: #dc3545 !important;
+                    margin-top: 0.25rem;
+                }
+                /* Target unordered lists that are rendered immediately after form controls
+                   (Symfony's form_errors often outputs a <ul><li>...</li></ul> directly after the widget).
+                   This makes the bullet text red without changing all lists globally. */
+                input + ul,
+                textarea + ul,
+                select + ul,
+                .form-control + ul,
+                .form-select + ul {
+                    color: #dc3545 !important;
+                    margin-top: 0.25rem;
+                }
+                input + ul > li,
+                textarea + ul > li,
+                select + ul > li,
+                .form-control + ul > li,
+                .form-select + ul > li {
+                    list-style-position: inside;
+                    color: #dc3545 !important;
+                }
+                /* Also style error lists that appear before widgets (common with `form_row`) */
+                .mb-3 > ul,
+                .mb-3 ul > li,
+                .col-md-6 ul > li,
+                .col-md-4 ul > li,
+                .form-row ul > li,
+                .form-group ul > li {
+                    color: #dc3545 !important;
+                    list-style-position: inside;
+                    margin-top: 0.25rem;
+                }
             </style>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         {% endblock %}
