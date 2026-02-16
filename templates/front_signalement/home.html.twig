@@ -1,0 +1,39 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+<div class="container text-center py-5">
+    <h1 class="display-4 mb-4">GreenCore Service</h1>
+    <p class="lead mb-5">Signalez un incident environnemental ou suivez l'état de votre demande.</p>
+
+    <div class="row g-4 justify-content-center">
+        {# Bloc Nouveau #}
+        <div class="col-md-5">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body p-4">
+                    <i class="fa-solid fa-bullhorn fa-3x text-success mb-3"></i>
+                    <h3>Nouveau Signalement</h3>
+                    <p>Vous avez remarqué une anomalie ? Créez un ticket en quelques secondes.</p>
+                    <a href="{{ path('app_front_signalement_new') }}" class="btn btn-success btn-lg w-100">Commencer</a>
+                </div>
+            </div>
+        </div>
+
+        {# Bloc Suivi #}
+        <div class="col-md-5">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body p-4">
+                    <i class="fa-solid fa-magnifying-glass fa-3x text-primary mb-3"></i>
+                    <h3>Suivre un ticket</h3>
+                    <form action="{{ path('app_signalement_search') }}" method="post">
+                        <div class="input-group mb-3">
+                            <input type="number" name="id_signalement" class="form-control" placeholder="Entrez le n° du signalement" required>
+                            <button class="btn btn-primary" type="submit">Rechercher</button>
+                        </div>
+                    </form>
+                    <p class="small text-muted">L'identifiant vous a été donné lors de la création.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{# templates/front_signalement/new.html.twig #}
+{% extends 'front.html.twig' %}
+
+{% block title %}Nouveau Signalement{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white py-3">
+                <h3 class="card-title mb-0"><i class="fa-solid fa-pen-to-square"></i> Créer un signalement</h3>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted mb-4">Remplissez les informations ci-dessous. Un numéro de suivi vous sera communiqué après validation.</p>
+
+                {{ form_start(form) }}
+                {% if not form.vars.valid %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for child in form.children %}
+                {% for error in child.vars.errors %}
+                    <li>{{ child.vars.label }}: {{ error.message }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+                    {# 1. DESCRIPTION #}
+                    <div class="mb-4">
+                        {{ form_label(form.description, '1. Description du problème', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Décrivez précisément ce que vous voyez...'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    {# 2. LOCALISATION #}
+                    <div class="mb-4">
+                        {{ form_label(form.localisation, '2. Localisation / Adresse', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.localisation, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Rue de la République, ou coordonnées GPS'}}) }}
+                        {{ form_errors(form.localisation) }}
+                    </div>
+
+                    {# 3. IMAGE (Preuve visuelle) #}
+                    <div class="mb-4 p-3 bg-light rounded border">
+                        {{ form_label(form.imageFile, '3. Photo du problème', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.imageFile) }}
+                        <div class="form-text mt-2">
+                            <i class="fa-solid fa-circle-info"></i> Format accepté : JPG, PNG, WEBP (Max 5Mo).
+                        </div>
+                    </div>
+
+                    {# Champs masqués #}
+                    <div class="d-none">
+                        {{ form_rest(form) }}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ path('app_signalement_home') }}" class="btn btn-outline-secondary me-md-2">Annuler</a>
+                        <button type="submit" class="btn btn-success px-5 shadow">
+                            <i class="fa-solid fa-paper-plane"></i> Envoyer le signalement
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

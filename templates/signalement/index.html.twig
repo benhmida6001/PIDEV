@@ -1,0 +1,144 @@
+{% extends 'sc.html.twig' %}
+
+{% block title %}Liste des Signalements{% endblock %}
+
+{% block body %}
+    {# --- CHARGEMENT DES ICÔNES FONT-AWESOME --- #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <h1>Signalements</h1>
+
+    {# --- 1. BARRE DE RECHERCHE & BOUTONS --- #}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="width: 50%;">
+            <input type="text" id="dynamicSearch" placeholder="Rechercher (description, lieu, statut...)" value="{{ search }}" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        
+        <div>
+            {# Bouton Actualiser avec icône #}
+            <a href="{{ path('app_signalement_index') }}" class="btn btn-secondary" style="margin-right: 10px;">
+                <i class="fa-solid fa-rotate-right"></i> Actualiser
+            </a>
+            {# Bouton Créer vert conservé #}
+            <a href="{{ path('app_signalement_new') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Créer
+            </a>
+        </div>
+    </div>
+
+    {# --- 2. TABLEAU --- #}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {# Colonne ID (Tri conservé avec icônes) #}
+                <th>
+                    ID
+                    {% set nextDirId = (sort == 'id_signalement' and dir == 'ASC') ? 'DESC' : 'ASC' %}
+                    <a href="{{ path('app_signalement_index', {sort: 'id_signalement', dir: nextDirId, search: search}) }}" style="text-decoration: none; color: inherit; margin-left: 5px;">
+                        {% if sort == 'id_signalement' %}
+                            <i class="fa-solid {{ dir == 'ASC' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                        {% else %}
+                            <i class="fa-solid fa-sort" style="color: #ccc;"></i>
+                        {% endif %}
+                    </a>
+                </th>
+
+                <th>Image</th>
+
+                {# Colonne Description (Tri supprimé) #}
+                <th>Description</th>
+
+                {# Colonne Localisation (Tri supprimé) #}
+                <th>Localisation</th>
+
+                {# Colonne Date (Tri conservé avec icônes) #}
+                <th>
+                    Date
+                    {% set nextDirDate = (sort == 'date_creation' and dir == 'ASC') ? 'DESC' : 'ASC' %}
+                    <a href="{{ path('app_signalement_index', {sort: 'date_creation', dir: nextDirDate, search: search}) }}" style="text-decoration: none; color: inherit; margin-left: 5px;">
+                        {% if sort == 'date_creation' %}
+                            <i class="fa-solid {{ dir == 'ASC' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                        {% else %}
+                            <i class="fa-solid fa-sort" style="color: #ccc;"></i>
+                        {% endif %}
+                    </a>
+                </th>
+
+                {# Colonne Statut (Tri conservé avec icônes) #}
+                <th>
+                    Statut
+                    {% set nextDirStatut = (sort == 'statut_traitement' and dir == 'ASC') ? 'DESC' : 'ASC' %}
+                    <a href="{{ path('app_signalement_index', {sort: 'statut_traitement', dir: nextDirStatut, search: search}) }}" style="text-decoration: none; color: inherit; margin-left: 5px;">
+                        {% if sort == 'statut_traitement' %}
+                            <i class="fa-solid {{ dir == 'ASC' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                        {% else %}
+                            <i class="fa-solid fa-sort" style="color: #ccc;"></i>
+                        {% endif %}
+                    </a>
+                </th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signalement in signalements %}
+            <tr style="vertical-align: middle;">
+                <td>{{ signalement.idSignalement }}</td>
+                <td>
+                    {% if signalement.imageUrl %}
+                        <img src="{{ asset('assets_sc/uploads/' ~ signalement.imageUrl) }}" alt="Miniature" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ signalement.description }}</td>
+                <td>{{ signalement.localisation }}</td>
+                <td>{{ signalement.dateCreation ? signalement.dateCreation|date('d/m/Y H:i') : '' }}</td>
+                <td>
+                    {# On peut garder le texte pour le statut, c'est plus clair à lire #}
+                    {{ signalement.statutTraitement }}
+                </td>
+                <td>
+                    {# Icônes d'actions au lieu du texte #}
+                    <a href="{{ path('app_signalement_show', {'id_signalement': signalement.idSignalement}) }}" class="btn btn-sm btn-info" title="Voir les détails">
+                        <i class="fa-solid fa-eye" style="color: white;"></i>
+                    </a>
+                    <a href="{{ path('app_signalement_edit', {'id_signalement': signalement.idSignalement}) }}" class="btn btn-sm btn-primary" title="Modifier">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" style="text-align: center;">Aucun signalement trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# --- 3. JAVASCRIPT (Recherche en temps réel) --- #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('dynamicSearch');
+            let typingTimer;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(typingTimer);
+                
+                typingTimer = setTimeout(function() {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('search', searchInput.value);
+                    url.searchParams.set('sort', '{{ sort }}'); 
+                    url.searchParams.set('dir', '{{ dir }}');   
+                    
+                    window.location.href = url.toString(); 
+                }, 400); 
+            });
+            
+            const val = searchInput.value;
+            searchInput.value = '';
+            searchInput.value = val;
+            searchInput.focus();
+        });
+    </script>
+{% endblock %}

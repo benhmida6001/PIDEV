@@ -1,0 +1,98 @@
+{% extends 'sc.html.twig' %}
+
+{% block title %}Edit Signalement{% endblock %}
+
+{% block body %}
+    <h1>Edit Signalement</h1>
+
+    {# --- 1. LE CSS POUR L'EFFET DE SURVOL --- #}
+    <style>
+        .image-upload-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+            overflow: hidden; /* Pour que le fond noir ne dépasse pas des bords arrondis */
+        }
+        
+        /* Le calque sombre avec le texte qui apparait au survol */
+        .image-upload-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: bold;
+        }
+
+        /* Quand on survole le conteneur, le calque devient visible */
+        .image-upload-container:hover .image-upload-overlay {
+            opacity: 1;
+        }
+
+        /* On cache le bouton "Parcourir" d'origine généré par Symfony */
+        #signalement_imageFile {
+            display: none; 
+        }
+    </style>
+
+    {# --- 2. L'AFFICHAGE DE L'IMAGE CLIQUABLE --- #}
+    <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+        <p><strong>Image (Cliquez pour modifier) :</strong></p>
+        
+        <div class="image-upload-container" id="imagePreviewContainer">
+            {% if signalement.imageUrl %}
+                <img id="imagePreview" src="{{ asset('assets_sc/uploads/' ~ signalement.imageUrl) }}" alt="Image actuelle" style="max-width: 250px; height: auto; display: block;">
+            {% else %}
+                {# Image par défaut si aucune image n'existe #}
+                <img id="imagePreview" src="https://via.placeholder.com/250x150?text=Ajouter+une+image" alt="Pas d'image" style="max-width: 250px; height: auto; display: block;">
+            {% endif %}
+            
+            <div class="image-upload-overlay">
+                <span>📷 Changer l'image</span>
+            </div>
+        </div>
+    </div>
+
+    {# Le formulaire Symfony (le champ imageFile sera caché par notre CSS) #}
+    {{ include('signalement/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_signalement_index') }}">back to list</a>
+
+    {{ include('signalement/_delete_form.html.twig') }}
+
+    {# --- 3. LE JAVASCRIPT POUR FAIRE MARCHER LA MAGIE --- #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // On récupère nos éléments HTML
+            const container = document.getElementById('imagePreviewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+            // Attention : 'signalement_imageFile' est l'ID généré automatiquement par Symfony
+            const fileInput = document.getElementById('signalement_imageFile'); 
+
+            if (container && fileInput) {
+                // 1. Quand on clique sur l'image, ça simule un clic sur l'input caché
+                container.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                // 2. Quand l'utilisateur a choisi un nouveau fichier
+                fileInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        // On crée un lecteur de fichier pour afficher l'aperçu immédiatement
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.src = e.target.result; // On remplace la source de l'image
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

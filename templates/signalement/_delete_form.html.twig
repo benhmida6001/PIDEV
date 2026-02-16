@@ -1,0 +1,10 @@
+{# templates/signalement/_delete_form.html.twig #}
+
+<form method="post" action="{{ path('app_signalement_delete', {'id_signalement': signalement.idSignalement}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce signalement ?');" style="display: inline-block;">
+    
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ signalement.idSignalement) }}">
+    
+    <button class="btn btn-danger mb-0">
+        <i class="material-icons text-sm">delete</i> Supprimer
+    </button>
+</form>

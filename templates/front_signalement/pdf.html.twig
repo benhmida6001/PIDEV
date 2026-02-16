@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .header { text-align: center; border-bottom: 2px solid #539150; padding-bottom: 10px; }
+        .ticket-id { font-size: 24px; color: #28a745; margin-top: 20px; }
+        .info-box { margin-top: 30px; padding: 15px; border: 1px solid #ddd; }
+        .label { font-weight: bold; color: #555; }
+        .footer { margin-top: 50px; font-size: 10px; text-align: center; color: #777; }
+        .image-container { text-align: center; margin-top: 20px; }
+        img { max-width: 300px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>GreenCore</h1>
+        <p>Ensemble pour la planète</p>
+    </div>
+
+    <div class="ticket-id">Ticket de Suivi #{{ signalement.idSignalement }}</div>
+
+    <div class="info-box">
+        <p><span class="label">Date :</span> {{ signalement.dateCreation|date('d/m/Y à H:i') }}</p>
+        <p><span class="label">Statut :</span> {{ signalement.statutTraitement }}</p>
+        <p><span class="label">Localisation :</span> {{ signalement.localisation }}</p>
+        <hr>
+        <p><span class="label">Description :</span><br> {{ signalement.description }}</p>
+    </div>
+
+    {% if signalement.imageUrl %}
+        <div class="image-container">
+            {# Utilisation du chemin absolu pour Dompdf #}
+{# templates/front_signalement/pdf.html.twig #}
+
+{% if signalement.imageUrl %}
+        <div class="image-container">
+            <p class="label">Preuve visuelle :</p>
+            {# Correction ici : ajout du / après uploads #}
+            <img src="{{ projectDir ~ '/public/assets_sc/uploads/' ~ signalement.imageUrl }}" style="width: 300px;">
+        </div>
+    {% endif %}    </div>
+    {% endif %}
+
+    <div class="footer">
+        &copy; 2026 GreenCore - Document généré le {{ "now"|date('d/m/Y') }}
+    </div>
+</body>
+</html>

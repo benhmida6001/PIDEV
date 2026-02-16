@@ -1,0 +1,63 @@
+{% extends 'sc.html.twig' %}
+
+{% block title %}Signalement{% endblock %}
+
+{% block body %}
+    <h1>Signalement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id_signalement</th>
+                {# ICI C'EST BON #}
+                <td>{{ signalement.idSignalement }}</td>
+            </tr>
+            
+            {# --- J'AI CORRIGÉ LE CHEMIN ET LA STRUCTURE HTML ICI --- #}
+            <tr>
+                <th>Image (Preuve)</th>
+                <td>
+                    {% if signalement.imageUrl %}
+                        <img src="{{ asset('assets_sc/uploads/' ~ signalement.imageUrl) }}" alt="Preuve" style="width: 100px; height: auto; border-radius: 5px;">
+                    {% else %}
+                        <span class="text-muted">Pas d'image</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {# ------------------------------------------------------- #}
+
+            <tr>
+                <th>Description</th>
+                <td>{{ signalement.description }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ signalement.localisation }}</td>
+            </tr>
+            <tr>
+                <th>Date_creation</th>
+                <td>{{ signalement.dateCreation ? signalement.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut_traitement</th>
+                <td>{{ signalement.statutTraitement }}</td>
+            </tr>
+            <tr>
+                <th>Date_traitement</th>
+                <td>{{ signalement.dateTraitement ? signalement.dateTraitement|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Id_user</th>
+                <td>{{ signalement.idUser }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_signalement_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+
+    {# ERREUR CORRIGÉE ICI : #}
+    {# 'id_signalement' (nom dans la route) : signalement.idSignalement (objet PHP) #}
+    <a href="{{ path('app_signalement_edit', {'id_signalement': signalement.idSignalement}) }}" class="btn btn-primary mt-3">Modifier</a>
+
+    {{ include('signalement/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'sc.html.twig' %}
+
+{% block title %}Liste des Catégories{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <h1>Catégories</h1>
+
+    {# --- 1. BARRE DE RECHERCHE & BOUTONS --- #}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="width: 50%;">
+            <input type="text" id="dynamicSearch" placeholder="Rechercher (nom, instructions...)" value="{{ search }}" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        
+        <div>
+            <a href="{{ path('app_categorie_index') }}" class="btn btn-secondary" style="margin-right: 10px;">
+                <i class="fa-solid fa-rotate-right"></i> Actualiser
+            </a>
+            <a href="{{ path('app_categorie_new') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Créer
+            </a>
+        </div>
+    </div>
+
+    {# --- 2. TABLEAU --- #}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {# ID #}
+                <th>
+                    ID
+                    {% set nextDirId = (sort == 'id_categorie' and dir == 'ASC') ? 'DESC' : 'ASC' %}
+                    <a href="{{ path('app_categorie_index', {sort: 'id_categorie', dir: nextDirId, search: search}) }}" style="text-decoration: none; color: inherit; margin-left: 5px;">
+                        {% if sort == 'id_categorie' %}
+                            <i class="fa-solid {{ dir == 'ASC' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                        {% else %}
+                            <i class="fa-solid fa-sort" style="color: #ccc;"></i>
+                        {% endif %}
+                    </a>
+                </th>
+
+                {# Nom de la catégorie #}
+                <th>
+                    Nom
+                    {% set nextDirNom = (sort == 'nom_categorie' and dir == 'ASC') ? 'DESC' : 'ASC' %}
+                    <a href="{{ path('app_categorie_index', {sort: 'nom_categorie', dir: nextDirNom, search: search}) }}" style="text-decoration: none; color: inherit; margin-left: 5px;">
+                        {% if sort == 'nom_categorie' %}
+                            <i class="fa-solid {{ dir == 'ASC' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                        {% else %}
+                            <i class="fa-solid fa-sort" style="color: #ccc;"></i>
+                        {% endif %}
+                    </a>
+                </th>
+
+                {# Autres colonnes sans tri pour garder ça propre #}
+                <th>Instructions de tri</th>
+                <th>Priorité</th>
+                <th>Décomposition</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr style="vertical-align: middle;">
+                <td>{{ categorie.idCategorie }}</td>
+                {# Ici on utilise les Getters de ton Entité ! #}
+                <td><strong>{{ categorie.nomCategorie }}</strong></td>
+                <td>{{ categorie.instructionTri }}</td>
+                <td>
+                    {% if categorie.scorePriorite %}
+                        <span class="badge bg-primary">Score: {{ categorie.scorePriorite }}</span>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ categorie.tempsDecomposition ?: '-' }}</td>
+                <td>
+                    <a href="{{ path('app_categorie_show', {'id_categorie': categorie.idCategorie}) }}" class="btn btn-sm btn-info" title="Voir les détails">
+                        <i class="fa-solid fa-eye" style="color: white;"></i>
+                    </a>
+                    <a href="{{ path('app_categorie_edit', {'id_categorie': categorie.idCategorie}) }}" class="btn btn-sm btn-primary" title="Modifier">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Aucune catégorie trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# --- 3. JAVASCRIPT --- #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('dynamicSearch');
+            let typingTimer;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(typingTimer);
+                
+                typingTimer = setTimeout(function() {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('search', searchInput.value);
+                    url.searchParams.set('sort', '{{ sort }}'); 
+                    url.searchParams.set('dir', '{{ dir }}');   
+                    
+                    window.location.href = url.toString(); 
+                }, 400); 
+            });
+            
+            const val = searchInput.value;
+            searchInput.value = '';
+            searchInput.value = val;
+            searchInput.focus();
+        });
+    </script>
+{% endblock %}

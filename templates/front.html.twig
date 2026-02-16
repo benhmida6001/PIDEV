@@ -1,0 +1,55 @@
+{# templates/front.html.twig #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}GreenCore - Client{% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <style>
+            body { background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
+            .navbar-custom { background-color: #28a745; }
+            .container { flex: 1; } /* Pousse le footer en bas */
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm mb-4">
+            <div class="container">
+                {# Lien vers l'accueil fluide #}
+                <a class="navbar-brand" href="{{ path('app_signalement_home') }}"><strong>GreenCore</strong></a>
+                
+                <div class="navbar-nav ms-auto align-items-center">
+                    {# Changement : On pointe vers l'accueil pour le suivi #}
+                    <a class="nav-link text-white" href="{{ path('app_signalement_home') }}">
+                        <i class="fa-solid fa-magnifying-glass"></i> Suivre un ticket
+                    </a>
+                    <a class="nav-link btn btn-light text-success ms-lg-3 px-3" href="{{ path('app_front_signalement_new') }}">
+                        <i class="fa-solid fa-plus-circle"></i> Nouveau Signalement
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            {# --- AFFICHAGE DES MESSAGES FLASH (Indispensable pour voir le n° de ticket) --- #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show shadow-sm" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </div>
+
+        <footer class="text-center mt-5 py-4 border-top bg-white text-muted">
+            <small>&copy; 2026 GreenCore - Ensemble pour la planète</small>
+        </footer>
+
+        {# Ajout du JS de Bootstrap pour que les alertes et boutons fonctionnent #}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
