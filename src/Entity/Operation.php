@@ -44,6 +44,17 @@ private ?Materiel $materiel = null;
     #[ORM\JoinColumn(nullable: false)]
     private ?User $requester = null;
 
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $returnedImage = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $verificationResult = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $returnedAt = null;
+ 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,6 +156,40 @@ private ?Materiel $materiel = null;
     public function setRequester(?User $requester): static
     {
         $this->requester = $requester;
+        return $this;
+    }
+
+    
+    public function getReturnedImage(): ?string
+    {
+        return $this->returnedImage;
+    }
+
+    public function setReturnedImage(?string $returnedImage): static
+    {
+        $this->returnedImage = $returnedImage;
+        return $this;
+    }
+
+    public function getVerificationResult(): ?string
+    {
+        return $this->verificationResult;
+    }
+
+    public function setVerificationResult(?string $verificationResult): static
+    {
+        $this->verificationResult = $verificationResult;
+        return $this;
+    }
+
+    public function getReturnedAt(): ?\DateTimeImmutable
+    {
+        return $this->returnedAt;
+    }
+
+    public function setReturnedAt(?\DateTimeImmutable $returnedAt): static
+    {
+        $this->returnedAt = $returnedAt;
         return $this;
     }
 }

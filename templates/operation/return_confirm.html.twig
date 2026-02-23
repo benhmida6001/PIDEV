@@ -1,0 +1,259 @@
+{# filepath: /c:/Users/bahae/Documents/BenH/PIDEV/templates/operation/return_confirm.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmer le retour{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .comparison-container {
+        display: flex;
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+    .image-box {
+        flex: 1;
+        text-align: center;
+    }
+    .image-box img {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .image-box h4 {
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .loading-overlay.active {
+        display: flex;
+    }
+    .spinner {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .loading-text {
+        color: white;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+    .result-box {
+        display: none;
+        margin-top: 2rem;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .result-box.show {
+        display: block;
+    }
+    .result-box.success {
+        background: #d4edda;
+        border: 2px solid #28a745;
+    }
+    .result-box.warning {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+    }
+    .result-box.danger {
+        background: #f8d7da;
+        border: 2px solid #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">
+        <i class="bi bi-arrow-return-left"></i> Confirmer le retour du matériel
+    </h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center mb-4">{{ operation.materiel.name }}</h3>
+            
+            <div class="image-box">
+    <h4><i class="bi bi-image"></i> Image Originale</h4>
+    <p class="text-muted">État: <strong>{{ operation.materiel.status }}</strong></p>
+    {% if operation.materiel.image %}
+        <img src="{{ asset('uploads/materiels/' ~ operation.materiel.image) }}" alt="Image originale">
+<img id="returnPreview" src="#" alt="Image de retour">
+        <small class="d-block mt-2 text-muted">Fichier: {{ operation.materiel.image }}</small>
+    {% else %}
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Aucune image originale
+        </div>
+    {% endif %}
+</div>
+
+<div class="image-box">
+    <h4><i class="bi bi-camera"></i> Image de Retour</h4>
+    <p class="text-muted">Nouvelle photo</p>
+    <img id="returnPreview" src="#" alt="Image de retour" style="display:none;"
+         onerror="this.style.display='none'">
+    <div id="noPreview" class="alert alert-info">
+        <i class="bi bi-upload"></i> Chargement de l'image...
+    </div>
+</div>
+
+            <div id="resultBox" class="result-box">
+                <h3 id="resultTitle"></h3>
+                <p id="resultMessage"></p>
+                <div id="resultActions"></div>
+            </div>
+
+            <form id="returnForm" method="post" action="{{ path('app_operation_process_return', {id: operation.id}) }}" enctype="multipart/form-data">
+                <input type="hidden" name="returned_image_data" id="returnedImageData">
+                <input type="hidden" name="confirm_return" id="confirmReturn" value="0">
+                
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="window.history.back()">
+                        <i class="bi bi-x-circle"></i> Annuler
+                    </button>
+                    <button type="button" class="btn btn-warning btn-lg" id="analyzeBtn">
+                        <i class="bi bi-search"></i> Analyser avec l'IA
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p class="loading-text">
+        <i class="bi bi-robot"></i> Analyse de l'état du matériel en cours...<br>
+        <small>Veuillez patienter</small>
+    </p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const returnedImageData = localStorage.getItem('returnedImagePreview');
+    const previewImg = document.getElementById('returnPreview');
+    const noPreview = document.getElementById('noPreview');
+    
+    if (returnedImageData) {
+        previewImg.src = returnedImageData;
+        previewImg.style.display = 'block';
+        noPreview.style.display = 'none';
+        document.getElementById('returnedImageData').value = returnedImageData;
+    }
+
+    document.getElementById('analyzeBtn').addEventListener('click', async function() {
+        if (!returnedImageData) {
+            alert('Erreur: Image de retour manquante. Veuillez recommencer.');
+            return;
+        }
+        
+        document.getElementById('loadingOverlay').classList.add('active');
+        
+        const formData = new FormData(document.getElementById('returnForm'));
+        
+        try {
+            const response = await fetch('{{ path('app_operation_analyze_return', {id: operation.id}) }}', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error('Erreur serveur: ' + error);
+            }
+            
+            const result = await response.json();
+            
+            document.getElementById('loadingOverlay').classList.remove('active');
+            
+            showResult(result);
+        } catch (error) {
+            document.getElementById('loadingOverlay').classList.remove('active');
+            alert('Erreur lors de l\'analyse: ' + error.message);
+            console.error(error);
+        }
+    });
+});
+
+function showResult(result) {
+    const resultBox = document.getElementById('resultBox');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultMessage = document.getElementById('resultMessage');
+    const resultActions = document.getElementById('resultActions');
+    
+    resultBox.classList.remove('success', 'warning', 'danger');
+    
+    let statusText = '';
+    let statusIcon = '';
+    
+    if (result.status === 'excellent') {
+        resultBox.classList.add('success');
+        statusText = 'Excellent état';
+        statusIcon = 'bi-star-fill';
+        resultTitle.innerHTML = `<i class="bi ${statusIcon}"></i> ${statusText}`;
+    } else if (result.status === 'good') {
+        resultBox.classList.add('success');
+        statusText = 'Bon état';
+        statusIcon = 'bi-check-circle-fill';
+        resultTitle.innerHTML = `<i class="bi ${statusIcon}"></i> ${statusText}`;
+    } else if (result.status === 'acceptable') {
+        resultBox.classList.add('warning');
+        statusText = 'État acceptable';
+        statusIcon = 'bi-exclamation-triangle-fill';
+        resultTitle.innerHTML = `<i class="bi ${statusIcon}"></i> ${statusText}`;
+    } else {
+        resultBox.classList.add('danger');
+        statusText = 'Matériel à vérifier';
+        statusIcon = 'bi-x-circle-fill';
+        resultTitle.innerHTML = `<i class="bi ${statusIcon}"></i> ${statusText}`;
+    }
+    
+    resultMessage.innerHTML = `<strong>Analyse IA:</strong><br>${result.explanation}`;
+    
+    resultActions.innerHTML = `
+        <div class="alert alert-info mt-3">
+            <strong>Nouvel état détecté:</strong> <span class="badge bg-primary">${result.status.toUpperCase()}</span>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+            <button type="button" class="btn btn-success btn-lg" onclick="confirmReturn()">
+                <i class="bi bi-check-circle"></i> Confirmer le retour dans cet état
+            </button>
+            <button type="button" class="btn btn-warning btn-lg" onclick="window.history.back()">
+                <i class="bi bi-tools"></i> Refuser et réparer d'abord
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ path('app_materiel_index') }}'">
+                <i class="bi bi-x-circle"></i> Annuler complètement
+            </button>
+        </div>
+    `;
+    
+    resultBox.classList.add('show');
+}
+
+function confirmReturn() {
+    document.getElementById('confirmReturn').value = '1';
+    document.getElementById('returnForm').submit();
+}
+</script>
+{% endblock %}
