@@ -1,0 +1,1094 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stats-container {
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .stats-card {
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffffffff, #9558d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: #05e1c8ff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .activity-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .trend-positive {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .trend-negative {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .export-btn {
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="stats-container">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="text-white text-center mb-4">
+                    Tableau de Statistique
+                </h1>
+            </div>
+        </div>
+
+        <!-- Statistiques principales -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="stats-card text-center">
+                    <div class="stat-number">{{ totalUsers }}</div>
+                    <div class="stat-label">Total Utilisateurs</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card text-center">
+                    <div class="stat-number">{{ activeUsers }}</div>
+                    <div class="stat-label">Utilisateurs Actifs</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card text-center">
+                    <div class="stat-number">{{ newUsersThisMonth }}</div>
+                    <div class="stat-label">Nouveaux ce Mois</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stats-card text-center">
+                    <div class="stat-number">
+                        {% if totalUsers > 0 %}
+                            {{ ((activeUsers / totalUsers) * 100)|round(1) }}%
+                        {% else %}
+                            0%
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Taux d'Activité</div>
+                </div>
+            </div>
+        </div>
+       <!-- Nouveaux graphiques d'activité -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">Répartition par Devices</h3>
+                    <div class="chart-container">
+                        <canvas id="deviceChart"height="80"></canvas>
+                        <div style="text-align: center; margin-top: 20px; color: #666;">
+                            <div style="display: flex; justify-content: center; gap: 30px;">
+                                <div style="text-align: center;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# Chart.js #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('deviceChart').getContext('2d');
+
+    const deviceChart = new Chart(ctx, {
+        type: 'doughnut', // meilleur visuel que pie 
+        data: {
+            labels: ['Desktop', 'Mobile'],
+            datasets: [{
+                label: 'Utilisateurs',
+                data: [20, 50], // remplace avec tes données
+                backgroundColor: [
+                    '#007bff', // bleu
+                    '#28a745', // vert
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '60%', // effet donut 🔥
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 250px;
+}
+</style>
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                 <h3 class="mb-3">Temps de Session</h3>
+
+    <div class="chart-container">
+        <canvas id="sessionChart"></canvas>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <div style="font-size: 36px; font-weight: bold; color: #FF9800;">
+        </div>
+        <div style="color: #666;">minutes en moyenne</div>
+    </div>
+</div>
+</div>
+
+{# Chart.js (à mettre UNE seule fois dans tout le projet) #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const canvas = document.getElementById('sessionChart');
+    if (!canvas) return;
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+            datasets: [{
+                label: 'Temps de session (minutes)',
+                data: {{ sessionData|default([30,45,60,50,70,40,55])|json_encode|raw }},
+                backgroundColor: '#FF9800',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+</style>   
+                                        <div style="font-size: 20px; font-weight: bold; color: #4CAF50;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphiques existants -->
+       <div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="stats-card">
+            <h3 class="mb-3">Évolution des Inscriptions</h3>
+
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+
+                <div style="text-align: center; margin-top: 15px; color: #666;">
+                    <div style="display: flex; justify-content: center; gap: 30px;">
+                         <div style="text-align: center;">                                                     
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+{# Chart.js #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
+
+    const monthlyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ months|default(['Jan','Fév','Mar','Avr','Mai','Juin'])|json_encode|raw }},
+            datasets: [{
+                label: 'Inscriptions',
+                data: {{ monthlyData|default([5,10,8,15,20,25])|json_encode|raw }},
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+</style>
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">Répartition par Sexe</h3>
+                    <div class="chart-container">
+                        <canvas id="genderChart"height="30"></canvas>
+                        <div style="text-align: center; margin-top: 15px; color: #666;">
+                            <div style="display: flex; justify-content: center; gap: 30px;">
+                                <div style="text-align: center;">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const canvas = document.getElementById('genderChart');
+    if (!canvas) return;
+
+    const maleCount = {{ maleUsers|default(0) }};
+    const femaleCount = {{ femaleUsers|default(0) }};
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Hommes', 'Femmes'],
+            datasets: [{
+                data: [maleCount, femaleCount],
+                backgroundColor: ['#2196F3', '#E91E63'],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a,b) => a + b, 0);
+                            const pct = total ? ((context.parsed / total) * 100).toFixed(1) : 0;
+                            return context.label + ': ' + context.parsed + ' (' + pct + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container{
+    position: relative;
+    height: 300px;
+}
+</style>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">Répartition par Âge</h3>
+                    <div class="chart-container">
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            {# Chart.js #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('ageChart').getContext('2d');
+
+    const ageChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['18-25', '26-35', '36-45', '+46'],
+            datasets: [{
+                label: 'Utilisateurs',
+                data: [12, 25, 10, 5], // remplace par tes données
+                backgroundColor: [
+                    '#007bff',
+                    '#28a745',
+                    '#ffc107',
+                    '#dc3545'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+</style>
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">Répartition par Rôle</h3>
+                    <div class="chart-container">
+                        <canvas id="roleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# Chart.js #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('roleChart').getContext('2d');
+
+    const roleChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Admin', 'User'],
+            datasets: [{
+                label: 'Utilisateurs',
+                data: [2, 4], // 2 admins, 4 users
+                backgroundColor: [
+                    '#7ddc35ff', // rouge pour admin
+                    '#005effff'  // bleu pour user
+                ],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                            return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+</style>
+
+        <!-- Métriques de performance -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="stats-card">
+                    <h3 class="mb-3">
+                        Métriques de Performance
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.avgResponseTime }}ms</div>
+                                <div class="stat-label">Temps de Réponse</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.serverUptime }}</div>
+                                <div class="stat-label">Disponibilité</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.memoryUsage }}</div>
+                                <div class="stat-label">Mémoire</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.cpuUsage }}</div>
+                                <div class="stat-label">CPU</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.databaseQueries }}</div>
+                                <div class="stat-label">Requêtes DB</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <div class="metric-card">
+                                <div class="stat-number">{{ performanceMetrics.cacheHitRate }}</div>
+                                <div class="stat-label">Cache Hit Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activité récente et tendances -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">
+                         Activité Récente
+                    </h3>
+                    {% for activity in recentActivity %}
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ activity.name }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ activity.email }}</small>
+                                </div>
+                                <div class="text-right">
+                                    <small>{{ activity.lastLogin }}</small>
+                                    <br>
+                                    {% if activity.isActive %}
+                                        <span class="badge badge-success">Actif</span>
+                                    {% else %}
+                                        <span class="badge badge-warning">Inactif</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="stats-card">
+                    <h3 class="mb-3">
+                         Tendances de Croissance
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# Chart.js CDN #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('growthChart').getContext('2d');
+
+    const growthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+            datasets: [{
+                label: 'Croissance',
+                data: [10, 20, 35, 50, 70, 90],
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 128, 0, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<style>
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+</style>
+
+        <!-- Statistique détaillée -->
+        <div class="row">
+            <div class="col-12">
+                <div class="stats-card">
+                    <h3 class="mb-3">
+                         Statistique Détaillée
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Démographie</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Hommes</span>
+                                    <strong>{{ maleUsers }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Femmes</span>
+                                    <strong>{{ femaleUsers }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Moins de 18 ans</span>
+                                    <strong>{{ ageDistribution['Moins de 18 ans'] }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>18-25 ans</span>
+                                    <strong>{{ ageDistribution['18-25 ans'] }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>26-35 ans</span>
+                                    <strong>{{ ageDistribution['26-35 ans'] }}</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Activité</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Utilisateurs Actifs</span>
+                                    <strong>{{ activeUsersCount }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Utilisateurs Inactifs</span>
+                                    <strong>{{ inactiveUsersCount }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Administrateurs</span>
+                                    <strong>{{ adminUsers }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Utilisateurs Standard</span>
+                                    <strong>{{ userUsers }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Nouveaux ce mois</span>
+                                    <strong>{{ newUsersThisMonth }}</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        console.log('=== DÉBUT DES STATISTIQUES ===');
+        console.log('Total users:', {{ totalUsers|default(0) }});
+        console.log('Male users:', {{ maleUsers|default(0) }});
+        console.log('Female users:', {{ femaleUsers|default(0) }});
+        console.log('Monthly registrations:', {{ monthlyRegistrations|json_encode|raw }});
+        console.log('New users this month:', {{ newUsersThisMonth|default(0) }});
+        
+        // Vérifier si Chart.js est chargé
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js n\'est pas chargé !');
+            alert('Erreur : Chart.js n\'est pas chargé. Veuillez recharger la page.');
+            return;
+        }
+        
+        console.log('Chart.js est chargé, version:', Chart.version);
+        
+        // Graphique de répartition par devices
+        console.log('=== CRÉATION GRAPHIQUE DEVICES ===');
+        const deviceCtx = document.getElementById('deviceChart');
+        if (!deviceCtx) {
+            console.error('Canvas deviceChart non trouvé !');
+        } else {
+            console.log('Canvas deviceChart trouvé:', deviceCtx);
+            try {
+                const mobileCount = {{ mobileUsers|default(40) }};
+                const desktopCount = {{ desktopUsers|default(60) }};
+                
+                new Chart(deviceCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Mobile', 'Desktop'],
+                        datasets: [{
+                            data: [mobileCount, desktopCount],
+                            backgroundColor: ['#2196F3', '#4CAF50'], // Bleu et Vert vifs
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('Graphique devices créé avec succès');
+            } catch (error) {
+                console.error('Erreur création graphique devices:', error);
+            }
+        }
+
+        // Graphique d'évolution mensuelle
+        console.log('=== CRÉATION GRAPHIQUE MENSUEL ===');
+        console.log('Monthly registrations data:', {{ monthlyRegistrations|json_encode|raw }});
+        const monthlyCtx = document.getElementById('monthlyChart');
+        if (!monthlyCtx) {
+            console.error('Canvas monthlyChart non trouvé !');
+        } else {
+            console.log('Canvas monthlyChart trouvé:', monthlyCtx);
+            try {
+                // Données de secours si vide
+                const defaultMonthlyData = {
+                    'Jan': 2, 'Fév': 3, 'Mar': 1, 'Avr': 4, 'Mai': 2,
+                    'Jun': 5, 'Jul': 3, 'Août': 4, 'Sep': 2, 'Oct': 3, 'Nov': 2, 'Déc': 4
+                };
+                
+                const finalMonthlyData = Object.keys({{ monthlyRegistrations|json_encode|raw }}).length > 0 
+                    ? {{ monthlyRegistrations|json_encode|raw }} 
+                    : defaultMonthlyData;
+                
+                console.log('Final monthly data:', finalMonthlyData);
+                
+                new Chart(monthlyCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(finalMonthlyData),
+                        datasets: [{
+                            label: 'Inscriptions',
+                            data: Object.values(finalMonthlyData),
+                            borderColor: '#2196F3', // Bleu vif
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#2196F3',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                console.log('Graphique mensuel créé avec succès');
+            } catch (error) {
+                console.error('Erreur création graphique mensuel:', error);
+            }
+        }
+
+        // Graphique de répartition par sexe
+        const genderCtx = document.getElementById('genderChart').getContext('2d');
+        const maleCount = {{ maleUsers|default(0) }};
+        const femaleCount = {{ femaleUsers|default(0) }};
+        const finalMaleCount = maleCount > 0 ? maleCount : 65;
+        const finalFemaleCount = femaleCount > 0 ? femaleCount : 35;
+        
+        new Chart(genderCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hommes', 'Femmes'],
+                datasets: [{
+                    data: [finalMaleCount, finalFemaleCount],
+                    backgroundColor: ['#2196F3', '#E91E63'], // Bleu et Rouge vifs
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Graphique de répartition par âge
+        console.log('=== CRÉATION GRAPHIQUE ÂGE ===');
+        console.log('Age distribution data:', {{ ageDistribution|json_encode|raw }});
+        const ageCtx = document.getElementById('ageChart');
+        if (!ageCtx) {
+            console.error('Canvas ageChart non trouvé !');
+        } else {
+            console.log('Canvas ageChart trouvé:', ageCtx);
+            try {
+                // Données de secours si vide
+                const defaultAgeData = {
+                    'Moins de 18 ans': 0,
+                    '18-25 ans': 3,
+                    '26-35 ans': 2,
+                    '36-45 ans': 0,
+                    'Plus de 45 ans': 0
+                };
+                
+                const ageData = {{ ageDistribution|json_encode|raw }};
+                const finalAgeData = Object.keys(ageData).length > 0 ? ageData : defaultAgeData;
+                
+                console.log('Final age data:', finalAgeData);
+                
+                new Chart(ageCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(finalAgeData),
+                        datasets: [{
+                            label: 'Utilisateurs',
+                            data: Object.values(finalAgeData),
+                            backgroundColor: '#FF9800', // Orange vif
+                            borderColor: '#F57C00',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + ' utilisateurs';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('Graphique âge créé avec succès');
+            } catch (error) {
+                console.error('Erreur création graphique âge:', error);
+            }
+        }
+
+        // Graphique de répartition par rôle
+        console.log('=== CRÉATION GRAPHIQUE RÔLES ===');
+        console.log('Admin users:', {{ adminUsers|default(0) }});
+        console.log('User users:', {{ userUsers|default(0) }});
+        const roleCtx = document.getElementById('roleChart');
+        if (!roleCtx) {
+            console.error('Canvas roleChart non trouvé !');
+        } else {
+            console.log('Canvas roleChart trouvé:', roleCtx);
+            try {
+                new Chart(roleCtx.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: ['Administrateurs', 'Utilisateurs'],
+                        datasets: [{
+                            data: [{{ adminUsers|default(1) }}, {{ userUsers|default(5) }}],
+                            backgroundColor: ['#9C27B0', '#4CAF50'], // Violet et Vert vifs
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+                console.log('Graphique rôles créé avec succès');
+            } catch (error) {
+                console.error('Erreur création graphique rôles:', error);
+            }
+        }
+
+        // Graphique de tendances de croissance
+        console.log('=== CRÉATION GRAPHIQUE TENDANCES ===');
+        console.log('Growth trends data:', {{ growthTrends|json_encode|raw }});
+        const growthCtx = document.getElementById('growthChart');
+        if (!growthCtx) {
+            console.error('Canvas growthChart non trouvé !');
+        } else {
+            console.log('Canvas growthChart trouvé:', growthCtx);
+            try {
+                // Données de secours si vide
+                const defaultGrowthData = [
+                    { month: 'Juil', users: 1 },
+                    { month: 'Août', users: 2 },
+                    { month: 'Sep', users: 2 },
+                    { month: 'Oct', users: 3 },
+                    { month: 'Nov', users: 3 },
+                    { month: 'Déc', users: 4 }
+                ];
+                
+                const growthData = {{ growthTrends|json_encode|raw }};
+                const finalGrowthData = growthData.length > 0 ? growthData : defaultGrowthData;
+                
+                console.log('Final growth data:', finalGrowthData);
+                
+                new Chart(growthCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: finalGrowthData.map(item => item.month),
+                        datasets: [{
+                            label: 'Utilisateurs',
+                            data: finalGrowthData.map(item => item.users),
+                            borderColor: '#ae0ff3ff', // Violet vif
+                            backgroundColor: 'rgba(103, 58, 183, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#ae0ff3ff',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + ' utilisateurs';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('Graphique tendances créé avec succès');
+            } catch (error) {
+                console.error('Erreur création graphique tendances:', error);
+            }
+        }
+       
+
+        // Fonction d'export
+        function exportStats() {
+            const stats = {
+                totalUsers: {{ totalUsers }},
+                activeUsers: {{ activeUsers }},
+                newUsersThisMonth: {{ newUsersThisMonth }},
+                maleUsers: {{ maleUsers }},
+                femaleUsers: {{ femaleUsers }},
+                ageDistribution: {{ ageDistribution|json_encode|raw }},
+                monthlyRegistrations: {{ monthlyRegistrations|json_encode|raw }},
+                performanceMetrics: {{ performanceMetrics|json_encode|raw }}
+            };
+            
+            const dataStr = JSON.stringify(stats, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'statistics_' + new Date().toISOString().slice(0, 10) + '.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        // Auto-rafraîchissement toutes les 30 secondes
+        setInterval(() => {
+            location.reload();
+        }, 30000);
+    </script>
+    
+{% endblock %}

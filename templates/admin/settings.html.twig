@@ -1,0 +1,304 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paramètres - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .settings-container {
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .settings-card {
+            background: rgba(255, 255, 255, 0.83);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #667eea;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+        }
+        
+        .section-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid  #28a745;
+        }
+        
+        .alert-success {
+            background: linear-gradient(45deg, #d4edda,, #c3e6cb);
+            border: none;
+            border-radius: 10px;
+            color: #155724;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="settings-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <!-- En-tête -->
+                <div class="text-center mb-4">
+                    <h1 class="text-white">
+                        {{ 'settings.title'|trans }}
+                    </h1>
+                    
+                </div>
+
+                <!-- Messages flash -->
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ message|trans }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+
+                <!-- Carte principale -->
+                <div class="settings-card">
+                    <form method="post">
+                        
+                        <!-- Section Configuration Générale -->
+                        <div class="mb-4">
+                            <h4 class="section-title">
+                               {{ 'settings.general'|trans|default('Configuration Générale') }}
+                            </h4>
+                            
+                            <!-- Nom de l'application --> 
+                            <div class="mb-3">
+                                <label for="app_name" class="form-label">
+                                    {{ 'settings.app_name'|trans }}
+                                </label>
+                                <input type="text" 
+                                       id="app_name" 
+                                       name="app_name" 
+                                       class="form-control" 
+                                       value="{{ current_app_name|default('GREENCORE') }}"
+                                       placeholder="GREENCORE">
+                            </div>
+                        
+                            <!-- Email administrateur -->
+                            <div class="mb-3">
+                                <label for="admin_email" class="form-label">
+                                     {{ 'Email'|trans }}
+                                </label>
+                                <input type="email" 
+                                       id="admin_email" 
+                                       name="admin_email" 
+                                       class="form-control" 
+                                       value="{{ current_admin_email|default('admin@greencore.com') }}"
+                                       placeholder="admin@exemple.com">
+                            </div>
+                        </div>
+
+                        <!-- Section Options Systèmes -->
+                        <div class="mb-4">
+                            <h4 class="section-title">
+                                 Options Systèmes
+                            </h4>
+                            
+                            <!-- Mode maintenance -->
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       id="maintenance_mode" 
+                                       name="maintenance_mode"
+                                       {% if current_maintenance_mode %}checked{% endif %}>
+                                <label class="form-check-label" for="maintenance_mode">
+                                     {{ 'Maintenance Mode'|trans }}
+                                </label>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       id="notifications" 
+                                       name="notifications"
+                                       {% if current_notifications %}checked{% endif %}>
+                                <label class="form-check-label" for="notifications">
+                                     {{ 'Notification'|trans }}
+                                </label>
+                            </div>
+
+                            <!-- Debug mode -->
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       id="debug_mode" 
+                                       name="debug_mode"
+                                       {% if current_debug_mode %}checked{% endif %}>
+                                <label class="form-check-label" for="debug_mode">
+                                     {{ 'Debug Mode'|trans }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Section Apparence -->
+                        <div class="mb-4">
+                            <h4 class="section-title">
+                                 Apparence
+                            </h4>
+                            
+                            <!-- Langue -->
+                            <div class="mb-3">
+                                <label for="language" class="form-label">
+                                    {{ 'Langue'|trans }}
+                                </label>
+                                <select id="language" name="language" class="form-control">
+                                    <option value="fr" {% if current_language == 'fr' %}selected{% endif %}>{{ 'settings.french'|trans }}</option>
+                                    <option value="en" {% if current_language == 'en' %}selected{% endif %}>{{ 'settings.english'|trans }}</option>
+                                    <option value="es" {% if current_language == 'es' %}selected{% endif %}>{{ 'settings.spanish'|trans }}</option>
+                                    <option value="de" {% if current_language == 'de' %}selected{% endif %}>{{ 'settings.german'|trans }}</option>
+                                    <option value="it" {% if current_language == 'it' %}selected{% endif %}>{{ 'settings.italian'|trans }}</option>
+                                    <option value="pt" {% if current_language == 'pt' %}selected{% endif %}>{{ 'settings.portuguese'|trans }}</option>
+                                    <option value="nl" {% if current_language == 'nl' %}selected{% endif %}>{{ 'settings.dutch'|trans }}</option>
+                                    <option value="ru" {% if current_language == 'ru' %}selected{% endif %}>{{ 'settings.russian'|trans }}</option>
+                                    <option value="zh" {% if current_language == 'zh' %}selected{% endif %}>{{ 'settings.chinese'|trans }}</option>
+                                    <option value="ja" {% if current_language == 'ja' %}selected{% endif %}>{{ 'settings.japanese'|trans }}</option>
+                                </select>
+                            </div>
+
+                            <!-- Thème -->
+                            <div class="mb-3">
+                                <label for="theme" class="form-label">
+                                    {{'Thème'|trans }}
+                                </label>
+                                <select id="theme" name="theme" class="form-control">
+                                    <option value="default" {% if current_theme == 'default' %}selected{% endif %}>{{ 'default'|trans }}</option>
+                                    <option value="dark" {% if current_theme == 'dark' %}selected{% endif %}>{{ 'sombre'|trans }}</option>
+                                    <option value="light" {% if current_theme == 'light' %}selected{% endif %}>{{ 'clair'|trans }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div>
+                                <button type="button" class="btn btn-outline-danger me-2" onclick="confirmReset()">
+                                    Réinitialiser
+                                </button>
+                            </div>
+                            
+                            <div>
+                                <a href="{{ path('app_dashboard') }}" class="btn btn-secondary me-2">
+                                    Retour
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ 'settings.save'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                <!-- Informations système -->
+                <div class="settings-card">
+                    <h4 class="section-title">
+                        Information Système
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Version:</strong> 1.0.0</p>
+                            <p><strong>Symfony:</strong> {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</p>
+                            <p><strong>PHP:</strong> {{ constant('PHP_VERSION') }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Environnement:</strong> {{ app.environment }}</p>
+                            <p><strong>Dernière mise à jour:</strong> {{ "now"|date("d/m/Y H:i") }}</p>
+                            <p><strong>Base de données:</strong> MySQL</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function confirmReset() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les paramètres ?')) {
+                // Réinitialiser le formulaire
+                document.querySelector('form').reset();
+                // Cocher les valeurs par défaut
+                document.getElementById('notifications').checked = true;
+            }
+        }
+
+        // Animation des champs
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier les rôles - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .form-control {
+            background-color: #e8f5e8;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: #c8e6c9;
+            border-color: #388e3c;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            color: #1b5e20;
+        }
+        
+        .form-label {
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .form-check-input:checked {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+        
+        .form-check-input:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+        
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .user-info {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Modifier les rôles de l'utilisateur</h3>
+                </div>
+                <div class="card-body">
+                    <div class="user-info">
+                        <h5 class="mb-2">Informations de l'utilisateur</h5>
+                        <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
+                        <p class="mb-0"><strong>ID:</strong> {{ user.id }}</p>
+                    </div>
+
+                    {{ form_start(form) }}
+                        <div class="mb-4">
+                            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            <small class="text-muted">L'email ne peut pas être modifié</small>
+                        </div>
+
+                        <div class="mb-4">
+                            {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'form-label'}}) }}
+                            <div class="mt-2">
+                                {% for child in form.roles %}
+                                    <div class="form-check form-check-inline me-3">
+                                        {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                        {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <small class="text-muted">Sélectionnez les rôles à attribuer à cet utilisateur</small>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('app_admin_users') }}" class="btn btn-secondary">
+                                Retour à la liste
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                Enregistrer les modifications
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

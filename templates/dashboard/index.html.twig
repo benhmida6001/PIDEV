@@ -1,0 +1,563 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'nav.dashboard'|trans|default('Tableau de bord') }} - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .top-bar {
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            border-radius: 25px;
+            padding: 8px 40px 8px 20px;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            background: white;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            outline: none;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #4caf50;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background 0.3s ease;
+        }
+        
+        .search-box button:hover {
+            background: #388e3c;
+        }
+        
+        .profile-actions .btn {
+            margin-left: 10px;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dashboard-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            color: #66bb6a;
+        }
+        
+        .quick-action {
+            border: 2px solid #4caf50;
+            color: #4caf50;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .quick-action:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4caf50;
+        }
+        
+        .activity-item {
+            border-left: 3px solid #4caf50;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #4caf50, #66bb6a);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="container mt-4">
+        <!-- Section de bienvenue -->
+        <div class="welcome-section">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-3" style="color: #2e7d32;">
+                        Bienvenue {{ app.user.email }}
+                    </h1>
+                    <p class="text-muted mb-0">
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                            {{ 'dashboard.administrator'|trans|default('Administrateur') }} • {{ 'dashboard.full_access'|trans|default('Accès complet à la plateforme') }}
+                        {% else %}
+                            {{ 'dashboard.user'|trans|default('Utilisateur') }} • {{ 'dashboard.manage_profile'|trans|default('Gérez votre profil et vos activités') }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    {% if app.user.profilePicture %}
+                        <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" alt="Photo de profil" class="profile-avatar">
+                    {% else %}
+                        <div class="profile-avatar d-flex align-items-center justify-content-center" style="background: #e8f5e8;">
+                            <span style="font-size: 2rem; color: #2e7d32;"></span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques principales -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card dashboard-card">
+                    <div class="card-body text-center">
+                        <div class="stat-icon mb-3"></div>
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <p class="text-muted mb-0">{{ 'dashboard.total_users'|trans|default('Utilisateurs totaux') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card dashboard-card">
+                    <div class="card-body text-center">
+                        <div class="stat-icon mb-3"></div>
+                        <div class="stat-number" id="activeUsers">0</div>
+                        <p class="text-muted mb-0">{{ 'dashboard.active_users'|trans|default('Utilisateurs actifs') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card dashboard-card">
+                    <div class="card-body text-center">
+                        <div class="stat-icon mb-3"></div>
+                        <div class="stat-number">0</div>
+                        <p class="text-muted mb-0">{{ 'dashboard.new_users'|trans|default('Projets créés') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card dashboard-card">
+                    <div class="card-body text-center">
+                        <div class="stat-icon mb-3"></div>
+                        <div class="stat-number">1</div>
+                        <p class="text-muted mb-0">Tâches complétées</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Actions rapides -->
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ 'dashboard.quick_actions'|trans|default('Actions rapides') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <a href="{{ path('app_profile') }}" class="quick-action">
+                                    <div class="mb-2"></div>
+                                    <div>{{ 'dashboard.my_profile'|trans|default('Mon Profil') }}</div>
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="{{ path('app_profile_edit') }}" class="quick-action">
+                                    <div class="mb-2"></div>
+                                    <div>{{ 'dashboard.edit_profile'|trans|default('Modifier Profil') }}</div>
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="{{ path('app_profile_change_password') }}" class="quick-action">
+                                    <div class="mb-2"></div>
+                                    <div>{{ 'dashboard.change_password'|trans|default('Changer Mot de Passe') }}</div>
+                                </a>
+                            </div>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="col-12">
+                                    <a href="{{ path('app_admin_users') }}" class="quick-action">
+                                        <div class="mb-2"></div>
+                                        <div>{{ 'dashboard.manage_users'|trans|default('Gérer Utilisateurs') }}</div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activité récente -->
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ 'dashboard.recent_activity'|trans|default('Activité récente') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <small class="text-muted">Il y a 2 heures</small>
+                            <p class="mb-0">Connexion au système</p>
+                        </div>
+                        <div class="activity-item">
+                            <small class="text-muted">Il y a 1 jour</small>
+                            <p class="mb-0">{{ 'dashboard.profile_updated'|trans|default('Mise à jour du profil') }}</p>
+                        </div>
+                        <div class="activity-item">
+                            <small class="text-muted">Il y a 3 jours</small>
+                            <p class="mb-0">Création du compte</p>
+                        </div>
+                        <div class="activity-item">
+                            <small class="text-muted">Il y a 1 semaine</small>
+                            <p class="mb-0">Première connexion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progrès -->
+            <div class="col-md-4 mb-4">
+                <div class="card dashboard-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ 'dashboard.progress'|trans|default('Progrès') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>{{ 'dashboard.profile_complete'|trans|default('Profil complété') }}</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Sécurité</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Activité</span>
+                                <span>60%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section administrateur -->
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">{{ 'dashboard.administration'|trans|default('Administration') }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h6 class="text-primary" style="color: #4caf50 !important;">Utilisateurs</h6>
+                                        <p class="mb-0">{{ 'dashboard.manage_accounts'|trans|default('Gérez les comptes') }}</p>
+                                        <a href="{{ path('app_admin_users') }}" class="btn btn-sm btn-primary mt-2">Voir</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h6 class="text-success" style="color: #66bb6a !important;">Rôles</h6>
+                                        <p class="mb-0">Modifiez les permissions</p>
+                                        <a href="{{ path('app_admin_users_roles') }}" class="btn btn-sm btn-success mt-2">
+                                             Gérer
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h6 class="text-info" style="color: #26a69a !important;">Statistiques</h6>
+                                        <p class="mb-0">Voir les analytics</p>
+                                        <a href="{{ path('app_statistics') }}" class="btn btn-sm btn-info mt-2">Bientôt</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h6 class="text-warning" style="color: #ffa726 !important;">Paramètres</h6>
+                                        <p class="mb-0">Configurez le système</p>
+                                        <a href="{{ path('app_settings') }}" class="btn btn-sm btn-warning mt-2">
+                                             Configurer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Simuler le chargement des statistiques
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation des nombres
+            animateValue('totalUsers', 0, {{ users_count|default(2) }}, 2000);
+            animateValue('activeUsers', 0, {{ active_users_count|default(1) }}, 2000);
+        });
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const minTimer = 50;
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+            const startTime = new Date().getTime();
+            const endTime = startTime + duration;
+            let timer;
+
+            function run() {
+                const now = new Date().getTime();
+                const remaining = Math.max((endTime - now) / duration, 0);
+                const value = Math.round(end - (remaining * range));
+                obj.innerHTML = value;
+                if (value == end) {
+                    clearInterval(timer);
+                }
+            }
+
+            timer = setInterval(run, stepTime);
+            run();
+        }
+
+        // Fonction de recherche avancée
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                document.getElementById('searchInput').focus();
+                return;
+            }
+
+            console.log('Recherche:', searchTerm);
+            
+            // Créer une interface de recherche
+            showSearchResults(searchTerm);
+        }
+
+        function showSearchResults(searchTerm) {
+            // Supprimer les résultats précédents
+            const existingResults = document.getElementById('searchResults');
+            if (existingResults) {
+                existingResults.remove();
+            }
+
+            // Créer la modale de résultats
+            const resultsModal = document.createElement('div');
+            resultsModal.id = 'searchResults';
+            resultsModal.className = 'modal fade show';
+            resultsModal.style.display = 'block';
+            resultsModal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            
+            resultsModal.innerHTML = `
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light">
+                            <h5 class="modal-title">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="me-2">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                                Résultats pour "${searchTerm}"
+                            </h5>
+                            <button type="button" class="btn-close" onclick="closeSearchResults()"></button>
+                        </div>
+                        <div class="modal-body">
+                            ${generateSearchContent(searchTerm)}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeSearchResults()">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(resultsModal);
+        }
+
+        function generateSearchContent(searchTerm) {
+            const searchCategories = [
+                {
+                    title: 'Utilisateurs',
+                    icon:'user',
+                    items: [
+                        { name: 'Gestion des utilisateurs', url: '/admin/users', description: 'Voir et modifier les comptes utilisateurs' },
+                        { name: 'Mon profil', url: '/profile', description: 'Voir et modifier mon profil' }
+                    ]
+                },
+                {
+                    title: 'Actions rapides',
+                    icon:'person' ,
+                    items: [
+                        { name: 'Modifier profil', url: '/profile/edit', description: 'Mettre à jour mes informations' },
+                        { name: 'Changer mot de passe', url: '/profile/change-password', description: 'Sécuriser mon compte' }
+                    ]
+                },
+                {
+                    title: 'Navigation',
+                    icon:'home' ,
+                    items: [
+                        { name: 'Tableau de bord', url: '/dashboard', description: 'Retour au dashboard' },
+                        { name: 'Accueil', url: '/', description: 'Page d\'accueil' },
+                        { name: 'Déconnexion', url: '/logout', description: 'Quitter l\'application' }
+                    ]
+                }
+            ];
+
+            let html = '<div class="row">';
+            
+            searchCategories.forEach(category => {
+                const filteredItems = category.items.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm) || 
+                    item.description.toLowerCase().includes(searchTerm)
+                );
+                
+                if (filteredItems.length > 0) {
+                    html += `
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0">
+                                        <span class="me-2">${category.icon}</span>
+                                        ${category.title}
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    ${filteredItems.map(item => `
+                                        <div class="mb-2">
+                                            <a href="${item.url}" class="text-decoration-none">
+                                                <div class="p-2 rounded hover-bg-light">
+                                                    <strong>${highlightSearch(item.name, searchTerm)}</strong>
+                                                    <br>
+                                                    <small class="text-muted">${highlightSearch(item.description, searchTerm)}</small>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += '</div>';
+            
+            return html || '<p class="text-center text-muted">Aucun résultat trouvé pour "' + searchTerm + '"</p>';
+        }
+
+        function highlightSearch(text, searchTerm) {
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        function closeSearchResults() {
+            const resultsModal = document.getElementById('searchResults');
+            if (resultsModal) {
+                resultsModal.remove();
+            }
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchInput').focus();
+        }
+
+        // Recherche avec la touche Entrée
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+{% endblock %}
+

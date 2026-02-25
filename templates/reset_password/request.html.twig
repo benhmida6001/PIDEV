@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+
+        .center-wrap{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .reset-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .reset-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .reset-header h1 {
+            color: #1b5e20;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .reset-header p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            outline: none;
+        }
+
+        .btn-reset {
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+            color: white;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="center-wrap">
+    <div class="reset-card">
+        <div class="reset-header">
+            <h1>Forgot Password</h1>
+        </div>
+
+        {# messages flash #}
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+        {% endfor %}
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">{{ flash }}</div>
+        {% endfor %}
+
+        {# erreurs globales du formulaire #}
+        {{ form_errors(requestForm) }}
+
+        {{ form_start(requestForm, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="mb-3">
+                {{ form_label(requestForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(requestForm.email, {'attr': {'class': 'form-control','placeholder':'example@esprit.tn'}}) }}
+                {{ form_errors(requestForm.email) }}
+            </div>
+            <button type="submit" class="btn-reset">
+                Envoyer le lien
+            </button>
+
+        <a href="{{ path('app_login') }}" class="back-link">
+            Retour 
+        </a>
+    </div>
+</div>
+{% endblock %}

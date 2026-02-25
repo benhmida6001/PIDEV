@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un utilisateur - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .form-control {
+            background-color: #e8f5e8;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: #c8e6c9;
+            border-color: #388e3c;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            color: #1b5e20;
+        }
+        
+        .form-label {
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">Créer un nouvel utilisateur</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                            <div class="mb-3">
+                                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.email.vars.errors|length > 0 %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.email.vars.errors %}
+                                            <small class="d-block">{{ error.message }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.password.first, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.password.first.vars.errors|length > 0 %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.password.first.vars.errors %}
+                                            <small class="d-block">{{ error.message }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.password.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.password.second.vars.errors|length > 0 %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.password.second.vars.errors %}
+                                            <small class="d-block">{{ error.message }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {% if form.password.vars.errors|length > 0 %}
+                                <div class="alert alert-danger mt-2">
+                                    {% for error in form.password.vars.errors %}
+                                        <small class="d-block">{{ error.message }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'form-label'}}) }}
+                                <div class="form-check">
+                                    {% for child in form.roles %}
+                                        <div class="form-check">
+                                            {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                            {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if form.roles.vars.errors|length > 0 %}
+                                    <div class="text-danger mt-1">
+                                        {% for error in form.roles.vars.errors %}
+                                            <small>{{ error.message }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ path('app_admin_users') }}" class="btn btn-secondary">
+                                    Retour à la liste
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    Créer l'utilisateur
+                                </button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
