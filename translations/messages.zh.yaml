@@ -1,0 +1,88 @@
+# 系统设置
+settings:
+  title: "系统设置"
+  description: "配置应用程序设置"
+  general: "常规配置"
+  app_name: "应用程序名称"
+  admin_email: "管理员邮箱"
+  language: "语言"
+  theme: "主题"
+  maintenance_mode: "维护模式"
+  maintenance_help: "为用户启用维护模式"
+  notifications: "通知"
+  notifications_help: "启用系统通知"
+  debug_mode: "调试模式"
+  debug_help: "为开发启用调试模式"
+  save: "保存"
+  saved_success: "设置保存成功！"
+  
+  # 语言选项
+  french: "法语"
+  english: "英语"
+  spanish: "西班牙语"
+  german: "德语"
+  italian: "意大利语"
+  portuguese: "葡萄牙语"
+  dutch: "荷兰语"
+  arabic: "阿拉伯语"
+  chinese: "中文"
+  japanese: "日语"
+  
+  # 主题选项
+  default: "默认"
+  dark: "深色"
+  light: "浅色"
+
+# 用户偏好
+preferences:
+  title: "用户偏好"
+  description: "自定义用户体验"
+  general: "常规设置"
+  language: "首选语言"
+  theme: "首选主题"
+  timezone: "时区"
+  notifications: "通知"
+  privacy: "隐私"
+  accessibility: "可访问性"
+  save: "保存偏好"
+  saved_success: "偏好保存成功！"
+  reset: "重置"
+  reset_confirm: "确定要重置偏好吗？"
+  reset_success: "偏好重置成功！"
+
+# 常规设置
+general_settings:
+  language: "语言"
+  theme: "主题"
+  timezone: "时区"
+  date_format: "日期格式"
+  time_format: "时间格式"
+  currency: "货币"
+  number_format: "数字格式"
+
+# 通知设置
+notification_settings:
+  email_notifications: "邮件通知"
+  push_notifications: "推送通知"
+  sms_notifications: "短信通知"
+  marketing_emails: "营销邮件"
+  security_alerts: "安全警报"
+  system_updates: "系统更新"
+
+# 隐私设置
+privacy_settings:
+  profile_visibility: "个人资料可见性"
+  data_collection: "数据收集"
+  analytics_tracking: "分析跟踪"
+  third_party_sharing: "第三方共享"
+  data_retention: "数据保留"
+  cookie_preferences: "Cookie偏好"
+
+# 可访问性设置
+accessibility_settings:
+  font_size: "字体大小"
+  high_contrast: "高对比度"
+  screen_reader: "屏幕阅读器"
+  keyboard_navigation: "键盘导航"
+  reduced_motion: "减少动画"
+  focus_visible: "焦点可见"

@@ -96,6 +96,10 @@ final class AdminController extends AbstractController
     {
         // Seuls les administrateurs peuvent accéder à cette page
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
 
         $user = new User();
         $form = $this->createForm(CreateUserType::class, $user);
@@ -109,6 +113,7 @@ final class AdminController extends AbstractController
                 $this->addFlash('error', 'Cet email est déjà utilisé par un autre utilisateur.');
                 return $this->render('admin/create_user.html.twig', [
                     'form' => $form->createView(),
+                    'current_theme' => $current_theme,
                 ]);
             }
 
@@ -130,6 +135,7 @@ final class AdminController extends AbstractController
 
         return $this->render('admin/create_user.html.twig', [
             'form' => $form->createView(),
+            'current_theme' => $current_theme,
         ]);
     }
 

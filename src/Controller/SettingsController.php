@@ -21,18 +21,18 @@ class SettingsController extends AbstractController
             $theme = $request->request->get('theme');
             
             // Sauvegarder la langue dans la session
-            if ($language) {
+            if ($language && in_array($language, ['fr', 'en', 'es', 'de', 'it', 'pt', 'nl', 'ar', 'zh', 'ja'])) {
                 $session->set('_locale', $language);
                 $request->setLocale($language);
             }
             
             // Sauvegarder le thème dans la session
-            if ($theme) {
+            if ($theme && in_array($theme, ['default', 'dark', 'light'])) {
                 $session->set('theme', $theme);
             }
 
             $this->addFlash('success', 'settings.saved_success');
-            return $this->redirectToRoute('app_settings');
+            return $this->redirectToRoute('app_settings', ['_locale' => $language ?? $session->get('_locale', 'fr')]);
         }
 
         return $this->render('admin/settings.html.twig', [

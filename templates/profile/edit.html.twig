@@ -5,44 +5,127 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        body {
-            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
-            min-height: 100vh;
-        }
-        
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #2e7d32, #43a047);
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-        }
-        
-        .form-control {
-            background-color: #e8f5e8;
-            border: 2px solid #4caf50;
-            color: #2e7d32;
-            font-weight: 500;
-            padding: 12px 15px;
-            border-radius: 8px;
-        }
-        
-        .form-control:focus {
-            background-color: #c8e6c9;
-            border-color: #388e3c;
-            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
-            color: #1b5e20;
-        }
-               
-        .form-label {
-            color: #2e7d32;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
+        /* Thèmes dynamiques */
+        {% if current_theme == 'dark' %}
+            body {
+                background-color: #1a202c !important;
+                color: #e2e8f0 !important;
+                background: linear-gradient(180deg, #1a202c 0%, #2d3748 50%, #4a5568 100%) !important;
+            }
+            .card {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border: 1px solid #4a5568 !important;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2d3748, #4a5568) !important;
+                color: #e2e8f0 !important;
+            }
+            .form-control {
+                background-color: #2d3748 !important;
+                border: 2px solid #4a5568 !important;
+                color: #e2e8f0 !important;
+            }
+            .form-control:focus {
+                background-color: #374151 !important;
+                border-color: #4caf50 !important;
+                color: #e2e8f0 !important;
+            }
+            .form-label {
+                color: #e2e8f0 !important;
+            }
+            .alert {
+                background-color: #2d3748 !important;
+                border-color: #4a5568 !important;
+                color: #e2e8f0 !important;
+            }
+            .text-danger {
+                color: #fc8181 !important;
+            }
+        {% elseif current_theme == 'light' %}
+            body {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: 1px solid #e9ecef !important;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                color: white !important;
+            }
+            .form-control {
+                background-color: #ffffff !important;
+                border: 2px solid #4caf50 !important;
+                color: #2d3748 !important;
+            }
+            .form-control:focus {
+                background-color: #f8f9fa !important;
+                border-color: #388e3c !important;
+                color: #2d3748 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25) !important;
+            }
+            .form-label {
+                color: #000000 !important;
+                font-weight: 600 !important;
+            }
+            .alert {
+                background-color: #ffffff !important;
+                border-color: #4caf50 !important;
+                color: #2d3748 !important;
+            }
+        {% else %}
+            /* Thème par défaut - Vert et blanc */
+            body {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #e8f5e8 50%, #ffffff 100%) !important;
+                min-height: 100vh;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+                border: 2px solid #4caf50 !important;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                color: white !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .form-control {
+                background-color: #ffffff !important;
+                border: 2px solid #4caf50 !important;
+                color: #2d3748 !important;
+                font-weight: 500;
+                padding: 12px 15px;
+                border-radius: 8px;
+            }
+            .form-control:focus {
+                background-color: #f8f9fa !important;
+                border-color: #388e3c !important;
+                color: #2d3748 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25) !important;
+            }
+            .form-label {
+                color: #2d3748 !important;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+            .alert {
+                background-color: #ffffff !important;
+                border: 2px solid #4caf50 !important;
+                color: #2d3748 !important;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+        {% endif %}
         
         .btn-primary {
             background-color: #4caf50;
@@ -89,7 +172,7 @@
                     <h3 class="mb-0">Modifier mon profil</h3>
                 </div>
                 <div class="card-body">
-                    {{ form_start(profileForm) }}
+                    {{ form_start(profileForm, {'attr': {'novalidate': 'novalidate'}}) }}
 
                         <div class="mb-4">
                             {{ form_label(profileForm.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}

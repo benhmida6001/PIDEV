@@ -34,6 +34,10 @@ final class ProfileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
+        
         $user = $this->getUser();
         $form = $this->createForm(ProfileFormType::class, $user);
         $form->handleRequest($request);
@@ -46,6 +50,7 @@ final class ProfileController extends AbstractController
                 $this->addFlash('error', 'Cet email est déjà utilisé par un autre compte.');
                 return $this->render('profile/edit.html.twig', [
                     'profileForm' => $form->createView(),
+                    'current_theme' => $current_theme,
                 ]);
             }
 
@@ -76,6 +81,7 @@ final class ProfileController extends AbstractController
                     $this->addFlash('error', 'Erreur lors de l\'upload de la photo: '.$e->getMessage());
                     return $this->render('profile/edit.html.twig', [
                         'profileForm' => $form->createView(),
+                        'current_theme' => $current_theme,
                     ]);
                 }
             }
@@ -87,6 +93,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('profile/edit.html.twig', [
             'profileForm' => $form->createView(),
+            'current_theme' => $current_theme,
         ]);
     }
 
@@ -94,6 +101,10 @@ final class ProfileController extends AbstractController
     public function changePassword(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
         
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordFormType::class);
@@ -108,6 +119,7 @@ final class ProfileController extends AbstractController
                 $this->addFlash('error', 'Le mot de passe actuel est incorrect.');
                 return $this->render('profile/change_password.html.twig', [
                     'changePasswordForm' => $form->createView(),
+                    'current_theme' => $current_theme,
                 ]);
             }
 
@@ -127,6 +139,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('profile/change_password.html.twig', [
             'changePasswordForm' => $form->createView(),
+            'current_theme' => $current_theme,
         ]);
     }
 }
