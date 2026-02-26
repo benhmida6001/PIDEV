@@ -1,3 +1,15 @@
+# Direct interface translations
+French: "French"
+English: "English"
+Spanish: "Spanish"
+German: "German"
+Italian: "Italian"
+Portuguese: "Portuguese"
+Dutch: "Dutch"
+Arabic: "Arabic"
+Chinese: "Chinese"
+Japanese: "Japanese"
+
 # System Settings
 settings:
   title: "System Settings"

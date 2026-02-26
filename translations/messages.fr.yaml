@@ -1,3 +1,15 @@
+# Traductions directes pour l'interface
+Français: "Français"
+Anglais: "Anglais"
+Espagnol: "Espagnol"
+Allemand: "Allemand"
+Italien: "Italien"
+Portugais: "Portugais"
+Néerlandais: "Néerlandais"
+Arabe: "Arabe"
+Chinois: "Chinois"
+Japonais: "Japonais"
+
 # Paramètres système
 settings:
   title: "Paramètres système"
