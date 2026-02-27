@@ -199,7 +199,7 @@
                     <div class="card-body">
                         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                             <div class="mb-3">
-                                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_label(form.email,'Email'|trans, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                                 {% if form.email.vars.errors|length > 0 %}
                                     <div class="alert alert-danger mt-2">
@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="mb-3">
-                                {{ form_label(form.password.first, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_label(form.password.first, 'Password'|trans, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
                                 {% if form.password.first.vars.errors|length > 0 %}
                                     <div class="alert alert-danger mt-2">
@@ -223,7 +223,7 @@
                             </div>
 
                             <div class="mb-3">
-                                {{ form_label(form.password.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_label(form.password.second, 'Confirm Password'|trans, {'label_attr': {'class': 'form-label'}}) }}
                                 {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                                 {% if form.password.second.vars.errors|length > 0 %}
                                     <div class="alert alert-danger mt-2">
@@ -243,7 +243,19 @@
                             {% endif %}
 
                             <div class="mb-3">
-                                {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_label(form.sexe, 'Sexe'|trans, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.sexe, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.sexe.vars.errors|length > 0 %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.sexe.vars.errors %}
+                                            <small class="d-block">{{ error.message }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.roles, 'Roles'|trans, {'label_attr': {'class': 'form-label'}}) }}
                                 <div class="form-check">
                                     {% for child in form.roles %}
                                         <div class="form-check">
@@ -263,7 +275,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <a href="{{ path('app_admin_users') }}" class="btn btn-secondary">
-                                    Retour à la liste
+                                    Retour 
                                 </a>
                                 <button type="submit" class="btn btn-primary">
                                     Créer l'utilisateur

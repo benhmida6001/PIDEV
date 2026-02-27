@@ -16,6 +16,10 @@ final class DashboardController extends AbstractController
         // L'utilisateur doit être connecté pour accéder au dashboard
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
+
         // Récupérer les statistiques
         $users = $entityManager->getRepository(User::class)->findAll();
         $totalUsers = count($users);
@@ -26,6 +30,7 @@ final class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'users_count' => $totalUsers,
             'active_users_count' => $activeUsers,
+            'current_theme' => $current_theme,
         ]);
     }
 }

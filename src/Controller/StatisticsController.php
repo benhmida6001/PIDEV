@@ -180,6 +180,10 @@ final class StatisticsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
+
         $userRepository = $entityManager->getRepository(User::class);
         $users = $userRepository->findAll();
         
@@ -359,7 +363,8 @@ final class StatisticsController extends AbstractController
             'totalSessions' => $totalSessions,
             'recentActivity' => $recentActivity,
             'activeUsersCount' => $activeUsers,
-            'inactiveUsersCount' => $totalUsers - $activeUsers
+            'inactiveUsersCount' => $totalUsers - $activeUsers,
+            'current_theme' => $current_theme,
         ]);
     }
 }

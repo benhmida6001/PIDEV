@@ -5,6 +5,279 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        /* Thèmes dynamiques */
+        {% if current_theme == 'dark' %}
+            body {
+                background-color: #1a202c !important;
+                color: #e2e8f0 !important;
+                background: linear-gradient(180deg, #1a202c 0%, #2d3748 50%, #4a5568 100%) !important;
+                min-height: 100vh;
+            }
+            .search-box input {
+                background-color: #374151 !important;
+                border: 2px solid #4a5568 !important;
+                color: #e2e8f0 !important;
+                flex: 1;
+                font-size: 1.1rem;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .search-box input:focus {
+                background-color: #4b5563 !important;
+                border-color: #4caf50 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #e2e8f0 !important;
+            }
+            .search-box button {
+                background-color: #4caf50 !important;
+                color: white !important;
+                white-space: nowrap;
+                padding: 15px 25px;
+                font-size: 1.1rem;
+                border-radius: 8px;
+            }
+            .card {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border: 1px solid #4a5568 !important;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2d3748, #4a5568) !important;
+                color: #e2e8f0 !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .table thead th {
+                background-color: #4a5568 !important;
+                color: #e2e8f0 !important;
+                border-bottom: 2px solid #4a5568 !important;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-warning {
+                border-color: #ff9800 !important;
+                color: #ff9800 !important;
+                background: transparent !important;
+            }
+            .btn-outline-warning:hover {
+                background-color: #ff9800 !important;
+                border-color: #ff9800 !important;
+                color: white !important;
+            }
+            .btn-outline-danger {
+                border-color: #f44336 !important;
+                color: #f44336 !important;
+                background: transparent !important;
+            }
+            .btn-outline-danger:hover {
+                background-color: #f44336 !important;
+                border-color: #f44336 !important;
+                color: white !important;
+            }
+        {% elseif current_theme == 'light' %}
+            body {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
+                min-height: 100vh;
+            }
+            .search-box input {
+                background-color: #ffffff !important;
+                border: 2px solid #e9ecef !important;
+                color: #2d3748 !important;
+                flex: 1;
+                font-size: 1.1rem;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .search-box input:focus {
+                background-color: #f8f9fa !important;
+                border-color: #4caf50 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #2d3748 !important;
+            }
+            .search-box button {
+                background-color: #4caf50 !important;
+                color: white !important;
+                white-space: nowrap;
+                padding: 15px 25px;
+                font-size: 1.1rem;
+                border-radius: 8px;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: 1px solid #e9ecef !important;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                color: white !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .table thead th {
+                background-color: #f8f9fa !important;
+                color: #2d3748 !important;
+                border-bottom: 2px solid #e9ecef !important;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-warning {
+                border-color: #ffc107 !important;
+                color: #ffc107 !important;
+                background: transparent !important;
+            }
+            .btn-outline-warning:hover {
+                background-color: #ffc107 !important;
+                border-color: #ffc107 !important;
+                color: #212529 !important;
+            }
+            .btn-outline-danger {
+                border-color: #dc3545 !important;
+                color: #dc3545 !important;
+                background: transparent !important;
+            }
+            .btn-outline-danger:hover {
+                background-color: #dc3545 !important;
+                border-color: #dc3545 !important;
+                color: white !important;
+            }
+        {% else %}
+            /* Thème par défaut - Vert et blanc */
+            body {
+                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+                min-height: 100vh;
+            }
+            .search-box input {
+                background-color: #e8f5e8 !important;
+                border: 2px solid #4caf50 !important;
+                color: #2e7d32 !important;
+                flex: 1;
+                font-size: 1.1rem;
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .search-box input:focus {
+                background-color: #c8e6c9 !important;
+                border-color: #388e3c !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #1b5e20 !important;
+            }
+            .search-box button {
+                background-color: #4caf50 !important;
+                color: white !important;
+                white-space: nowrap;
+                padding: 15px 25px;
+                font-size: 1.1rem;
+                border-radius: 8px;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2e7d32, #43a047);
+                color: white;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .table thead th {
+                background-color: #e8f5e8 !important;
+                color: #2e7d32 !important;
+                border-bottom: 2px solid #4caf50 !important;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-warning {
+                border-color: #ffc107 !important;
+                color: #ffc107 !important;
+                background: transparent !important;
+            }
+            .btn-outline-warning:hover {
+                background-color: #ffc107 !important;
+                border-color: #ffc107 !important;
+                color: #212529 !important;
+            }
+            .btn-outline-danger {
+                border-color: #dc3545 !important;
+                color: #dc3545 !important;
+                background: transparent !important;
+            }
+            .btn-outline-danger:hover {
+                background-color: #dc3545 !important;
+                border-color: #dc3545 !important;
+                color: white !important;
+            }
+        {% endif %}
+        
+        .bg-danger {
+            background-color: #ef5350 !important;
+        }
+        
         .search-box {
             display: flex;
             gap: 15px;

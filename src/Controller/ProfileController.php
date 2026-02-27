@@ -21,11 +21,15 @@ final class ProfileController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function index(): Response
     {
-        // L'utilisateur doit être connecté pour accéder à cette page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
 
         return $this->render('profile/index.html.twig', [
             'user' => $this->getUser(),
+            'current_theme' => $current_theme,
         ]);
     }
 

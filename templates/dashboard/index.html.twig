@@ -5,6 +5,218 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        /* Thèmes dynamiques */
+        {% if current_theme == 'dark' %}
+            body {
+                background-color: #1a202c !important;
+                color: #e2e8f0 !important;
+                background: linear-gradient(180deg, #1a202c 0%, #2d3748 50%, #4a5568 100%) !important;
+                min-height: 100vh;
+            }
+            .top-bar {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                padding: 15px 25px;
+                margin-bottom: 30px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            .search-box input {
+                background-color: #374151 !important;
+                border: 2px solid #4a5568 !important;
+                color: #e2e8f0 !important;
+                border-radius: 25px;
+                padding: 8px 40px 8px 20px;
+                width: 300px;
+                transition: all 0.3s ease;
+            }
+            .search-box input:focus {
+                background-color: #4b5563 !important;
+                border-color: #4caf50 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #e2e8f0 !important;
+                outline: none;
+            }
+            .dashboard-card {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border: 1px solid #4a5568 !important;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2d3748, #4a5568) !important;
+                color: #e2e8f0 !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .stat-number {
+                color: #4caf50 !important;
+            }
+            .stat-icon {
+                color: #66bb6a !important;
+            }
+            .quick-action {
+                border: 2px solid #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .quick-action:hover {
+                background-color: #4caf50 !important;
+                color: white !important;
+            }
+        {% elseif current_theme == 'light' %}
+            body {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
+                min-height: 100vh;
+            }
+            .top-bar {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                padding: 15px 25px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .search-box input {
+                background-color: #ffffff !important;
+                border: 2px solid #e9ecef !important;
+                color: #2d3748 !important;
+                border-radius: 25px;
+                padding: 8px 40px 8px 20px;
+                width: 300px;
+                transition: all 0.3s ease;
+            }
+            .search-box input:focus {
+                background-color: #f8f9fa !important;
+                border-color: #4caf50 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #2d3748 !important;
+                outline: none;
+            }
+            .dashboard-card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: 1px solid #e9ecef !important;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                color: white !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .stat-number {
+                color: #4caf50 !important;
+            }
+            .stat-icon {
+                color: #66bb6a !important;
+            }
+            .quick-action {
+                border: 2px solid #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .quick-action:hover {
+                background-color: #4caf50 !important;
+                color: white !important;
+            }
+        {% else %}
+            /* Thème par défaut - Vert et blanc */
+            body {
+                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+                min-height: 100vh;
+            }
+            .top-bar {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                padding: 15px 25px;
+                margin-bottom: 30px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            .search-box input {
+                background-color: #e8f5e8 !important;
+                border: 2px solid #4caf50 !important;
+                color: #2e7d32 !important;
+                border-radius: 25px;
+                padding: 8px 40px 8px 20px;
+                width: 300px;
+                transition: all 0.3s ease;
+            }
+            .search-box input:focus {
+                background-color: #c8e6c9 !important;
+                border-color: #388e3c !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+                color: #1b5e20 !important;
+                outline: none;
+            }
+            .dashboard-card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2e7d32, #43a047);
+                color: white;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .stat-number {
+                color: #4caf50 !important;
+            }
+            .stat-icon {
+                color: #66bb6a !important;
+            }
+            .quick-action {
+                border: 2px solid #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+            }
+            .quick-action:hover {
+                background-color: #4caf50 !important;
+                color: white !important;
+            }
+        {% endif %}
+        
+        .welcome-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4caf50;
+        }
+        
+        .activity-item {
+            border-left: 3px solid #4caf50;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #4caf50, #66bb6a);
+        }
+        
         .top-bar {
             backdrop-filter: blur(10px);
             border-radius: 15px;
@@ -111,11 +323,6 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
         }
-        
-        .welcome-section {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-            border-radius: 15px;
-            padding: 30px;
             margin-bottom: 30px;
         }
         

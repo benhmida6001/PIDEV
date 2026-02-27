@@ -22,10 +22,15 @@ final class AdminController extends AbstractController
         // Seuls les administrateurs peuvent accéder à cette page
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Récupérer le thème depuis la session
+        $session = $this->container->get('request_stack')->getSession();
+        $current_theme = $session->get('theme', 'default');
+
         $users = $userRepository->findAll();
 
         return $this->render('admin/users.html.twig', [
             'users' => $users,
+            'current_theme' => $current_theme,
         ]);
     }
 

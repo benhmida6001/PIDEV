@@ -48,52 +48,139 @@ settings:
 # Préférences utilisateur
 preferences:
   title: "Préférences utilisateur"
-  interface: "Interface"
+  description: "Personnaliser l'expérience utilisateur"
+  general: "Paramètres généraux"
+  language: "Langue préférée"
+  theme: "Thème préféré"
+  timezone: "Fuseau horaire"
   notifications: "Notifications"
-  format: "Format"
+  privacy: "Confidentialité"
+  accessibility: "Accessibilité"
+  save: "Sauvegarder les préférences"
+  saved_success: "Préférences sauvegardées avec succès !"
+  reset: "Réinitialiser"
+  reset_confirm: "Êtes-vous sûr de vouloir réinitialiser les préférences ?"
+  reset_success: "Préférences réinitialisées avec succès !"
+
+# Paramètres généraux
+general_settings:
   language: "Langue"
   theme: "Thème"
-  dark_mode: "Mode sombre"
-  email_notifications: "Notifications email"
-  sound_effects: "Effets sonores"
+  timezone: "Fuseau horaire"
   date_format: "Format de date"
   time_format: "Format d'heure"
-  items_per_page: "Éléments par page"
-  save: "Sauvegarder"
-  reset: "Réinitialiser"
-  saved_success: "Préférences sauvegardées avec succès !"
-  reset_success: "Préférences réinitialisées avec succès !"
-  
-  # Options
-  enabled: "Activé"
-  disabled: "Désactivé"
-  
-  # Formats de date
-  format_dmy: "JJ/MM/AAAA"
-  format_mdy: "MM/JJ/AAAA"
-  format_ymd: "AAAA/MM/JJ"
-  format_dmy_long: "JJ Mois AAAA"
-  
-  # Formats d'heure
-  format_24h: "24h (HH:MM)"
-  format_12h: "12h (HH:MM AM/PM)"
-  
-  # Éléments par page
-  items_5: "5 éléments"
-  items_10: "10 éléments"
-  items_15: "15 éléments"
-  items_20: "20 éléments"
-  items_25: "25 éléments"
-  items_50: "50 éléments"
+  currency: "Devise"
+  number_format: "Format des nombres"
+
+# Paramètres de notification
+notification_settings:
+  email_notifications: "Notifications par email"
+  push_notifications: "Notifications push"
+  sms_notifications: "Notifications SMS"
+  marketing_emails: "Emails marketing"
+  security_alerts: "Alertes de sécurité"
+  system_updates: "Mises à jour système"
+
+# Paramètres de confidentialité
+privacy_settings:
+  profile_visibility: "Visibilité du profil"
+  data_collection: "Collecte des données"
+  analytics_tracking: "Suivi analytique"
+  third_party_sharing: "Partage avec des tiers"
+  data_retention: "Conservation des données"
+  cookie_preferences: "Préférences de cookies"
+
+# Paramètres d'accessibilité
+accessibility_settings:
+  font_size: "Taille de police"
+  high_contrast: "Contraste élevé"
+  screen_reader: "Lecteur d'écran"
+  keyboard_navigation: "Navigation au clavier"
+  reduced_motion: "Réduction des mouvements"
+  focus_visible: "Focus visible"
+
+# Profil
+profile:
+  title: "Mon Profil"
+  description: "Gérer mes informations personnelles"
+  edit: "Modifier le profil"
+  change_password: "Changer le mot de passe"
+  confirm_password: "Confirmer le mot de passe"
+  sexe: "Sexe"
+  type_compte: "Type de compte"
+  id: "ID"
+  role: "Rôle"
+  administrator: "Administrateur"
+  user_role: "Utilisateur"
+  projects_created: "Projets créés"
+  tasks_completed: "Tâches complétées"
+  personal_info: "Informations Personnelles"
+  name: "Nom"
+  email: "Email"
+  last_login: "Dernière connexion"
+  account_created: "Compte créé"
+  status: "Statut"
+  active: "Actif"
+  inactive: "Inactif"
 
 # Navigation
 nav:
   dashboard: "Tableau de bord"
-  users: "Utilisateurs"
-  statistics: "Statistiques"
-  settings: "Paramètres"
+  home: "Accueil"
   profile: "Profil"
+  users: "Utilisateurs"
+  settings: "Paramètres"
+  statistics: "Statistiques"
   logout: "Déconnexion"
+
+# Messages système
+success: "Succès"
+error: "Erreur"
+warning: "Attention"
+info: "Information"
+
+# Sécurité
+security:
+  authentication_required: "Authentification requise"
+  access_denied: "Accès refusé"
+  invalid_credentials: "Identifiants invalides"
+  account_locked: "Compte bloqué"
+  account_disabled: "Compte désactivé"
+  account_expired: "Compte expiré"
+  session_expired: "Session expirée"
+
+# Administration
+admin:
+  title: "Administration"
+  users: "Utilisateurs"
+  create_user: "Créer un utilisateur"
+  edit_user: "Modifier l'utilisateur"
+  delete_user: "Supprimer l'utilisateur"
+  user_management: "Gestion des utilisateurs"
+  user_list: "Liste des utilisateurs"
+  user_details: "Détails de l'utilisateur"
+  user_name: "Nom de l'utilisateur"
+  user_email: "Email de l'utilisateur"
+  user_role: "Rôle de l'utilisateur"
+  user_status: "Statut de l'utilisateur"
+  active_users: "Utilisateurs actifs"
+  new_users: "Nouveaux utilisateurs"
+  total_users: "Total des utilisateurs"
+
+# Statistiques
+statistics:
+  title: "Statistiques"
+  description: "Vue d'ensemble des statistiques"
+  overview: "Aperçu général"
+  user_stats: "Statistiques des utilisateurs"
+  system_stats: "Statistiques système"
+  performance: "Performance"
+  reports: "Rapports"
+  charts: "Graphiques"
+  analytics: "Analytique"
+  metrics: "Métriques"
+  back: "Retour"
+  refresh: "Actualiser"
 
 # Dashboard
 dashboard:
@@ -138,40 +225,16 @@ dashboard:
   back: "Retour"
   refresh: "Actualiser"
 
-# Profil
-profile:
-  title: "Profil"
   personal_info: "Informations Personnelles"
   name: "Nom"
   email: "Email"
   id: "ID"
   role: "Rôle"
-  administrator: "Administrateur"
-  user_role: "Utilisateur"
-  edit_profile: "Modifier le profil"
-  change_password: "Changer le mot de passe"
   last_login: "Dernière connexion"
   account_created: "Compte créé"
   status: "Statut"
   active: "Actif"
   inactive: "Inactif"
-
-# Statistiques
-statistics:
-  title: "Tableau de Statistique"
-  total_users: "Utilisateurs totaux"
-  active_users: "Utilisateurs actifs"
-  new_users: "Nouveaux utilisateurs"
-  total_projects: "Projets totaux"
-  completed_tasks: "Tâches complétées"
-  performance_metrics: "Métriques de Performance"
-  recent_activity: "Activité Récente"
-  growth_trends: "Tendances de Croissance"
-  detailed_statistics: "Statistique Détaillée"
-  export_data: "Exporter les données"
-  user_statistics: "Statistiques des utilisateurs"
-  project_statistics: "Statistiques des projets"
-  system_overview: "Aperçu du système"
 
 # Utilisateurs
 users:
@@ -210,7 +273,8 @@ roles:
   confirm_reset: "Envoyer un email de réinitialisation à {{ email }} ?"
 
 # Messages généraux
-success: "Succès"
-error: "Erreur"
-warning: "Attention"
-info: "Information"
+general_messages:
+  success: "Succès"
+  error: "Erreur"
+  warning: "Attention"
+  info: "Information"

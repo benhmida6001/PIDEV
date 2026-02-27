@@ -1,91 +1,176 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Profil - GREENCORE{% endblock %}
+{% block title %}{{ 'profile.title'|trans }} - GREENCORE{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .card {
-            border: none;
-            border-radius: 15px;
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #2e7d32, #43a047);
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-        }
-        
-        .table {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .badge {
-            padding: 6px 12px;
-            font-weight: 500;
-        }
-        
-        .btn-outline-primary {
-            border-color: #4caf50;
-            color: #4caf50;
-            text-decoration: none;
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid #4caf50;
-            background: transparent;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: #4caf50;
-            border-color: #4caf50;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .btn-outline-danger {
-            border-color: #f44336;
-            color: #f44336;
-            text-decoration: none;
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid #f44336;
-            background: transparent;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-outline-danger:hover {
-            background-color: #f44336;
-            border-color: #f44336;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .bg-primary {
-            background-color: #4caf50 !important;
-        }
-        
-        .bg-success {
-            background-color: #66bb6a !important;
-        }
-        
-        .bg-info {
-            background-color: #4caf50 !important;
-        }
-        
-        .bg-danger {
-            background-color: #4caf50 !important;
-        }
-        
-        .alert {
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
+        /* Thèmes dynamiques */
+        {% if current_theme == 'dark' %}
+            body {
+                background-color: #1a202c !important;
+                color: #e2e8f0 !important;
+                background: linear-gradient(180deg, #1a202c 0%, #2d3748 50%, #4a5568 100%) !important;
+                min-height: 100vh;
+            }
+            .card {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border: 1px solid #4a5568 !important;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2d3748, #4a5568) !important;
+                color: #e2e8f0 !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #2d3748 !important;
+                color: #e2e8f0 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-danger {
+                border-color: #f44336 !important;
+                color: #f44336 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-danger:hover {
+                background-color: #f44336 !important;
+                border-color: #f44336 !important;
+                color: white !important;
+            }
+        {% elseif current_theme == 'light' %}
+            body {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
+                min-height: 100vh;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: 1px solid #e9ecef !important;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                color: white !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-danger {
+                border-color: #dc3545 !important;
+                color: #dc3545 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-danger:hover {
+                background-color: #dc3545 !important;
+                border-color: #dc3545 !important;
+                color: white !important;
+            }
+        {% else %}
+            /* Thème par défaut - Vert et blanc */
+            body {
+                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+                min-height: 100vh;
+            }
+            .card {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            .card-header {
+                background: linear-gradient(135deg, #2e7d32, #43a047);
+                color: white;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            .table {
+                background-color: #ffffff !important;
+                color: #2d3748 !important;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .badge {
+                background-color: #4caf50 !important;
+                color: white !important;
+                padding: 6px 12px;
+                font-weight: 500;
+            }
+            .btn-outline-primary {
+                border-color: #4caf50 !important;
+                color: #4caf50 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-primary:hover {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+                color: white !important;
+            }
+            .btn-outline-danger {
+                border-color: #dc3545 !important;
+                color: #dc3545 !important;
+                background: transparent !important;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn-outline-danger:hover {
+                background-color: #dc3545 !important;
+                border-color: #dc3545 !important;
+                color: white !important;
+            }
+        {% endif %}
     </style>
 {% endblock %}
 
@@ -179,11 +264,11 @@
                             </table>
 
                             <div class="mt-4">
-                                <a href="{{ path('app_profile_edit') }}" class="btn-outline-primary me-2">
+                                <a href="{{ path('app_profile_edit') }}" class="btn btn-primary">
                                      Modifier le profil
                                 </a>
-                                <a href="{{ path('app_profile_change_password') }}" class="btn-outline-danger">
-                                    Changer le mot de passe
+                                <a href="{{ path('app_profile_change_password') }}" class="btn btn-secondary">
+                                    {{ 'profile.change_password'|trans }}
                                 </a>
                             </div>
                         </div>

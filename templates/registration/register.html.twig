@@ -199,6 +199,25 @@
                         {% endif %}
                     </div>
 
+                    <div class="mb-4">
+                        {{ form_label(registrationForm.roles, 'Type de compte', {'label_attr': {'class': 'form-label'}}) }}
+                        <div class="form-check">
+                            {% for child in registrationForm.roles %}
+                                <div class="form-check">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if registrationForm.roles.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in registrationForm.roles.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
                     {% if registrationForm.plainPassword.vars.errors|length > 0 %}
                         <div class="alert alert-danger">
                             {% for error in registrationForm.plainPassword.vars.errors %}
