@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des Utilisateurs - GREENCORE{% endblock %}
+{% block title %}{{ 'Gestion des Utilisateurs'|trans }} - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -185,25 +185,25 @@
                 color: white !important;
             }
         {% else %}
-            /* Thème par défaut - Vert et blanc */
+            /* Thème par défaut - Vert complet */
             body {
-                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%) !important;
                 min-height: 100vh;
             }
             .search-box input {
-                background-color: #e8f5e8 !important;
+                background-color: #ffffff !important;
                 border: 2px solid #4caf50 !important;
-                color: #2e7d32 !important;
+                color: #2d3748 !important;
                 flex: 1;
                 font-size: 1.1rem;
                 padding: 15px;
                 border-radius: 8px;
             }
             .search-box input:focus {
-                background-color: #c8e6c9 !important;
+                background-color: #f8f9fa !important;
                 border-color: #388e3c !important;
                 box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
-                color: #1b5e20 !important;
+                color: #2d3748 !important;
             }
             .search-box button {
                 background-color: #4caf50 !important;
@@ -216,14 +216,15 @@
             .card {
                 background-color: #ffffff !important;
                 color: #2d3748 !important;
-                border: none;
+                border: 2px solid #4caf50 !important;
                 border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
             }
             .card-header {
-                background: linear-gradient(135deg, #2e7d32, #43a047);
-                color: white;
+                background: linear-gradient(135deg, #2e7d32, #43a047) !important;
+                color: white !important;
                 border-radius: 15px 15px 0 0 !important;
+                border-bottom: 2px solid #4caf50 !important;
             }
             .table {
                 background-color: #ffffff !important;
@@ -242,35 +243,8 @@
                 padding: 6px 12px;
                 font-weight: 500;
             }
-            .btn-outline-primary {
-                border-color: #4caf50 !important;
-                color: #4caf50 !important;
-                background: transparent !important;
-            }
-            .btn-outline-primary:hover {
-                background-color: #4caf50 !important;
-                border-color: #4caf50 !important;
-                color: white !important;
-            }
-            .btn-outline-warning {
-                border-color: #ffc107 !important;
-                color: #ffc107 !important;
-                background: transparent !important;
-            }
-            .btn-outline-warning:hover {
-                background-color: #ffc107 !important;
-                border-color: #ffc107 !important;
-                color: #212529 !important;
-            }
-            .btn-outline-danger {
-                border-color: #dc3545 !important;
-                color: #dc3545 !important;
-                background: transparent !important;
-            }
-            .btn-outline-danger:hover {
-                background-color: #dc3545 !important;
-                border-color: #dc3545 !important;
-                color: white !important;
+            .text-muted {
+                color: #2e7d32 !important;
             }
         {% endif %}
         
@@ -389,6 +363,18 @@
 {% endblock %}
 
 {% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <a href="{{ path('app_dashboard') }}" class="btn btn-outline-light mb-2">
@@ -576,3 +562,4 @@
         });
     </script>
 {% endblock %}
+

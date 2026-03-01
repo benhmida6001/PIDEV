@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Changement de rôle - GREENCORE</title>
+    <title>{{ 'emails.role_change.subject'|trans }} - {{ 'app.name'|trans }}</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -112,7 +112,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">🌿 GREENCORE</div>
+            <div class="logo">🌿 {{ 'app.name'|trans }}</div>
             <h1 class="title">🛡️ Changement de vos permissions</h1>
         </div>
         
@@ -168,8 +168,8 @@
         </div>
         
         <div class="footer">
-            <p>Cet email a été envoyé automatiquement par GREENCORE</p>
-            <p>© {{ "now"|date("Y") }} GREENCORE - Tous droits réservés</p>
+            <p>{{ 'emails.role_change.footer'|trans }}</p>
+            <p>{{ 'emails.role_change.copyright'|trans }}</p>
         </div>
     </div>
 </body>

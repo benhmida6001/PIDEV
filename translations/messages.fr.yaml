@@ -1,4 +1,4 @@
-# Traductions pour l'administration - Version corrigée
+# Traductions pour l'administration
 admin:
   users:
     title: "Gestion des Utilisateurs"
@@ -45,3 +45,143 @@ admin:
   user_status: "Statut de l'utilisateur"
   active_users: "Utilisateurs actifs"
   new_users: "Nouveaux utilisateurs"
+
+# Traductions pour l'application principale
+app:
+  name: "PIDEV"
+  description: "Système de gestion durable et intelligent"
+  tagline: "La Technologie au cœur de la planète"
+  
+# Navigation
+nav:
+  home: "Accueil"
+  dashboard: "Tableau de bord"
+  profile: "Profil"
+  login: "Connexion"
+  logout: "Déconnexion"
+  register: "Inscription"
+  
+# Pages
+pages:
+  home:
+    title: "Accueil"
+    welcome: "Bienvenue sur notre plateforme innovante pour une gestion durable et intelligente"
+    subtitle: "La Technologie au cœur de la planète"
+  login:
+    title: "Connexion"
+    welcome: "USER LOGIN"
+    subtitle: "Connectez-vous à votre compte"
+  register:
+    title: "Inscription"
+    welcome: "CRÉER UN COMPTE"
+    subtitle: "Rejoignez notre communauté"
+  profile:
+    title: "Profil"
+    edit_title: "Modifier le profil"
+    change_password: "Changer le mot de passe"
+  dashboard:
+    title: "Tableau de bord"
+    subtitle: "Vue d'ensemble de votre activité"
+  
+# Messages système
+system:
+  security:
+    login_required: "Vous devez être connecté pour accéder à cette page"
+    access_denied: "Accès refusé"
+    session_expired: "Votre session a expiré"
+    account_locked: "Compte bloqué"
+    account_disabled: "Compte désactivé"
+  success:
+    login_success: "Connexion réussie"
+    logout_success: "Déconnexion réussie"
+    profile_updated: "Profil mis à jour"
+    password_changed: "Mot de passe changé"
+    user_created: "Utilisateur créé avec succès"
+    user_deleted: "Utilisateur supprimé"
+    role_updated: "Rôle mis à jour"
+  error:
+    invalid_credentials: "Identifiants invalides"
+    user_not_found: "Utilisateur non trouvé"
+    email_already_used: "Cet email est déjà utilisé"
+    password_mismatch: "Les mots de passe ne correspondent pas"
+    current_password_incorrect: "Mot de passe actuel incorrect"
+  
+# Emails
+emails:
+  password_reset:
+    subject: "Réinitialisation mot de passe"
+    greeting: "Bonjour,"
+    intro: "Vous avez demandé la réinitialisation de votre mot de passe."
+    instructions: "Cliquez sur le lien ci-dessous pour définir un nouveau mot de passe."
+    security_note: "Note : Ce lien expirera dans 1 heure."
+    footer: "Cet email a été envoyé automatiquement par PIDEV - Tous droits réservés"
+    copyright: "© 2026 PIDEV - Tous droits réservés"
+  role_change:
+    subject: "Changement de rôle"
+    greeting: "Bonjour,"
+    intro: "Vos permissions ont été mises à jour."
+    instructions: "Veuillez vous connecter pour voir vos nouvelles permissions."
+    security_note: "Note : Contactez-nous immédiatement en cas d'activité suspecte."
+    footer: "Cet email a été envoyé automatiquement par PIDEV - Tous droits réservés"
+    copyright: "© 2026 PIDEV - Tous droits réservés"
+  
+# Interface utilisateur
+ui:
+  welcome: "Bienvenue sur PIDEV"
+  tagline: "La Technologie au cœur de la planète"
+  powered_by: "Propulsé par PIDEV"
+  copyright: "© 2026 PIDEV - Tous droits réservés"
+  
+# Actions
+actions:
+  save: "Enregistrer"
+  cancel: "Annuler"
+  delete: "Supprimer"
+  edit: "Modifier"
+  view: "Voir"
+  create: "Créer"
+  update: "Mettre à jour"
+  back: "Retour"
+  submit: "Envoyer"
+  search: "Rechercher"
+  
+# Statuts et états
+status:
+  active: "Actif"
+  inactive: "Inactif"
+  pending: "En attente"
+  completed: "Terminé"
+  cancelled: "Annulé"
+  
+# Validation
+validation:
+  required: "Ce champ est obligatoire"
+  email: "Veuillez entrer une adresse email valide"
+  password_min: "Le mot de passe doit contenir au moins 8 caractères"
+  password_match: "Les mots de passe doivent correspondre"
+  
+# Thèmes
+themes:
+  default: "Par défaut"
+  light: "Clair"
+  dark: "Sombre"
+  
+# Écologie et durabilité
+ecology:
+  title: "Écologie et Durabilité"
+  description: "Notre engagement pour un avenir durable"
+  features:
+    green_tech: "Technologie verte"
+    carbon_neutral: "Neutre en carbone"
+    sustainable: "Développement durable"
+    smart_energy: "Énergie intelligente"
+    circular_economy: "Économie circulaire"
+
+# Paramètres système
+settings:
+  title: "Paramètres système"
+  description: "Configurez les paramètres de l'application"
+  general: "Configuration Générale"
+  app_name: "Nom de l'application"
+  admin_email: "Email administrateur"
+  language: "Langue"

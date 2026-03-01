@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Service\EmailService;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -35,31 +34,6 @@ class UserRoleController extends AbstractController
         $form = $this->createFormBuilder($user)
             ->add('email', EmailType::class, [
                 'label' => 'Email',
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('sexe', ChoiceType::class, [
-                'label' => 'Sexe',
-                'required' => false,
-                'choices' => [
-                    'Homme' => 'homme',
-                    'Femme' => 'femme',
-                    'Autre' => 'autre'
-                ],
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('age', TextType::class, [
-                'label' => 'Âge',
-                'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
             ->add('roles', ChoiceType::class, [
@@ -91,14 +65,60 @@ class UserRoleController extends AbstractController
             ])
             ->getForm();
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifier que l'email est bien défini
+            $email = $user->getEmail();
+            if (empty($email)) {
+                $this->addFlash('error', 'L\'email est obligatoire.');
+                return $this->render('admin/create_user.html.twig', [
+                    'form' => $form->createView(),
+                    'current_theme' => $request->getSession()->get('theme', 'default'),
+                    'current_theme_name' => $request->getSession()->get('theme', 'default')
+                ]);
+            }
+            
+            // Vérifier que le mot de passe est bien défini
+            $password = $user->getPassword();
+            if (empty($password)) {
+                $this->addFlash('error', 'Le mot de passe est obligatoire.');
+                return $this->render('admin/create_user.html.twig', [
+                    'form' => $form->createView(),
+                    'current_theme' => $request->getSession()->get('theme', 'default'),
+                    'current_theme_name' => $request->getSession()->get('theme', 'default')
+                ]);
+            }
+            
+            // Hasher le mot de passe
+            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            
+            // S'assurer que l'utilisateur a au moins le rôle ROLE_USER
+            $roles = $user->getRoles();
+            if (empty($roles)) {
+                $user->setRoles(['ROLE_USER']);
+            }
+            
+            // Sauvegarder en base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
+            
+            // Ajouter un message flash
+            $this->addFlash('success', 'Utilisateur créé avec succès !');
+            
+            // Rediriger vers la liste des utilisateurs
+            return $this->redirectToRoute('app_admin_users');
+        }
+
         return $this->render('admin/create_user.html.twig', [
             'form' => $form->createView(),
-            'current_theme' => 'dark'
+            'current_theme' => $request->getSession()->get('theme', 'default'),
+            'current_theme_name' => $request->getSession()->get('theme', 'default')
         ]);
     }
 
     #[Route('/admin/users', name: 'app_admin_users')]
-    public function users(EntityManagerInterface $entityManager): Response
+    public function users(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -107,12 +127,13 @@ class UserRoleController extends AbstractController
 
         return $this->render('admin/user1.html.twig', [
             'users' => $users,
-            'current_theme' => 'dark'
+            'current_theme' => $request->getSession()->get('theme', 'default'),
+            'current_theme_name' => $request->getSession()->get('theme', 'default')
         ]);
     }
 
     #[Route('/admin/user/{id}', name: 'app_admin_user_view')]
-    public function viewUser(int $id, EntityManagerInterface $entityManager): Response
+    public function viewUser(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -125,7 +146,8 @@ class UserRoleController extends AbstractController
 
         return $this->render('admin/view_user.html.twig', [
             'user' => $user,
-            'current_theme' => 'dark'
+            'current_theme' => $request->getSession()->get('theme', 'default'),
+            'current_theme_name' => $request->getSession()->get('theme', 'default')
         ]);
     }
 
@@ -143,12 +165,13 @@ class UserRoleController extends AbstractController
 
         return $this->render('admin/edit_user.html.twig', [
             'user' => $user,
-            'current_theme' => 'dark'
+            'current_theme' => $request->getSession()->get('theme', 'default'),
+            'current_theme_name' => $request->getSession()->get('theme', 'default',)
         ]);
     }
 
     #[Route('/admin/user/{id}/delete', name: 'app_admin_user_delete', methods: ['POST'])]
-    public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
+    public function deleteUser(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -166,7 +189,7 @@ class UserRoleController extends AbstractController
     }
 
     #[Route('/admin/users/roles', name: 'app_admin_users_roles')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -179,7 +202,7 @@ class UserRoleController extends AbstractController
     }
 
     #[Route('/admin/user/{id}/promote', name: 'app_user_promote', requirements: ['id' => '\d+'])]
-    public function promote(int $id, EntityManagerInterface $entityManager): Response
+    public function promote(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -210,7 +233,7 @@ class UserRoleController extends AbstractController
     }
 
     #[Route('/admin/user/{id}/demote', name: 'app_user_demote', requirements: ['id' => '\d+'])]
-    public function demote(int $id, EntityManagerInterface $entityManager): Response
+    public function demote(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -243,7 +266,7 @@ class UserRoleController extends AbstractController
     }
 
     #[Route('/admin/user/{id}/send-reset', name: 'app_user_send_reset', requirements: ['id' => '\d+'])]
-    public function sendPasswordReset(int $id, EntityManagerInterface $entityManager): Response
+    public function sendPasswordReset(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 

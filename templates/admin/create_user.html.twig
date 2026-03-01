@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un utilisateur - GREENCORE{% endblock %}
+{% block title %}{{ 'Créer un utilisateur'|trans }} - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -100,25 +100,23 @@
                 margin-bottom: 1rem;
             }
         {% else %}
-            /* Thème par défaut - Vert et blanc */
+            /* Thème par défaut - Vert complet */
             body {
-                background-color: #ffffff !important;
-                color: #2d3748 !important;
-                background: linear-gradient(180deg, #ffffff 0%, #e8f5e8 50%, #ffffff 100%) !important;
+                background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%) !important;
                 min-height: 100vh;
             }
             .card {
                 background-color: #ffffff !important;
                 color: #2d3748 !important;
-                border: none;
-                border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
                 border: 2px solid #4caf50 !important;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
             }
             .card-header {
-                background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+                background: linear-gradient(135deg, #2e7d32, #43a047) !important;
                 color: white !important;
                 border-radius: 15px 15px 0 0 !important;
+                border-bottom: 2px solid #4caf50 !important;
             }
             .form-control {
                 background-color: #ffffff !important;
@@ -135,7 +133,7 @@
                 box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
             }
             .form-label {
-                color: #2d3748 !important;
+                color: #2e7d32 !important;
                 font-weight: 600;
                 margin-bottom: 8px;
             }
@@ -145,6 +143,17 @@
                 color: #2d3748 !important;
                 border-radius: 8px;
                 margin-bottom: 1rem;
+            }
+            .text-muted {
+                color: #2e7d32 !important;
+            }
+            .form-check-input:checked {
+                background-color: #4caf50 !important;
+                border-color: #4caf50 !important;
+            }
+            .form-check-input:focus {
+                border-color: #4caf50 !important;
+                box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
             }
         {% endif %}
         
@@ -243,18 +252,6 @@
                             {% endif %}
 
                             <div class="mb-3">
-                                {{ form_label(form.sexe, 'Sexe'|trans, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(form.sexe, {'attr': {'class': 'form-control'}}) }}
-                                {% if form.sexe.vars.errors|length > 0 %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.sexe.vars.errors %}
-                                            <small class="d-block">{{ error.message }}</small>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="mb-3">
                                 {{ form_label(form.roles, 'Roles'|trans, {'label_attr': {'class': 'form-label'}}) }}
                                 <div class="form-check">
                                     {% for child in form.roles %}
@@ -277,9 +274,6 @@
                                 <a href="{{ path('app_admin_users') }}" class="btn btn-secondary">
                                     Retour 
                                 </a>
-                                <button type="submit" class="btn btn-primary">
-                                    Créer l'utilisateur
-                                </button>
                             </div>
                         {{ form_end(form) }}
                     </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paramètres - GREENCORE{% endblock %}
+{% block title %}Paramètres - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -134,8 +134,8 @@
                                        id="app_name" 
                                        name="app_name" 
                                        class="form-control" 
-                                       value="{{ current_app_name|default('GREENCORE') }}"
-                                       placeholder="GREENCORE">
+                                       value="{{ current_app_name|default('GREENCORE'|trans) }}"
+                                       placeholder="{{ 'GREENCORE'|trans }}">
                             </div>
                         
                             <!-- Email administrateur -->
@@ -147,8 +147,8 @@
                                        id="admin_email" 
                                        name="admin_email" 
                                        class="form-control" 
-                                       value="{{ current_admin_email|default('admin@greencore.com') }}"
-                                       placeholder="admin@exemple.com">
+                                       value="{{ current_admin_email|default('admin@esprit.tn') }}"
+                                       placeholder="admin@esprit.tn">
                             </div>
                         </div>
 
@@ -226,9 +226,9 @@
                                     {{'Thème'|trans }}
                                 </label>
                                 <select id="theme" name="theme" class="form-control">
-                                    <option value="default" {% if current_theme == 'default' %}selected{% endif %}>{{ 'default'|trans }}</option>
-                                    <option value="dark" {% if current_theme == 'dark' %}selected{% endif %}>{{ 'sombre'|trans }}</option>
-                                    <option value="light" {% if current_theme == 'light' %}selected{% endif %}>{{ 'clair'|trans }}</option>
+                                    <option value="default" {% if current_theme == 'default' %}selected{% endif %}>{{ 'Défaut'|trans }}</option>
+                                    <option value="dark" {% if current_theme == 'dark' %}selected{% endif %}>{{ 'Sombre'|trans }}</option>
+                                    <option value="light" {% if current_theme == 'light' %}selected{% endif %}>{{ 'Clair'|trans }}</option>
                                 </select>
                             </div>
                         </div>

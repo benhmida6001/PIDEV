@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {{ user.email }} - GREENCORE{% endblock %}
+{% block title %}{{ 'Profil de {{ user.email }}'|trans }} {{ user.email }} - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

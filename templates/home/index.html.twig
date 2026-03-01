@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - GREENCORE{% endblock %}
+{% block title %}Accueil - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block body %}
     {% if app.user %}
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-primary" style="color: #4caf50 !important;">🌍 Bienvenue sur GREENCORE</h1>
-                    <p>La Technologie au coeur de la planète</p>
+                    <p>{{ 'app.tagline'|trans }}</p>
                     <p class="text-muted">Bonjour {{ app.user.email }} </p>
                     
                     <div class="mt-4">

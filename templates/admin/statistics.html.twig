@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Statistiques - GREENCORE{% endblock %}
+{% block title %}Statistiques - {{ 'GREENCORE'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -152,7 +152,6 @@
                 min-height: 100vh;
             }
             .stats-container {
-                background-color: #ffffff !important;
                 color: #2d3748 !important;
                 min-height: 100vh;
                 padding: 10px;
