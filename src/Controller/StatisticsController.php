@@ -104,7 +104,7 @@ final class StatisticsController extends AbstractController
         
         foreach ($users as $user) {
             $age = $user->getAge();
-            if ($age !== null) {
+            if ($age !== null && is_int($age)) {
                 if ($age < 18) {
                     $ageDistribution['Moins de 18 ans']++;
                 } elseif ($age >= 18 && $age <= 25) {
@@ -139,7 +139,7 @@ final class StatisticsController extends AbstractController
         ]);
     }
     
-    private function calculateGrowthTrends($users): array
+    private function calculateGrowthTrends(array $users): array
     {
         $growthTrends = [];
         $months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
@@ -167,12 +167,14 @@ final class StatisticsController extends AbstractController
     
     private function calculatePerformanceMetrics(): array
     {
-        return [
+        /** @var array<string, float> $metrics */
+        $metrics = [
             'page_load_time' => 1.2,
             'bounce_rate' => 25.5,
             'conversion_rate' => 3.8,
             'user_engagement' => 78.2
         ];
+        return $metrics;
     }
     
     #[Route('/admin/statistics', name: 'app_statistics')]
@@ -255,7 +257,7 @@ final class StatisticsController extends AbstractController
         
         foreach ($users as $user) {
             $age = $user->getAge();
-            if ($age !== null) {
+            if ($age !== null && is_int($age)) {
                 if ($age < 18) {
                     $ageDistribution['Moins de 18 ans']++;
                 } elseif ($age >= 18 && $age <= 25) {

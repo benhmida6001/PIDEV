@@ -20,7 +20,7 @@ final class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         // Si lastUsername est null, essayer de le récupérer de la session
-        if ($lastUsername === null) {
+        if ($lastUsername == null) {
             $session = $request->getSession();
             $lastUsername = $session->get('_security.last_username', '');
         }

@@ -461,7 +461,7 @@
                             </div>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <div class="col-12">
-                                    <a href="{{ path('app_admin_users') }}" class="quick-action">
+                                    <a href="{{ path('app_admin_users_roles') }}" class="quick-action">
                                         <div class="mb-2"></div>
                                         <div>{{ 'dashboard.manage_users'|trans|default('Gérer Utilisateurs') }}</div>
                                     </a>

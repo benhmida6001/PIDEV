@@ -128,12 +128,8 @@ final class ProfileController extends AbstractController
             }
 
             // Hasher et mettre à jour le nouveau mot de passe
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $newPassword
-                )
-            );
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $newPassword);
+            $user->setPassword($hashedPassword);
 
             $entityManager->flush();
             $this->addFlash('success', 'Votre mot de passe a été changé avec succès !');

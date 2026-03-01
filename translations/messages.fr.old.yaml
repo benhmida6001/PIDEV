@@ -1,0 +1,317 @@
+# Traductions pour l'administration
+admin:
+  users:
+    title: "Gestion des Utilisateurs"
+    list: "Liste des utilisateurs"
+    total: "utilisateurs"
+    create: "Créer un utilisateur"
+    back: "Retour"
+  table:
+    id: "ID"
+    email: "Email"
+    name: "Nom complet"
+    age: "Âge"
+    roles: "Rôles"
+    created: "Date de création"
+    actions: "Actions"
+  actions:
+    view: "Voir"
+    edit: "Modifier"
+    delete: "Supprimer"
+    create: "Créer"
+  messages:
+    no_users: "Aucun utilisateur trouvé"
+    no_users_description: "Commencez par inviter des membres à rejoindre la plateforme."
+    you: "Vous"
+    not_specified: "Non renseigné"
+    recently: "Il y a peu de temps"
+  roles:
+    admin: "Admin"
+    user: "User"
+  search:
+    placeholder: "Rechercher par email, nom, âge, rôle..."
+    button: "Rechercher"
+  delete_confirm: "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible."
+  title: "Administration"
+  create_user: "Créer un utilisateur"
+
+# Traductions directes pour l'interface
+Français: "Français"
+Anglais: "Anglais"
+Espagnol: "Espagnol"
+Allemand: "Allemand"
+Italien: "Italien"
+Portugais: "Portugais"
+Néerlandais: "Néerlandais"
+Arabe: "Arabe"
+Chinois: "Chinois"
+Japonais: "Japonais"
+
+# Paramètres système
+settings:
+  title: "Paramètres système"
+  description: "Configurez les paramètres de l'application"
+  general: "Configuration Générale"
+  app_name: "Nom de l'application"
+  admin_email: "Email administrateur"
+  language: "Langue"
+  theme: "Thème"
+  maintenance_mode: "Mode maintenance"
+  maintenance_help: "Activer le mode maintenance pour les utilisateurs"
+  notifications: "Notifications"
+  notifications_help: "Activer les notifications système"
+  debug_mode: "Mode debug"
+  debug_help: "Activer le mode debug pour le développement"
+  save: "Sauvegarder"
+  saved_success: "Paramètres sauvegardés avec succès !"
+  
+  # Options de langue
+  french: "Français"
+  english: "Anglais"
+  spanish: "Espagnol"
+  german: "Allemand"
+  italian: "Italien"
+  portuguese: "Portugais"
+  dutch: "Néerlandais"
+  arabic: "Arabe"
+  chinese: "Chinois"
+  japanese: "Japonais"
+  
+  # Options de thème
+  default: "Défaut"
+  dark: "Sombre"
+  light: "Clair"
+
+# Préférences utilisateur
+preferences:
+  title: "Préférences utilisateur"
+  description: "Personnaliser l'expérience utilisateur"
+  general: "Paramètres généraux"
+  language: "Langue préférée"
+  theme: "Thème préféré"
+  timezone: "Fuseau horaire"
+  notifications: "Notifications"
+  privacy: "Confidentialité"
+  accessibility: "Accessibilité"
+  save: "Sauvegarder les préférences"
+  saved_success: "Préférences sauvegardées avec succès !"
+  reset: "Réinitialiser"
+  reset_confirm: "Êtes-vous sûr de vouloir réinitialiser les préférences ?"
+  reset_success: "Préférences réinitialisées avec succès !"
+
+# Paramètres généraux
+general_settings:
+  language: "Langue"
+  theme: "Thème"
+  timezone: "Fuseau horaire"
+  date_format: "Format de date"
+  time_format: "Format d'heure"
+  currency: "Devise"
+  number_format: "Format des nombres"
+
+# Paramètres de notification
+notification_settings:
+  email_notifications: "Notifications par email"
+  push_notifications: "Notifications push"
+  sms_notifications: "Notifications SMS"
+  marketing_emails: "Emails marketing"
+  security_alerts: "Alertes de sécurité"
+  system_updates: "Mises à jour système"
+
+# Paramètres de confidentialité
+privacy_settings:
+  profile_visibility: "Visibilité du profil"
+  data_collection: "Collecte des données"
+  analytics_tracking: "Suivi analytique"
+  third_party_sharing: "Partage avec des tiers"
+  data_retention: "Conservation des données"
+  cookie_preferences: "Préférences de cookies"
+
+# Paramètres d'accessibilité
+accessibility_settings:
+  font_size: "Taille de police"
+  high_contrast: "Contraste élevé"
+  screen_reader: "Lecteur d'écran"
+  keyboard_navigation: "Navigation au clavier"
+  reduced_motion: "Réduction des mouvements"
+  focus_visible: "Focus visible"
+
+# Profil
+profile:
+  title: "Mon Profil"
+  description: "Gérer mes informations personnelles"
+  edit: "Modifier le profil"
+  change_password: "Changer le mot de passe"
+  confirm_password: "Confirmer le mot de passe"
+  sexe: "Sexe"
+  type_compte: "Type de compte"
+  id: "ID"
+  role: "Rôle"
+  administrator: "Administrateur"
+  user_role: "Utilisateur"
+  projects_created: "Projets créés"
+  tasks_completed: "Tâches complétées"
+  personal_info: "Informations Personnelles"
+  name: "Nom"
+  email: "Email"
+  last_login: "Dernière connexion"
+  account_created: "Compte créé"
+  status: "Statut"
+  active: "Actif"
+  inactive: "Inactif"
+
+# Navigation
+nav:
+  dashboard: "Tableau de bord"
+  home: "Accueil"
+  profile: "Profil"
+  users: "Utilisateurs"
+  settings: "Paramètres"
+  statistics: "Statistiques"
+  logout: "Déconnexion"
+
+# Messages système
+success: "Succès"
+error: "Erreur"
+warning: "Attention"
+info: "Information"
+
+# Sécurité
+security:
+  authentication_required: "Authentification requise"
+  access_denied: "Accès refusé"
+  invalid_credentials: "Identifiants invalides"
+  account_locked: "Compte bloqué"
+  account_disabled: "Compte désactivé"
+  account_expired: "Compte expiré"
+  session_expired: "Session expirée"
+
+# Administration
+admin:
+  title: "Administration"
+  users: "Utilisateurs"
+  create_user: "Créer un utilisateur"
+  edit_user: "Modifier l'utilisateur"
+  delete_user: "Supprimer l'utilisateur"
+  user_management: "Gestion des utilisateurs"
+  user_list: "Liste des utilisateurs"
+  user_details: "Détails de l'utilisateur"
+  user_name: "Nom de l'utilisateur"
+  user_email: "Email de l'utilisateur"
+  user_role: "Rôle de l'utilisateur"
+  user_status: "Statut de l'utilisateur"
+  active_users: "Utilisateurs actifs"
+  new_users: "Nouveaux utilisateurs"
+  total_users: "Total des utilisateurs"
+
+# Statistiques
+statistics:
+  title: "Statistiques"
+  description: "Vue d'ensemble des statistiques"
+  overview: "Aperçu général"
+  user_stats: "Statistiques des utilisateurs"
+  system_stats: "Statistiques système"
+  performance: "Performance"
+  reports: "Rapports"
+  charts: "Graphiques"
+  analytics: "Analytique"
+  metrics: "Métriques"
+  back: "Retour"
+  refresh: "Actualiser"
+
+# Dashboard
+dashboard:
+  title: "Tableau de bord"
+  welcome: "Bienvenue"
+  total_users: "Utilisateurs totaux"
+  active_users: "Utilisateurs actifs"
+  new_users: "Nouveaux utilisateurs"
+  quick_actions: "Actions rapides"
+  my_profile: "Mon Profil"
+  edit_profile: "Modifier Profil"
+  change_password: "Changer Mot de Passe"
+  manage_users: "Gérer Utilisateurs"
+  recent_activity: "Activité récente"
+  profile_updated: "Mise à jour du profil"
+  profile_updated_days: "Il y a 3 jours"
+  tasks_completed: "Tâches complétées"
+  progress: "Progrès"
+  profile_complete: "Profil complété"
+  administration: "Administration"
+  create_user: "Créer un utilisateur"
+  manage_accounts: "Gérer les comptes"
+  administrator: "Administrateur"
+  full_access: "Accès complet à la plateforme"
+  user: "Utilisateur"
+  manage_profile: "Gérez votre profil et vos activités"
+  projects_created: "Projets créés"
+  tasks_completed_label: "Tâches complétées"
+  security: "Sécurité"
+  performance: "Performance"
+  completed: "Terminé"
+  profile_updated_2h: "Il y a 2 heures"
+  profile_updated_1d: "Il y a 1 jour"
+  profile_updated_3d: "Il y a 3 jours"
+  profile_updated_1w: "Il y a 1 semaine"
+  first_login: "Première connexion"
+  system_login: "Connexion au système"
+  account_creation: "Création du compte"
+  see: "Voir"
+  manage: "Gérer"
+  configure: "Configurer"
+  back: "Retour"
+  refresh: "Actualiser"
+
+  personal_info: "Informations Personnelles"
+  name: "Nom"
+  email: "Email"
+  id: "ID"
+  role: "Rôle"
+  last_login: "Dernière connexion"
+  account_created: "Compte créé"
+  status: "Statut"
+  active: "Actif"
+  inactive: "Inactif"
+
+# Utilisateurs
+users:
+  title: "Gestion des Utilisateurs"
+  create_user: "Créer un utilisateur"
+  total_users: "utilisateurs"
+  name: "Nom"
+  email: "Email"
+  role: "Rôle"
+  actions: "Actions"
+  edit: "Modifier"
+  delete: "Supprimer"
+  view: "Voir"
+  admin: "Admin"
+  user: "User"
+  no_users_found: "Aucun utilisateur trouvé"
+  start_adding_users: "Commencez par ajouter des utilisateurs au système"
+  last_seen: "Dernière activité"
+  age: "ans"
+  a_few_moments_ago: "Il y a peu de temps"
+
+# Rôles
+roles:
+  title: "Gestion des Rôles"
+  manage_permissions: "Administrateur les permissions et les rôles des utilisateurs"
+  id: "ID"
+  user: "Utilisateur"
+  email: "Email"
+  roles: "Rôles"
+  actions: "Actions"
+  promote_admin: "Admin"
+  demote_user: "User"
+  reset_password: "Reset"
+  confirm_promote: "Promouvoir {{ email }} comme administrateur ?"
+  confirm_demote: "Rétrograder {{ email }} en utilisateur simple ?"
+  confirm_reset: "Envoyer un email de réinitialisation à {{ email }} ?"
+
+# Messages généraux
+general_messages:
+  success: "Succès"
+  error: "Erreur"
+  warning: "Attention"
+  info: "Information"
