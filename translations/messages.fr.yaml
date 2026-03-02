@@ -185,3 +185,23 @@ settings:
   app_name: "Nom de l'application"
   admin_email: "Email administrateur"
   language: "Langue"
+  theme: "Thème"
+  maintenance_mode: "Mode maintenance"
+  notifications: "Notifications"
+  debug_mode: "Mode débogage"
+  save: "Enregistrer"
+  reset: "Réinitialiser"
+  saved_success: "Paramètres enregistrés avec succès"
+  
+# Langues
+languages:
+  french: "Français"
+  english: "Anglais"
+  spanish: "Espagnol"
+  german: "Allemand"
+  italian: "Italien"
+  portuguese: "Portugais"
+  dutch: "Néerlandais"
+  arabic: "Arabe"
+  chinese: "Chinois"
+  japanese: "Japonais"

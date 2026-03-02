@@ -34,19 +34,27 @@ class ResetPasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
+            
+            // Log pour le débogage
+            error_log('Formulaire soumis avec email: ' . $email);
+            
             $userRepository = $this->entityManager->getRepository(User::class);
             $user = $userRepository->findOneBy(['email' => $email]);
 
             if ($user) {
+                error_log('Utilisateur trouvé: ' . $user->getEmail());
                 $success = $this->resetPasswordService->sendResetEmail($user);
                 
                 if ($success) {
-                    $this->addFlash('success', '📧 Un email de réinitialisation a été envoyé à votre adresse email.');
+                    error_log('Email envoyé avec succès');
+                    $this->addFlash('success', 'Un emaila été envoyé à votre adresse email.');
                 } else {
+                    error_log('Erreur lors de l\'envoi de l\'email');
                     $this->addFlash('error', '❌ Une erreur est survenue lors de l\'envoi de l\'email.');
                 }
             } else {
-                $this->addFlash('info', 'ℹ️ Si cette adresse email existe dans Notre système, vous recevrez un email de réinitialisation.');
+                error_log('Aucun utilisateur trouvé pour: ' . $email);
+                $this->addFlash('info', 'Si cette adresse email existe dans Notre système, vous recevrez un email.');
             }
 
             return $this->redirectToRoute('app_reset_password_request');
@@ -63,7 +71,7 @@ class ResetPasswordController extends AbstractController
         $user = $this->resetPasswordService->isResetTokenValid($token);
         
         if (!$user) {
-            $this->addFlash('error', '❌ Lien de réinitialisation invalide ou expiré.');
+            $this->addFlash('error', '❌ Lien invalide ou expiré.');
             return $this->redirectToRoute('app_reset_password_request');
         }
 
@@ -74,10 +82,10 @@ class ResetPasswordController extends AbstractController
             $newPassword = $form->get('plainPassword')->getData();
             
             if ($this->resetPasswordService->resetPassword($user, $newPassword)) {
-                $this->addFlash('success', '✅ Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.');
+                $this->addFlash('success', '✅ Votre mot de passe a été avec succès. Vous pouvez maintenant vous connecter.');
                 return $this->redirectToRoute('app_login');
             } else {
-                $this->addFlash('error', '❌ Une erreur est survenue lors de la réinitialisation du mot de passe.');
+                $this->addFlash('error', '❌ Une erreur est survenue lors du mot de passe.');
             }
         }
 

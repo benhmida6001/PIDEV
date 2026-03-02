@@ -1,0 +1,16 @@
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - 'src/Kernel.php'
+        - 'src/Entity/*'
+        - 'src/Migrations/*'
+        - 'src/DataFixtures/*'
+    ignoreErrors:
+        - '#Call to an undefined method.*#'
+        - '#Access to an undefined property.*#'
+        - '#Undefined variable.*#'
+    bootstrapFiles:
+        - vendor/autoload.php

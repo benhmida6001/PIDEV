@@ -186,8 +186,8 @@ security:
   account_expired: "Compte expiré"
   session_expired: "Session expirée"
 
-# Administration
-admin:
+# Administration - Section finale
+admin_section:
   title: "Administration"
   users: "Utilisateurs"
   create_user: "Créer un utilisateur"

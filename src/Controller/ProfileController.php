@@ -48,6 +48,8 @@ final class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Vérifier si le nouvel email n'est pas déjà utilisé par un autre utilisateur
+            /** @var User $user */
+            $user = $this->getUser();
             $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
             
             if ($existingUser && $existingUser->getId() !== $user->getId()) {
@@ -111,6 +113,7 @@ final class ProfileController extends AbstractController
         $current_theme = $session->get('theme', 'default');
         
         $user = $this->getUser();
+        /** @var User $user */
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 

@@ -1,0 +1,19 @@
+# Commandes PHPStan pour PowerShell
+
+## 1. Changer de répertoire
+cd "c:\Users\User_01\Downloads\PIDEV-user1 (2)\PIDEV-user1"
+
+## 2. Version PHPStan
+php phpstan.phar --version
+
+## 3. Analyse avec configuration clean
+php phpstan.phar analyse src --configuration=phpstan-clean.neon
+
+## 4. Analyse avec configuration minimale
+php phpstan.phar analyse src --configuration=phpstan-minimal-final.neon
+
+## 5. Analyse avec configuration finale
+php phpstan.phar analyse src --configuration=phpstan-final.neon
+
+## 6. Rapport HTML
+php phpstan.phar analyse src --configuration=phpstan-clean.neon --report-html=phpstan-report.html

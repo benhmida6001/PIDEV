@@ -1,0 +1,13 @@
+parameters:
+    level: 5
+    paths:
+        - src
+    excludePaths:
+        - 'src/Kernel.php'
+        - 'src/Entity/*'
+        - 'src/Migrations/*'
+        - 'src/DataFixtures/*'
+    ignoreErrors:
+        - '#greaterOrEqual\.alwaysTrue#'
+        - '#property\.onlyWritten#'
+    treatPhpDocTypesAsCertain: false

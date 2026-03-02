@@ -13,6 +13,10 @@ class UserPreferences
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(inversedBy: 'preferences', targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     #[ORM\Column(length: 10)]
     private ?string $language = 'fr';
 
@@ -134,6 +138,18 @@ class UserPreferences
     public function setTimeFormat(string $timeFormat): static
     {
         $this->timeFormat = $timeFormat;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -18,6 +18,7 @@ class UserPreferencesController extends AbstractController
     #[Route('/', name: 'app_user_preferences')]
     public function index(Security $security, EntityManagerInterface $entityManager): Response
     {
+        /** @var User $user */
         $user = $security->getUser();
         
         // Récupérer ou créer les préférences de l'utilisateur
@@ -42,6 +43,7 @@ class UserPreferencesController extends AbstractController
     #[Route('/save', name: 'app_user_preferences_save', methods: ['POST'])]
     public function save(Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
+        /** @var User $user */
         $user = $security->getUser();
         $preferences = $user->getPreferences();
         
@@ -75,6 +77,7 @@ class UserPreferencesController extends AbstractController
     #[Route('/reset', name: 'app_user_preferences_reset')]
     public function reset(Security $security, EntityManagerInterface $entityManager): Response
     {
+        /** @var User $user */
         $user = $security->getUser();
         $preferences = $user->getPreferences();
         

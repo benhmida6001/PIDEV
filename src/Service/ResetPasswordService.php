@@ -45,8 +45,18 @@ class ResetPasswordService
 
     public function sendResetEmail(User $user): bool
     {
-        $token = $this->generateResetToken($user);
-        return $this->emailService->sendPasswordResetEmail($user->getEmail(), $token);
+        try {
+            $token = $this->generateResetToken($user);
+            error_log('Token généré: ' . $token);
+            
+            $result = $this->emailService->sendPasswordResetEmail($user->getEmail(), $token);
+            error_log('Résultat envoi email: ' . ($result ? 'succès' : 'échec'));
+            
+            return $result;
+        } catch (\Exception $e) {
+            error_log('Exception dans sendResetEmail: ' . $e->getMessage());
+            return false;
+        }
     }
 
     public function isResetTokenValid(string $token): ?User

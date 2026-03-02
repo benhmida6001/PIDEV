@@ -19,7 +19,7 @@ class ResetPasswordFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'label' => '🔐 Nouveau Mot de Passe',
+                    'label' => ' Nouveau Mot de Passe',
                     'attr' => [
                         'placeholder' => 'Entrez votre nouveau mot de passe',
                         'class' => 'form-control'
@@ -36,7 +36,7 @@ class ResetPasswordFormType extends AbstractType
                     ],
                 ],
                 'second_options' => [
-                    'label' => '🔒 Confirmer le Mot de Passe',
+                    'label' => ' Confirmer le Mot de Passe',
                     'attr' => [
                         'placeholder' => 'Confirmez votre nouveau mot de passe',
                         'class' => 'form-control'
@@ -46,7 +46,7 @@ class ResetPasswordFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => '🔐 Réinitialiser le mot de passe',
+                'label' => 'Réinitialiser le mot de passe',
                 'attr' => [
                     'class' => 'btn btn-success w-100'
                 ]

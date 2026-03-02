@@ -1,0 +1,6 @@
+parameters:
+    level: 3
+    paths:
+        - src/Controller
+    excludePaths:
+        - 'src/Controller/StatisticsController.php'

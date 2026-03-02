@@ -1,0 +1,215 @@
+# Mensajes de la aplicación en español - GREENCORE
+
+# Aplicación
+app:
+  name: "GREENCORE"
+  tagline: "La tecnología en el corazón del planeta"
+
+# Autenticación y seguridad
+security:
+  login: "Iniciar sesión"
+  logout: "Cerrar sesión"
+  remember_me: "Recordarme"
+  registration: "Crear cuenta"
+  forgot_password: "Contraseña olvidada"
+  reset_password: "Restablecer contraseña"
+
+# Panel de control
+dashboard:
+  title: "Panel de control"
+  welcome: "Bienvenido a GREENCORE"
+  overview: "Vista general"
+  statistics: "Estadísticas"
+  users: "Usuarios"
+  settings: "Configuración"
+
+# Usuarios
+users:
+  title: "Usuarios"
+  list: "Lista de usuarios"
+  create: "Crear usuario"
+  edit: "Editar usuario"
+  delete: "Eliminar usuario"
+  profile: "Perfil de usuario"
+  roles: "Roles"
+  permissions: "Permisos"
+
+# Perfil de usuario
+profile:
+  title: "Perfil"
+  edit: "Editar perfil"
+  change_password: "Cambiar contraseña"
+  preferences: "Preferencias"
+  avatar: "Avatar"
+  information: "Información personal"
+
+# Configuración
+settings:
+  title: "Configuración del sistema"
+  description: "Configura los parámetros de la aplicación"
+  general: "Configuración general"
+  app_name: "Nombre de la aplicación"
+  admin_email: "Correo del administrador"
+  language: "Idioma"
+  theme: "Tema"
+  maintenance_mode: "Modo mantenimiento"
+  notifications: "Notificaciones"
+  debug_mode: "Modo depuración"
+  save: "Guardar"
+  reset: "Restablecer"
+  saved_success: "Configuración guardada exitosamente"
+
+# Idiomas
+languages:
+  spanish: "Español"
+  french: "Francés"
+  english: "Inglés"
+  german: "Alemán"
+  italian: "Italiano"
+  portuguese: "Portugués"
+  dutch: "Neerlandés"
+  arabic: "Árabe"
+  chinese: "Chino"
+  japanese: "Japonés"
+
+# Temas
+themes:
+  default: "Por defecto"
+  light: "Claro"
+  dark: "Oscuro"
+
+# Acciones
+actions:
+  save: "Guardar"
+  cancel: "Cancelar"
+  delete: "Eliminar"
+  edit: "Editar"
+  view: "Ver"
+  create: "Crear"
+  update: "Actualizar"
+  back: "Volver"
+  submit: "Enviar"
+  search: "Buscar"
+
+# Validación
+validation:
+  required: "Este campo es obligatorio"
+  email: "Por favor ingrese un correo electrónico válido"
+  password_min: "La contraseña debe contener al menos 8 caracteres"
+  password_match: "Las contraseñas deben coincidir"
+
+# Estados
+status:
+  active: "Activo"
+  inactive: "Inactivo"
+  pending: "Pendiente"
+  completed: "Completado"
+  cancelled: "Cancelado"
+
+# Errores
+error:
+  invalid_credentials: "Credenciales inválidas"
+  user_not_found: "Usuario no encontrado"
+  email_already_used: "Este correo electrónico ya está en uso"
+  password_mismatch: "Las contraseñas no coinciden"
+  current_password_incorrect: "La contraseña actual es incorrecta"
+  access_denied: "Acceso denegado"
+  token_expired: "El token ha expirado"
+  invalid_token: "Token inválido"
+
+# Correos electrónicos
+emails:
+  password_reset:
+    subject: "Restablecimiento de contraseña"
+    greeting: "Hola,"
+    intro: "Has solicitado restablecer tu contraseña."
+    instructions: "Haz clic en el enlace de abajo para establecer una nueva contraseña."
+    security_note: "Nota: Este enlace expirará en 1 hora."
+    footer: "Este correo fue enviado automáticamente por GREENCORE - Todos los derechos reservados"
+    copyright: "© 2026 GREENCORE - Todos los derechos reservados"
+  
+  role_change:
+    subject: "Cambio de rol"
+    greeting: "Hola,"
+    intro: "Tus permisos han sido actualizados."
+    instructions: "Por favor inicia sesión para ver tus nuevos permisos."
+    security_note: "Nota: Contáctanos inmediatamente en caso de actividad sospechosa."
+    footer: "Este correo fue enviado automáticamente por GREENCORE - Todos los derechos reservados"
+    copyright: "© 2026 GREENCORE - Todos los derechos reservados"
+
+# Interfaz de usuario
+ui:
+  welcome: "Bienvenido a GREENCORE"
+  tagline: "La tecnología en el corazón del planeta"
+  powered_by: "Desarrollado por GREENCORE"
+  copyright: "© 2026 GREENCORE - Todos los derechos reservados"
+
+# Roles
+roles:
+  admin: "Administrador"
+  user: "Usuario"
+  moderator: "Moderador"
+  editor: "Editor"
+  viewer: "Visor"
+
+# Estadísticas
+statistics:
+  title: "Estadísticas"
+  overview: "Vista general"
+  users_count: "Cantidad de usuarios"
+  active_users: "Usuarios activos"
+  new_users: "Usuarios nuevos"
+  total_projects: "Total de proyectos"
+  completed_tasks: "Tareas completadas"
+  system_performance: "Rendimiento del sistema"
+
+# Mantenimiento
+maintenance:
+  title: "Modo mantenimiento"
+  mode_enabled: "Modo mantenimiento habilitado"
+  mode_disabled: "Modo mantenimiento deshabilitado"
+  message: "El sistema actualmente está en modo de mantenimiento. Por favor intente nuevamente más tarde."
+  estimated_time: "Tiempo estimado para finalización"
+
+# Notificaciones
+notifications:
+  title: "Notificaciones"
+  new_user: "Nuevo usuario"
+  user_updated: "Usuario actualizado"
+  system_alert: "Alerta del sistema"
+  security_alert: "Alerta de seguridad"
+  email_notification: "Notificación por correo"
+
+# Entorno
+environment:
+  development: "Desarrollo"
+  production: "Producción"
+  testing: "Pruebas"
+  debug_mode: "Modo depuración"
+
+# Rendimiento
+performance:
+  title: "Rendimiento"
+  page_load_time: "Tiempo de carga de página"
+  memory_usage: "Uso de memoria"
+  database_queries: "Consultas a la base de datos"
+  cache_hit_ratio: "Tasa de aciertos de caché"
+
+# Características de seguridad
+security_features:
+  two_factor_auth: "Autenticación de dos factores"
+  rate_limiting: "Limitación de tasa"
+  ip_whitelist: "Lista blanca de IP"
+  session_timeout: "Tiempo de espera de sesión"
+  password_policy: "Política de contraseñas"
+  encryption: "Cifrado"
+
+# Ayuda
+help:
+  title: "Ayuda"
+  documentation: "Documentación"
+  support: "Soporte técnico"
+  faq: "Preguntas frecuentes"
+  contact: "Contactar"
+  tutorials: "Tutoriales"
+  guides: "Guías"

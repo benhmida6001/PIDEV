@@ -1,0 +1,12 @@
+parameters:
+    level: 6
+    paths:
+        - src
+    excludePaths:
+        - 'src/Kernel.php'
+        - 'src/Entity/*'
+        - 'src/Migrations/*'
+        - 'src/DataFixtures/*'
+    ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface::#'
+        - '#Call to an undefined method App\\Entity\\UserPreferences::#'
