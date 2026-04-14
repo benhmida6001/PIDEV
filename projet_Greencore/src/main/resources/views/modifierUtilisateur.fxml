@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- fx:controller = classe Java complète (pas un fichier sous views/) -->
+
+<VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #4caf50;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.greencore.controllers.ModifierUtilisateurController">
+   <children>
+      <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" text="Modifier Utilisateur" />
+      
+      <GridPane alignment="CENTER" hgap="10.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;" vgap="10.0">
+         <children>
+            <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="idField" editable="false" prefWidth="200.0" promptText="ID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            
+            <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="nomField" prefWidth="200.0" promptText="Nom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            
+            <Label text="Prénom:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="prenomField" prefWidth="200.0" promptText="Prénom" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            
+            <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="emailField" prefWidth="200.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            
+            <Label text="Mot de passe:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <PasswordField fx:id="passwordField" prefWidth="200.0" promptText="Laisser vide pour conserver" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            
+            <Label text="Téléphone:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <TextField fx:id="telephoneField" prefWidth="200.0" promptText="Téléphone" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            
+            <Label text="Adresse:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+            <TextField fx:id="adresseField" prefWidth="200.0" promptText="Adresse" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            
+            <Label text="Rôle:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+            <ComboBox fx:id="roleComboBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            
+            <Label text="Points:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+            <TextField fx:id="pointsField" prefWidth="200.0" promptText="Points gagnés" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      
+      <HBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Button onAction="#handleEnregistrer" prefWidth="100.0" text="Enregistrer" />
+            <Button onAction="#handleAnnuler" prefWidth="100.0" text="Annuler" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.greencore.controllers.AfficherEvenementsController">
+   <children>
+      <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" text="Liste des Événements" />
+      
+      <Separator style="-fx-background-color: white;" />
+      
+      <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #f1f8e9; -fx-padding: 10; -fx-background-radius: 8;">
+         <children>
+            <Button onAction="#handleActualiser" prefWidth="100.0" style="-fx-background-color: #81C784; -fx-text-fill: white; -fx-font-weight: bold;" text="Actualiser" />
+            <Button onAction="#handleAjouterEvenement" prefWidth="150.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Ajouter Événement" />
+            <Button onAction="#handleMettreAJourParticipations" prefWidth="140.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Gérer Participations" />
+            <Button onAction="#handleRetour" prefWidth="80.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" text="Retour" />
+         </children>
+      </HBox>
+      
+      <TableView fx:id="evenementsTable" prefHeight="400.0" prefWidth="746.0" style="-fx-background-color: white; -fx-border-color: #4CAF50; -fx-border-width: 1;">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+            <TableColumn fx:id="nomColumn" prefWidth="150.0" text="Nom" />
+            <TableColumn fx:id="dateColumn" prefWidth="120.0" text="Date" />
+            <TableColumn fx:id="lieuColumn" prefWidth="150.0" text="Lieu" />
+            <TableColumn fx:id="capaciteColumn" prefWidth="80.0" text="Capacité" />
+            <TableColumn fx:id="pointsColumn" prefWidth="80.0" text="Points" />
+         </columns>
+      </TableView>
+      
+      <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #f1f8e9; -fx-padding: 10; -fx-background-radius: 8;">
+         <children>
+            <Button onAction="#handleRechercherParId" prefWidth="120.0" style="-fx-background-color: #9C27B0; -fx-text-fill: white; -fx-font-weight: bold;" text="Rechercher par ID" />
+            <Button onAction="#handleRechercherParCritere" prefWidth="140.0" style="-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-weight: bold;" text="Rechercher par Critère" />
+            <Button onAction="#handleInscrireUtilisateur" prefWidth="130.0" style="-fx-background-color: #00BCD4; -fx-text-fill: white; -fx-font-weight: bold;" text="Inscrire Utilisateur" />
+            <Button onAction="#handleModifier" prefWidth="80.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Modifier" />
+            <Button onAction="#handleSupprimer" prefWidth="80.0" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Supprimer" />
+            <Button onAction="#handleDetails" prefWidth="100.0" style="-fx-background-color: #81C784; -fx-text-fill: white; -fx-font-weight: bold;" text="Détails" />
+         </children>
+      </HBox>
+      
+      <Label fx:id="messageLabel" style="-fx-text-fill: white;" text="" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

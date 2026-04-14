@@ -1,0 +1,138 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpfony/phpunit ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+###> IDE ###
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+###< IDE ###
+
+###> OS ###
+.DS_Store
+Thumbs.db
+###< OS ###
+
+###> Uploads ###
+/public/uploads/
+###< Uploads ###
+
+###> Logs ###
+/logs/
+*.log
+###< Logs ###
+
+###> Cache ###
+.cache/
+###< Cache ###
+
+###> Database ###
+*.sqlite
+*.sqlite3
+*.db
+###< Database ###
+
+###> Parent directory files ###
+../
+../../
+../../../
+*~
+*.tmp
+*.temp
+*.exe
+*.zip
+*.rar
+*.sql
+*.csv
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.apk
+*.msi
+*.iso
+*.ova
+*.pkt
+*.pka
+Downloads/
+Examen/
+Favorites/
+FirstProject7/
+GNS3/
+IdeaProjects/
+IdeaSnapshots/
+IntelGraphicsProfiles/
+Links/
+Music/
+NTUSER.*
+OneDrive/
+Oracle/
+Pictures/
+Projet7/
+ReverseEngineering/
+Saved Games/
+Searches/
+SportNova/
+Videos/
+VirtualBox VMs/
+anaconda3/
+bibliotheque/
+bookshop-api/
+classe/
+compte/
+ecole/
+equipements/
+etudiant/
+event-project/
+ex*.sql
+exercice*/
+firstAppSymfony*
+firstProject*
+firstprojet*
+gestionCompe/
+mahad*/
+main.c
+main.cpp
+notes/
+ntuser.*
+openpdf/
+polr-admin/
+proj*/
+project*/
+projet*/
+prosit*
+revision/
+scoop/
+seance*/
+skeleton/
+symfony-*/
+test/
+tournee/
+user-management-new/
+user.sql
+user/
+vendor/
+voyage/
+web*/
+###< Parent directory files ###

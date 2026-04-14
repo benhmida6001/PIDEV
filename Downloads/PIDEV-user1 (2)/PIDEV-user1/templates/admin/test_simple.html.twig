@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test Simple - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .test-container {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .test-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        .big-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #3498db;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="test-container">
+        <div class="container">
+            <h1 class="text-center mb-4">🧪 PAGE DE TEST SIMPLE</h1>
+            
+            <div class="test-card">
+                <h3>✅ Test de Base</h3>
+                <div class="big-text">{{ totalUsers|default(0) }}</div>
+                <div class="success">
+                    ✅ La page de test fonctionne !<br>
+                    ✅ Les données Twig sont passées<br>
+                    ✅ Le template est rendu<br>
+                    ✅ Le CSS est appliqué
+                </div>
+            </div>
+            
+            <div class="test-card">
+                <h3>📊 Données de Test</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Utilisateurs</h4>
+                        <p><strong>Total:</strong> {{ totalUsers|default(0) }}</p>
+                        <p><strong>Actifs:</strong> {{ activeUsers|default(0) }}</p>
+                        <p><strong>Nouveaux:</strong> {{ newUsersThisMonth|default(0) }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Sexe</h4>
+                        <p><strong>Hommes:</strong> {{ maleUsers|default(0) }}</p>
+                        <p><strong>Femmes:</strong> {{ femaleUsers|default(0) }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Rôles</h4>
+                        <p><strong>Admins:</strong> {{ adminUsers|default(0) }}</p>
+                        <p><strong>Users:</strong> {{ userUsers|default(0) }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-card">
+                <h3>🎨 Test Canvas</h3>
+                <canvas id="testCanvas" width="400" height="200" style="border: 2px solid #3498db; border-radius: 10px;"></canvas>
+                <div class="success mt-3">
+                    ✅ Canvas HTML créé<br>
+                    ✅ Dimensions: 400x200<br>
+                    ✅ Bordure bleue visible
+                </div>
+            </div>
+            
+            <div class="test-card">
+                <h3>🔗 Liens de Navigation</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ path('app_statistics') }}" class="btn btn-primary btn-block mb-2">
+                            📊 Statistiques Normales
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ path('app_statistics_debug') }}" class="btn btn-warning btn-block mb-2">
+                            🔍 Page Debug
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ path('app_database') }}" class="btn btn-success btn-block mb-2">
+                            🗄️ Base de Données
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ path('app_phpmyadmin') }}" class="btn btn-info btn-block mb-2">
+                            💻 phpMyAdmin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        console.log('=== PAGE DE TEST SIMPLE ===');
+        console.log('Total users:', {{ totalUsers|default(0) }});
+        
+        // Test simple du canvas
+        const canvas = document.getElementById('testCanvas');
+        if (canvas) {
+            console.log('✅ Canvas trouvé');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(50, 50, 100, 50);
+            ctx.fillStyle = '#e74c3c';
+            ctx.font = '20px Arial';
+            ctx.fillText('TEST', 60, 80);
+            console.log('✅ Canvas dessiné');
+        } else {
+            console.log('❌ Canvas non trouvé');
+        }
+        
+        console.log('=== FIN DU TEST ===');
+    </script>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.email }} - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary {
+            border-color: #4caf50;
+            color: #4caf50;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 2px solid #4caf50;
+            background: transparent;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: #ffa726;
+            border-color: #ffa726;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #ef5350;
+            border-color: #ef5350;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">Profil de l'utilisateur</h3>
+                            <a href="{{ path('app_admin_users') }}" class="btn btn-outline-primary btn-sm">
+                                Retour à la liste
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3">
+                                    <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 150px; height: 150px; background: linear-gradient(135deg, #e8f5e8, #c8e6c9) !important; overflow: hidden; position: relative;">
+                                        {% if user.profilePicture %}
+                                            <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Photo de profil" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                                        {% else %}
+                                            <span style="font-size: 4rem; color: #2e7d32;">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <h4 class="text-primary" style="color: #2e7d32 !important;">
+                                    {% if user.nom or user.prenom %}
+                                        {{ user.prenom }} {{ user.nom }}
+                                    {% else %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                </h4>
+                                <p class="text-muted">{{ user.email }}</p>
+                                {% if app.user.email == user.email %}
+                                    <span class="badge bg-info">Vous</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="mb-3">Informations personnelles</h5>
+                                <table class="table table-borderless">
+                                    {% if user.nom or user.prenom %}
+                                        <tr>
+                                            <td><strong>Nom complet:</strong></td>
+                                            <td>{{ user.prenom }} {{ user.nom }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td><strong>Sexe:</strong></td>
+                                        <td>
+                                            {% if user.sexe == 'homme' %}
+                                                Homme
+                                            {% elseif user.sexe == 'femme' %}
+                                                Femme
+                                            {% else %}
+                                                Non spécifié
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% if user.age %}
+                                        <tr>
+                                            <td><strong>Âge:</strong></td>
+                                            <td>{{ user.age }} ans</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td><strong>Email:</strong></td>
+                                        <td>{{ user.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ID Utilisateur:</strong></td>
+                                        <td>{{ user.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rôles:</strong></td>
+                                        <td>
+                                            {% for role in user.roles %}
+                                                <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'primary' }}" style="background-color: {{ role == 'ROLE_ADMIN' ? '#ef5350' : '#4caf50' }} !important;">
+                                                    {{ role == 'ROLE_ADMIN' ? 'Administrateur' : 'Utilisateur' }}
+                                                </span>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                {% if app.user.email != user.email %}
+                                    <div class="mt-4">
+                                        <h5 class="mb-3">Actions</h5>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i> Modifier
+                                            </a>
+                                            <form method="POST" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.');">
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i> Supprimer
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

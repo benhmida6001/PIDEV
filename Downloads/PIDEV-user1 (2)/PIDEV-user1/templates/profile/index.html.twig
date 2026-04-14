@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil - GREENCORE{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card {
+            border: none;
+            border-radius: 15px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary {
+            border-color: #4caf50;
+            color: #4caf50;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 2px solid #4caf50;
+            background: transparent;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-outline-danger {
+            border-color: #f44336;
+            color: #f44336;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 2px solid #f44336;
+            background: transparent;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: #f44336;
+            border-color: #f44336;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .bg-primary {
+            background-color: #4caf50 !important;
+        }
+        
+        .bg-success {
+            background-color: #66bb6a !important;
+        }
+        
+        .bg-info {
+            background-color: #4caf50 !important;
+        }
+        
+        .bg-danger {
+            background-color: #4caf50 !important;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Messages flash -->
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0"> Profil</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="mb-3">
+                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 150px; height: 150px; background: linear-gradient(135deg, #e8f5e8, #c8e6c9) !important; overflow: hidden; position: relative;">
+                                    {% if user.profilePicture %}
+                                        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Photo de profil" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <span style="font-size: 4rem; color: #2e7d32;"></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h4 class="text-primary" style="color: #2e7d32 !important;">{{ user.email }}</h4>
+                            <p class="text-muted">Membre depuis maintenant</p>
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="mb-3">Information personnelle</h5>
+                            <table class="table table-borderless">
+                                {% if user.nom or user.prenom %}
+                                    <tr>
+                                        <td><strong>Nom complet:</strong></td>
+                                        <td>{{ user.prenom }} {{ user.nom }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if user.adresse %}
+                                    <tr>
+                                        <td><strong>Adresse:</strong></td>
+                                        <td>{{ user.adresse }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if user.age %}
+                                    <tr>
+                                        <td><strong>Âge:</strong></td>
+                                        <td>{{ user.age }} ans</td>
+                                    </tr>
+                                {% endif %}
+                                {% if user.sexe %}
+                                    <tr>
+                                        <td><strong>Sexe:</strong></td>
+                                        <td>
+                                            {% if user.sexe == 'homme' %}
+                                                Homme
+                                            {% elseif user.sexe == 'femme' %}
+                                                Femme
+                                            {% else %}
+                                                Non spécifié
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td><strong>Email:</strong></td>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{{ 'profile.id'|trans }}:</strong></td>
+                                    <td>{{ user.id }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{{ 'profile.role'|trans }}:</strong></td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'primary' }}" style="background-color: {{ role == 'ROLE_ADMIN' ? '#ef5350' : '#4caf50' }} !important;">
+                                                {{ role == 'ROLE_ADMIN' ? 'profile.administrator'|trans : 'profile.user_role'|trans }}
+                                            </span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="mt-4">
+                                <a href="{{ path('app_profile_edit') }}" class="btn-outline-primary me-2">
+                                     Modifier le profil
+                                </a>
+                                <a href="{{ path('app_profile_change_password') }}" class="btn-outline-danger">
+                                    Changer le mot de passe
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0"> Statistiques</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h3 class="text-primary" style="color: #4caf50 !important;">6</h3>
+                                <p class="text-muted">Projets créés</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h3 class="text-success" style="color: #66bb6a !important;">4</h3>
+                                <p class="text-muted">Tâches complétées</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h3 class="text-info" style="color: #26a69a !important;">2</h3>
+                                <p class="text-muted">Collaborations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
