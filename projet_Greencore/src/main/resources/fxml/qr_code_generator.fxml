@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #4caf50;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QRCodeController">
+   <children>
+      <Label layoutX="200.0" layoutY="30.0" text="QR Code Generator" textFill="WHITE">
+         <font>
+            <Font name="Cambria Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      
+      <!-- QR Code Type Selection -->
+      <Label layoutX="50.0" layoutY="80.0" text="Type de QR Code:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbQRType" layoutX="200.0" layoutY="75.0" prefHeight="30.0" prefWidth="450.0" style="-fx-background-color: white; -fx-text-fill: #333;">
+      </ComboBox>
+      
+      <!-- Entity Selection -->
+      <Label layoutX="50.0" layoutY="130.0" text="Entité:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbEntity" layoutX="200.0" layoutY="125.0" prefHeight="30.0" prefWidth="450.0" style="-fx-background-color: white; -fx-text-fill: #333;">
+      </ComboBox>
+      
+      <!-- ID Input -->
+      <Label layoutX="50.0" layoutY="180.0" text="ID:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfId" layoutX="200.0" layoutY="175.0" prefHeight="30.0" prefWidth="450.0" style="-fx-background-color: white; -fx-text-fill: #333;" />
+      
+      <!-- Generate Button -->
+      <Button fx:id="btnGenerate" layoutX="200.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleGenerateQRCode" prefHeight="35.0" prefWidth="450.0" style="-fx-background-color: #2196f3; -fx-text-fill: white;" text="Générer QR Code">
+         <font>
+            <Font name="Cambria Bold" size="16.0" />
+         </font>
+      </Button>
+      
+      <!-- QR Code Display -->
+      <VBox fx:id="vboxQRDisplay" layoutX="50.0" layoutY="280.0" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 20; -fx-spacing: 10;" visible="false">
+         <children>
+            <Label fx:id="lblQRCodeData" text="QR Code data will appear here" wrapText="true" textFill="#333">
+               <font>
+                  <Font name="System" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblQRCodeImage" text="QR Code image will appear here" textFill="#333">
+               <font>
+                  <Font name="System" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      
+      <!-- Download Button -->
+      <Button fx:id="btnDownload" layoutX="200.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleDownloadQRCode" prefHeight="30.0" prefWidth="450.0" style="-fx-background-color: #4caf50; -fx-text-fill: white;" text="Télécharger" visible="false">
+         <font>
+            <Font name="Cambria Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <!-- Status Label -->
+      <Label fx:id="lblStatus" layoutX="200.0" layoutY="540.0" text="" textFill="WHITE">
+         <font>
+            <Font name="System" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

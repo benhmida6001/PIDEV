@@ -112,9 +112,25 @@ public class Evenement {
     }
 
     public void ajouterParticipant(Utilisateur u) {
-        if (u != null && !participants.contains(u)) {
+        if (u != null && !participants.contains(u) && participants.size() < capaciteMax) {
             participants.add(u);
+            u.getEvenements().add(this);
         }
+    }
+
+    public void retirerParticipant(Utilisateur u) {
+        if (u != null && participants.contains(u)) {
+            participants.remove(u);
+            u.getEvenements().remove(this);
+        }
+    }
+
+    public boolean estComplet() {
+        return participants.size() >= capaciteMax;
+    }
+
+    public int getPlacesRestantes() {
+        return capaciteMax - participants.size();
     }
 
     @Override
@@ -127,6 +143,21 @@ public class Evenement {
                 ", description='" + description + '\'' +
                 ", capaciteMax=" + capaciteMax +
                 ", pointsOfferts=" + pointsOfferts +
+                ", participants=" + participants.size() +
+                ", placesRestantes=" + getPlacesRestantes() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Evenement evenement = (Evenement) o;
+        return idEvent == evenement.idEvent;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(idEvent);
     }
 }

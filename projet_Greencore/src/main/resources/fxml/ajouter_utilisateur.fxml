@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="704.0" prefWidth="716.0" style="-fx-background-color: #4caf50;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouterUtilisateurController">
+    <children>
+
+        <!-- Titre -->
+        <Label layoutX="244.0" layoutY="24.0" text="Ajouter Utilisateur" textFill="WHITE">
+            <font>
+                <Font name="Cambria Bold Italic" size="27.0" />
+            </font>
+        </Label>
+
+        <!-- Nom -->
+        <Label layoutX="100.0" layoutY="77.0" text="Nom:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfNom" layoutX="150.0" layoutY="75.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Prénom -->
+        <Label layoutX="75.0" layoutY="117.0" text="Prénom:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfPrenom" layoutX="150.0" layoutY="115.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Email -->
+        <Label layoutX="98.0" layoutY="157.0" text="Email:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfEmail" layoutX="150.0" layoutY="155.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Téléphone -->
+        <Label layoutX="57.0" layoutY="197.0" text="Téléphone:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfTelephone" layoutX="150.0" layoutY="195.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Adresse -->
+        <Label layoutX="80.0" layoutY="237.0" text="Adresse:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfAdresse" layoutX="150.0" layoutY="235.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Rôle -->
+        <Label layoutX="101.0" layoutY="277.0" text="Rôle:" textFill="WHITE">
+            <font><Font name="System Bold" size="18.0" /></font>
+        </Label>
+        <ComboBox fx:id="cbRole" layoutX="150.0" layoutY="275.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Mot de passe -->
+        <Label layoutX="36.0" layoutY="317.0" text="Mot de passe:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <PasswordField fx:id="pfMotDePasse" layoutX="150.0" layoutY="315.0" prefHeight="30.0" prefWidth="462.0" />
+
+        <!-- Points -->
+        <Label layoutX="92.0" layoutY="357.0" text="Points:" textFill="WHITE">
+            <font><Font name="System Bold" size="17.0" /></font>
+        </Label>
+        <TextField fx:id="tfPoints" layoutX="150.0" layoutY="355.0" prefHeight="30.0" prefWidth="462.0" text="0" />
+
+        <!-- Message erreur/succès -->
+        <Label fx:id="lblMessage" layoutX="150.0" layoutY="390.0" prefWidth="462.0" text="" textFill="WHITE" wrapText="true">
+            <font><Font name="System" size="13.0" /></font>
+        </Label>
+
+        <!-- ✅ Bouton Ajouter — corrigé -->
+        <Button fx:id="btnAjouter" layoutX="150.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleAjouterUtilisateur" prefHeight="34.0" prefWidth="120.0" style="-fx-background-color: #2e7d32; -fx-text-fill: white;" text="Ajouter">
+            <font><Font name="Cambria Bold" size="14.0" /></font>
+        </Button>
+
+        <!-- ✅ Bouton Annuler — corrigé (balise fermée correctement) -->
+        <Button fx:id="btnAnnuler" layoutX="290.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleAnnuler" prefHeight="34.0" prefWidth="120.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Annuler">
+            <font><Font name="Cambria Bold" size="14.0" /></font>
+        </Button>
+
+    </children>
+</AnchorPane>

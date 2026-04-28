@@ -1,0 +1,250 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes. Error detail: AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:42), pid=5456, tid=21840
+#
+# JRE version:  (25.0.1+8) (build )
+# Java VM: OpenJDK 64-Bit Server VM (25.0.1+8-LTS, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --module-path=C:\Users\User_01\.m2\repository\org\openjfx\javafx-base\21.0.1\javafx-base-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-base\21.0.1\javafx-base-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-controls\21.0.1\javafx-controls-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-controls\21.0.1\javafx-controls-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-fxml\21.0.1\javafx-fxml-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-fxml\21.0.1\javafx-fxml-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-graphics\21.0.1\javafx-graphics-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-graphics\21.0.1\javafx-graphics-21.0.1.jar --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics Main -Xms64m -Xmx256m -XX:+UseSerialGC -XX:MaxHeapFreeRatio=50 -XX:MinHeapFreeRatio=30 -XX:+UseCompressedOops
+
+Host: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz, 8 cores, 11G,  Windows 11 , 64 bit Build 26100 (10.0.26100.7623)
+Time: Mon Apr 27 22:23:21 2026 Afr. centrale Ouest elapsed time: 0.011531 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001b822bde2c0):  JavaThread "Unknown thread" [_thread_in_vm, id=21840, stack(0x0000001674000000,0x0000001674100000) (1024K)]
+
+Stack: [0x0000001674000000,0x0000001674100000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x7a8379]  (no source info available)
+V  [jvm.dll+0x7729fd]  (no source info available)
+V  [jvm.dll+0x9f57b3]  (no source info available)
+V  [jvm.dll+0x9f7da1]  (no source info available)
+V  [jvm.dll+0x9f84a3]  (no source info available)
+V  [jvm.dll+0x2fcd26]  (no source info available)
+V  [jvm.dll+0xf6137]  (no source info available)
+V  [jvm.dll+0x3be6d8]  (no source info available)
+V  [jvm.dll+0x9bbc38]  (no source info available)
+V  [jvm.dll+0x459892]  (no source info available)
+V  [jvm.dll+0x99faa2]  (no source info available)
+V  [jvm.dll+0x4fa061]  (no source info available)
+V  [jvm.dll+0x4fb951]  (no source info available)
+C  [jli.dll+0x53fa]  (no source info available)
+C  [ucrtbase.dll+0x37b0]  (no source info available)
+C  [KERNEL32.DLL+0x2e8d7]  (no source info available)
+C  [ntdll.dll+0x8c53c]  (no source info available)
+
+Lock stack of current Java thread (top to bottom):
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffb85c5df88, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+
+=>0x000001b822bde2c0 (exited) JavaThread "Unknown thread"    [_thread_in_vm, id=21840, stack(0x0000001674000000,0x0000001674100000) (1024K)]
+Total: 1
+
+Threads with active compile tasks:
+Total: 0
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap address: 0x0000000000000000, size: 0 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+UseCompressedClassPointers 1, UseCompactObjectHeaders 0
+Narrow klass pointer bits 32, Max shift 3
+Narrow klass base: 0xffffffffffffffff, Narrow klass shift: -1
+Encoding Range: [0xffffffffffffffff - 0x000000007fffffff), (2147483648 bytes)
+Klass Range:    [0x0000000000000000 - 0x0000000000000000), (0 bytes)
+Klass ID Range:  [4294967295 - 0) (1)
+No protection zone.
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 16 size 48 Howl #buckets 8 coarsen threshold 3686 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 4096
+
+GC Heap Usage History (0 events):
+No events
+
+Metaspace Usage History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.008 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff6d5740000 - 0x00007ff6d574e000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.exe
+0x00007ffc76e60000 - 0x00007ffc770c7000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffc75cc0000 - 0x00007ffc75d89000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffc742a0000 - 0x00007ffc7468f000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffc740a0000 - 0x00007ffc741eb000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffc5da50000 - 0x00007ffc5da66000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\jli.dll
+0x00007ffc624b0000 - 0x00007ffc624ce000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\VCRUNTIME140.dll
+0x00007ffc74fa0000 - 0x00007ffc75165000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffc57670000 - 0x00007ffc57903000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.7309_none_3e05feeae336a044\COMCTL32.dll
+0x00007ffc73fb0000 - 0x00007ffc73fd7000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffc76d70000 - 0x00007ffc76e19000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffc74e10000 - 0x00007ffc74e3b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffc746a0000 - 0x00007ffc747cc000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffc74940000 - 0x00007ffc749e3000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffc76ce0000 - 0x00007ffc76d11000 	C:\WINDOWS\System32\IMM32.DLL
+0x000000005bdd0000 - 0x000000005bddc000 	C:\Program Files (x86)\360\Total Security\safemon\SafeWrapper.dll
+0x00007ffc75170000 - 0x00007ffc75224000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffc755c0000 - 0x00007ffc75666000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffc76610000 - 0x00007ffc76728000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffc37f90000 - 0x00007ffc3803c000 	C:\Program Files (x86)\360\Total Security\safemon\libzdtp64.dll
+0x00007ffc75e20000 - 0x00007ffc76573000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ffc747d0000 - 0x00007ffc7493a000 	C:\WINDOWS\System32\wintypes.dll
+0x00007ffc75230000 - 0x00007ffc755b6000 	C:\WINDOWS\System32\combase.dll
+0x00007ffc75da0000 - 0x00007ffc75e06000 	C:\WINDOWS\System32\SHLWAPI.dll
+0x00007ffc73a90000 - 0x00007ffc73a9b000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffc709c0000 - 0x00007ffc709cc000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\vcruntime140_1.dll
+0x00007ffc34550000 - 0x00007ffc345dd000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\msvcp140.dll
+0x00007ffb84eb0000 - 0x00007ffb85dd6000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\server\jvm.dll
+0x00007ffc76580000 - 0x00007ffc765f4000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffc73e10000 - 0x00007ffc73e6e000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ffc6b560000 - 0x00007ffc6b595000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffc73df0000 - 0x00007ffc73e04000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ffc72cf0000 - 0x00007ffc72d0b000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffc6ea20000 - 0x00007ffc6ea2a000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\jimage.dll
+0x00007ffc70d80000 - 0x00007ffc70fc2000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffc74e40000 - 0x00007ffc74f16000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffc575c0000 - 0x00007ffc575fc000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffc741f0000 - 0x00007ffc74295000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffc51a60000 - 0x00007ffc51a7e000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.dll
+0x00007ffc76a10000 - 0x00007ffc76ba7000 	C:\WINDOWS\System32\ole32.dll
+
+JVMTI agents: none
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.7309_none_3e05feeae336a044;C:\Program Files (x86)\360\Total Security\safemon;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\server
+
+VM Arguments:
+jvm_args: --module-path=C:\Users\User_01\.m2\repository\org\openjfx\javafx-base\21.0.1\javafx-base-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-base\21.0.1\javafx-base-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-controls\21.0.1\javafx-controls-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-controls\21.0.1\javafx-controls-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-fxml\21.0.1\javafx-fxml-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-fxml\21.0.1\javafx-fxml-21.0.1.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-graphics\21.0.1\javafx-graphics-21.0.1-win.jar;C:\Users\User_01\.m2\repository\org\openjfx\javafx-graphics\21.0.1\javafx-graphics-21.0.1.jar --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics 
+java_command: Main -Xms64m -Xmx256m -XX:+UseSerialGC -XX:MaxHeapFreeRatio=50 -XX:MinHeapFreeRatio=30 -XX:+UseCompressedOops
+java_class_path (initial): C:\Users\User_01\projet_Greencore\target\classes;C:\Users\User_01\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\User_01\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+   size_t InitialHeapSize                          = 199229440                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 3164602368                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5832704                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122945536                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122880000                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 3164602368                             {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Release file:
+<release file has not been read>
+Environment Variables:
+JAVA_HOME=C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot
+PATH=C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\xampp\php;C:\composer;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\cursor\resources\app\bin;C:\Program Files\Git\cmd;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Users\User_01\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\User_01\AppData\Local\Programs\Python\Python312\;C:\Users\User_01\scoop\shims;C:\Users\User_01\AppData\Local\Microsoft\WindowsApps;C:\Users\User_01\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\User_01\AppData\Roaming\Composer\vendor\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2024.1.2\bin;;C:\Program Files\JetBrains\PhpStorm 2024.2.1\bin;C:\Users\User_01\AppData\Local\Programs\Windsurf\bin;c:\Users\User_01\.windsurf\extensions\vscjava.vscode-java-debug-0.59.0-universal\bundled\scripts\noConfigScripts
+USERNAME=User_01
+LANG=en_US.UTF-8
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 140 Stepping 2, GenuineIntel
+TMP=C:\Users\User_01\AppData\Local\Temp
+TEMP=C:\Users\User_01\AppData\Local\Temp
+
+
+
+
+Compilation memory statistics disabled.
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 26100 (10.0.26100.7623)
+OS uptime: 0 days 8:57 hours
+Hyper-V role detected
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 140 stepping 2 microcode 0x3a, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, avx512f, avx512dq, avx512cd, avx512bw, avx512vl, sha, fma, vzeroupper, avx512_vpopcntdq, avx512_vpclmulqdq, avx512_vaes, avx512_vnni, clflush, clflushopt, clwb, avx512_vbmi2, avx512_vbmi, hv, rdtscp, rdpid, fsrm, gfni, avx512_bitalg, f16c, cet_ibt, cet_ss, avx512_ifma
+Processor Information for the first 8 processors :
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+
+Memory: 4k page, system-wide physical 12071M (1162M free)
+TotalPageFile size 22153M (AvailPageFile size 9M)
+current process WorkingSet (physical memory assigned to process): 13M, peak: 13M
+current process commit charge ("private bytes"): 11M, peak: 12M
+
+vm_info: OpenJDK 64-Bit Server VM (25.0.1+8-LTS) for windows-amd64 JRE (25.0.1+8-LTS), built on 2025-10-21T00:00:00Z with unknown MS VC++:1942
+
+END.

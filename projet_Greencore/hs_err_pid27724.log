@@ -1,0 +1,514 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes. Error detail: Failed to commit metaspace.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (virtualSpaceNode.cpp:113), pid=27724, tid=4944
+#
+# JRE version: OpenJDK Runtime Environment Temurin-25.0.1+8 (25.0.1+8) (build 25.0.1+8-LTS)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-25.0.1+8 (25.0.1+8-LTS, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, serial gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Xms64m -Xmx128m -XX:+UseSerialGC -XX:MaxHeapFreeRatio=70 -XX:MinHeapFreeRatio=30 -Dmaven.home= -Dmaven.multiModuleProjectDirectory=C:\Users\User_01\projet_Greencore org.apache.maven.wrapper.MavenWrapperMain javafx:run
+
+Host: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz, 8 cores, 11G,  Windows 11 , 64 bit Build 26100 (10.0.26100.7623)
+Time: Sun Apr 26 19:48:07 2026 Afr. centrale Ouest elapsed time: 0.559361 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000017e75f31800):  JavaThread "C1 CompilerThread0" daemon [_thread_in_vm, id=4944, stack(0x00000059a1700000,0x00000059a1800000) (1024K)]
+
+
+Current CompileTask:
+C1:559  542  s    3       jdk.internal.loader.Resource::cachedInputStream (20 bytes)
+
+Stack: [0x00000059a1700000,0x00000059a1800000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x7a8379]  (no source info available)
+V  [jvm.dll+0x7729fd]  (no source info available)
+V  [jvm.dll+0x9f57b3]  (no source info available)
+V  [jvm.dll+0x9f7da1]  (no source info available)
+V  [jvm.dll+0x9f84a3]  (no source info available)
+V  [jvm.dll+0x2fcd26]  (no source info available)
+V  [jvm.dll+0x9f268e]  (no source info available)
+V  [jvm.dll+0x73da34]  (no source info available)
+V  [jvm.dll+0x73da9a]  (no source info available)
+V  [jvm.dll+0x74038d]  (no source info available)
+V  [jvm.dll+0x740115]  (no source info available)
+V  [jvm.dll+0x29ab92]  (no source info available)
+V  [jvm.dll+0x73e458]  (no source info available)
+V  [jvm.dll+0x75205a]  (no source info available)
+V  [jvm.dll+0x74aa59]  (no source info available)
+V  [jvm.dll+0x2667c3]  (no source info available)
+V  [jvm.dll+0x2669a8]  (no source info available)
+V  [jvm.dll+0x1d0a6f]  (no source info available)
+V  [jvm.dll+0x1d08b0]  (no source info available)
+V  [jvm.dll+0x1c839b]  (no source info available)
+V  [jvm.dll+0x1ca5e8]  (no source info available)
+V  [jvm.dll+0x1c8b3c]  (no source info available)
+V  [jvm.dll+0x1d13d9]  (no source info available)
+V  [jvm.dll+0x1d08b0]  (no source info available)
+V  [jvm.dll+0x1c839b]  (no source info available)
+V  [jvm.dll+0x1ca5e8]  (no source info available)
+V  [jvm.dll+0x1c8c2a]  (no source info available)
+V  [jvm.dll+0x1c23a7]  (no source info available)
+V  [jvm.dll+0x1d2543]  (no source info available)
+V  [jvm.dll+0x1bdaa1]  (no source info available)
+V  [jvm.dll+0x1bdea3]  (no source info available)
+V  [jvm.dll+0x1be220]  (no source info available)
+V  [jvm.dll+0x1bd561]  (no source info available)
+V  [jvm.dll+0x1bf3ad]  (no source info available)
+V  [jvm.dll+0x2cf386]  (no source info available)
+V  [jvm.dll+0x2cd60a]  (no source info available)
+V  [jvm.dll+0x48f64e]  (no source info available)
+V  [jvm.dll+0x99630d]  (no source info available)
+V  [jvm.dll+0x7a6955]  (no source info available)
+C  [ucrtbase.dll+0x37b0]  (no source info available)
+C  [KERNEL32.DLL+0x2e8d7]  (no source info available)
+C  [ntdll.dll+0x8c53c]  (no source info available)
+
+Lock stack of current Java thread (top to bottom):
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x0000017e75ff10f0, length=11, elements={
+0x0000017e5c501d40, 0x0000017e5ca8f5c0, 0x0000017e5ca90f10, 0x0000017e5ca92c60,
+0x0000017e5ca93ac0, 0x0000017e5ca95690, 0x0000017e5ca96250, 0x0000017e5ca9b200,
+0x0000017e75f31800, 0x0000017e75ff7250, 0x0000017e76000f50
+}
+
+Java Threads: ( => current thread )
+  0x0000017e5c501d40 JavaThread "main"                              [_thread_in_vm, id=31536, stack(0x00000059a0d00000,0x00000059a0e00000) (1024K)]
+  0x0000017e5ca8f5c0 JavaThread "Reference Handler"          daemon [_thread_blocked, id=31404, stack(0x00000059a1000000,0x00000059a1100000) (1024K)]
+  0x0000017e5ca90f10 JavaThread "Finalizer"                  daemon [_thread_blocked, id=13344, stack(0x00000059a1100000,0x00000059a1200000) (1024K)]
+  0x0000017e5ca92c60 JavaThread "Signal Dispatcher"          daemon [_thread_blocked, id=6204, stack(0x00000059a1200000,0x00000059a1300000) (1024K)]
+  0x0000017e5ca93ac0 JavaThread "Attach Listener"            daemon [_thread_blocked, id=30064, stack(0x00000059a1300000,0x00000059a1400000) (1024K)]
+  0x0000017e5ca95690 JavaThread "Service Thread"             daemon [_thread_blocked, id=27780, stack(0x00000059a1400000,0x00000059a1500000) (1024K)]
+  0x0000017e5ca96250 JavaThread "Monitor Deflation Thread"   daemon [_thread_blocked, id=18504, stack(0x00000059a1500000,0x00000059a1600000) (1024K)]
+  0x0000017e5ca9b200 JavaThread "C2 CompilerThread0"         daemon [_thread_blocked, id=13868, stack(0x00000059a1600000,0x00000059a1700000) (1024K)]
+=>0x0000017e75f31800 JavaThread "C1 CompilerThread0"         daemon [_thread_in_vm, id=4944, stack(0x00000059a1700000,0x00000059a1800000) (1024K)]
+  0x0000017e75ff7250 JavaThread "Notification Thread"        daemon [_thread_blocked, id=11332, stack(0x00000059a1800000,0x00000059a1900000) (1024K)]
+  0x0000017e76000f50 JavaThread "Common-Cleaner"             daemon [_thread_blocked, id=12996, stack(0x00000059a1900000,0x00000059a1a00000) (1024K)]
+Total: 11
+
+Other Threads:
+  0x0000017e5ca800d0 VMThread "VM Thread"                           [id=21076, stack(0x00000059a0f00000,0x00000059a1000000) (1024K)]
+  0x0000017e5ca70e20 WatcherThread "VM Periodic Task Thread"        [id=14716, stack(0x00000059a0e00000,0x00000059a0f00000) (1024K)]
+Total: 2
+
+Threads with active compile tasks:
+C1 CompilerThread0  603  542  s    3       jdk.internal.loader.Resource::cachedInputStream (20 bytes)
+Total: 1
+
+VM state: not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007ff80be24168] Metaspace_lock - owner thread: 0x0000017e75f31800
+
+Heap address: 0x00000000f8000000, size: 128 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000088000000-0x0000000088dd0000-0x0000000088dd0000), size 14483456, SharedBaseAddress: 0x0000000088000000, ArchiveRelocationMode: 1.
+Compressed class space mapped at: 0x0000000089000000-0x00000000c9000000, reserved size: 1073741824
+UseCompressedClassPointers 1, UseCompactObjectHeaders 0
+Narrow klass pointer bits 32, Max shift 3
+Narrow klass base: 0x0000000088000000, Narrow klass shift: 0
+Encoding Range: [0x0000000088000000 - 0x0000000188000000), (4294967296 bytes)
+Klass Range:    [0x0000000088010000 - 0x00000000c9000000), (1090453504 bytes)
+Klass ID Range:  [65536 - 1090519033) (1090453497)
+Protection zone: [0x0000000088000000 - 0x0000000088010000), (65536 bytes)
+
+GC Precious Log:
+ CardTable entry size: 512
+ CPUs: 8 total, 8 available
+ Memory: 12071M
+ Large Page Support: Disabled
+ NUMA Support: Disabled
+ Compressed Oops: Enabled (32-bit)
+ Heap Min Capacity: 64M
+ Heap Initial Capacity: 64M
+ Heap Max Capacity: 128M
+ Pre-touch: Disabled
+
+Heap:
+ DefNew     total 19648K, used 6625K [0x00000000f8000000, 0x00000000f9550000, 0x00000000faaa0000)
+  eden space 17472K,  37% used [0x00000000f8000000, 0x00000000f86785f8, 0x00000000f9110000)
+  from space 2176K,   0% used [0x00000000f9110000, 0x00000000f9110000, 0x00000000f9330000)
+  to   space 2176K,   0% used [0x00000000f9330000, 0x00000000f9330000, 0x00000000f9550000)
+ Tenured    total 43712K, used 1171K [0x00000000faaa0000, 0x00000000fd550000, 0x0000000100000000)
+  the  space 43712K,   2% used [0x00000000faaa0000, 0x00000000fabc4ea8, 0x00000000fd550000)
+
+Card table byte_map: [0x0000017e75de0000,0x0000017e75e20000] _byte_map_base: 0x0000017e75620000
+
+Polling page: 0x0000017e66bd0000
+
+Metaspace:
+Metaspace        used 1975K, committed 2112K, reserved 1114112K
+ class space     used 146K, committed 256K, reserved 1048576K
+
+Usage:
+  Non-class:      1.79 MB used.
+      Class:    146.12 KB used.
+       Both:      1.93 MB used.
+
+Virtual space:
+  Non-class space:       64.00 MB reserved,       1.81 MB (  3%) committed,  1 nodes.
+      Class space:        1.00 GB reserved,     256.00 KB ( <1%) committed,  1 nodes.
+             Both:        1.06 GB reserved,       2.06 MB ( <1%) committed. 
+
+Chunk freelists:
+   Non-Class:  11.25 MB
+       Class:  15.66 MB
+        Both:  26.91 MB
+
+MaxMetaspaceSize: unlimited
+CompressedClassSpaceSize: 1.00 GB
+Initial GC threshold: 21.00 MB
+Current GC threshold: 21.00 MB
+CDS: on
+ - commit_granule_bytes: 65536.
+ - commit_granule_words: 8192.
+ - virtual_space_node_default_size: 8388608.
+ - enlarge_chunks_in_place: 1.
+UseCompressedClassPointers 1, UseCompactObjectHeaders 0
+Narrow klass pointer bits 32, Max shift 3
+Narrow klass base: 0x0000000088000000, Narrow klass shift: 0
+Encoding Range: [0x0000000088000000 - 0x0000000188000000), (4294967296 bytes)
+Klass Range:    [0x0000000088010000 - 0x00000000c9000000), (1090453504 bytes)
+Klass ID Range:  [65536 - 1090519033) (1090453497)
+Protection zone: [0x0000000088000000 - 0x0000000088010000), (65536 bytes)
+
+
+Internal statistics:
+
+num_allocs_failed_limit: 0.
+num_arena_births: 38.
+num_arena_deaths: 0.
+num_vsnodes_births: 2.
+num_vsnodes_deaths: 0.
+num_space_committed: 33.
+num_space_uncommitted: 0.
+num_chunks_returned_to_freelist: 0.
+num_chunks_taken_from_freelist: 82.
+num_chunk_merges: 0.
+num_chunk_splits: 57.
+num_chunks_enlarged: 44.
+num_inconsistent_stats: 0.
+
+CodeHeap 'non-profiled nmethods': size=120064Kb used=146Kb max_used=146Kb free=119917Kb
+ bounds [0x0000017e6e6b0000, 0x0000017e6e920000, 0x0000017e75bf0000]
+CodeHeap 'profiled nmethods': size=120000Kb used=658Kb max_used=658Kb free=119341Kb
+ bounds [0x0000017e66bf0000, 0x0000017e66e60000, 0x0000017e6e120000]
+CodeHeap 'non-nmethods': size=5696Kb used=1239Kb max_used=1254Kb free=4456Kb
+ bounds [0x0000017e6e120000, 0x0000017e6e390000, 0x0000017e6e6b0000]
+CodeCache: size=245760Kb, used=2043Kb, max_used=2058Kb, free=243714Kb
+ total_blobs=954, nmethods=541, adapters=319, full_count=0
+Compilation: enabled, stopped_count=0, restarted_count=0
+
+Compilation events (20 events):
+Event: 0.545 Thread 0x0000017e75f31800  531       3       java.lang.invoke.MemberName::getReferenceKind (12 bytes)
+Event: 0.545 Thread 0x0000017e75f31800 nmethod 531 0x0000017e66c92d08 code [0x0000017e66c92e00, 0x0000017e66c92f18]
+Event: 0.545 Thread 0x0000017e75f31800  532  s    3       java.lang.Throwable::fillInStackTrace (29 bytes)
+Event: 0.545 Thread 0x0000017e75f31800 nmethod 532 0x0000017e66c93008 code [0x0000017e66c93100, 0x0000017e66c93418]
+Event: 0.547 Thread 0x0000017e5ca9b200  533       4       java.util.zip.ZipUtils::CENLEN (9 bytes)
+Event: 0.549 Thread 0x0000017e5ca9b200 nmethod 533 0x0000017e6e6d3c08 code [0x0000017e6e6d3d00, 0x0000017e6e6d3dd8]
+Event: 0.551 Thread 0x0000017e75f31800  534       3       java.util.ArrayList::add (25 bytes)
+Event: 0.551 Thread 0x0000017e75f31800 nmethod 534 0x0000017e66c93488 code [0x0000017e66c93580, 0x0000017e66c93938]
+Event: 0.552 Thread 0x0000017e75f31800  535       3       java.util.ArrayList::add (23 bytes)
+Event: 0.552 Thread 0x0000017e75f31800 nmethod 535 0x0000017e66c93988 code [0x0000017e66c93a80, 0x0000017e66c93db8]
+Event: 0.553 Thread 0x0000017e5ca9b200  536 %     4       java.lang.StringLatin1::replace @ 78 (197 bytes)
+Event: 0.556 Thread 0x0000017e75f31800  537       3       java.lang.ReflectiveOperationException::<init> (7 bytes)
+Event: 0.556 Thread 0x0000017e75f31800 nmethod 537 0x0000017e66c93e08 code [0x0000017e66c93f00, 0x0000017e66c94090]
+Event: 0.556 Thread 0x0000017e75f31800  538       3       java.lang.Exception::<init> (7 bytes)
+Event: 0.557 Thread 0x0000017e75f31800 nmethod 538 0x0000017e66c94108 code [0x0000017e66c94200, 0x0000017e66c94330]
+Event: 0.557 Thread 0x0000017e75f31800  539       3       java.lang.Throwable::<init> (53 bytes)
+Event: 0.557 Thread 0x0000017e75f31800 nmethod 539 0x0000017e66c94408 code [0x0000017e66c94500, 0x0000017e66c948c0]
+Event: 0.557 Thread 0x0000017e75f31800  540       1       java.util.jar.Manifest::getEntries (5 bytes)
+Event: 0.557 Thread 0x0000017e75f31800 nmethod 540 0x0000017e6e6d3f08 code [0x0000017e6e6d4000, 0x0000017e6e6d40c8]
+Event: 0.557 Thread 0x0000017e75f31800  542  s    3       jdk.internal.loader.Resource::cachedInputStream (20 bytes)
+
+GC Heap Usage History (0 events):
+No events
+
+Metaspace Usage History (0 events):
+No events
+
+Dll operation events (7 events):
+Event: 0.013 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.dll
+Event: 0.088 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\net.dll
+Event: 0.094 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\nio.dll
+Event: 0.101 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\zip.dll
+Event: 0.127 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\jimage.dll
+Event: 0.466 Loaded shared library C:\Users\User_01\AppData\Local\Temp\jansi-2.4.0-208256ced5fa4d10-jansi.dll
+Event: 0.490 Loaded shared library C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\verify.dll
+
+Deoptimization events (6 events):
+Event: 0.310 Thread 0x0000017e5c501d40 Uncommon trap: trap_request=0xffffff45 fr.pc=0x0000017e6e6c1c7c relative=0x00000000000000fc
+Event: 0.311 Thread 0x0000017e5c501d40 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000017e6e6c1c7c method=java.lang.StringCoding.countPositives([BII)I @ 17 c2
+Event: 0.311 Thread 0x0000017e5c501d40 DEOPT PACKING pc=0x0000017e6e6c1c7c sp=0x00000059a0dfa160
+Event: 0.312 Thread 0x0000017e5c501d40 DEOPT UNPACKING pc=0x0000017e6e1a5782 sp=0x00000059a0dfa100 mode 2
+Event: 0.511 Thread 0x0000017e5c501d40 DEOPT PACKING pc=0x0000017e66c24799 sp=0x00000059a0dfd3f0
+Event: 0.511 Thread 0x0000017e5c501d40 DEOPT UNPACKING pc=0x0000017e6e170fa2 sp=0x00000059a0dfc840 mode 0
+
+Classes loaded (20 events):
+Event: 0.546 Loading class java/util/LinkedList$ListItr
+Event: 0.546 Loading class java/util/LinkedList$ListItr done
+Event: 0.548 Loading class java/util/Stack
+Event: 0.548 Loading class java/util/Vector
+Event: 0.549 Loading class java/util/Vector done
+Event: 0.549 Loading class java/util/Stack done
+Event: 0.550 Loading class java/lang/NoSuchFieldError
+Event: 0.550 Loading class java/lang/NoSuchFieldError done
+Event: 0.553 Loading class java/util/concurrent/LinkedBlockingQueue
+Event: 0.555 Loading class java/util/concurrent/BlockingQueue
+Event: 0.555 Loading class java/util/concurrent/BlockingQueue done
+Event: 0.555 Loading class java/util/AbstractQueue
+Event: 0.555 Loading class java/util/AbstractQueue done
+Event: 0.555 Loading class java/util/concurrent/LinkedBlockingQueue done
+Event: 0.555 Loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject
+Event: 0.556 Loading class java/util/concurrent/locks/Condition
+Event: 0.556 Loading class java/util/concurrent/locks/Condition done
+Event: 0.556 Loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject done
+Event: 0.556 Loading class java/util/concurrent/LinkedBlockingQueue$Node
+Event: 0.556 Loading class java/util/concurrent/LinkedBlockingQueue$Node done
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (16 events):
+Event: 0.138 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NoSuchMethodError'{0x00000000f8048fc0}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.invokeStaticInit(java.lang.Object)'> (0x00000000f8048fc0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 804]
+Event: 0.170 Thread 0x0000017e5c501d40 Exception <a 'sun/nio/fs/WindowsException'{0x00000000f8148050}> (0x00000000f8148050) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 516]
+Event: 0.171 Thread 0x0000017e5c501d40 Exception <a 'sun/nio/fs/WindowsException'{0x00000000f8148688}> (0x00000000f8148688) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 516]
+Event: 0.196 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NoSuchMethodError'{0x00000000f81eda70}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, java.lang.Object)'> (0x00000000f81eda70) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 804]
+Event: 0.196 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NoSuchMethodError'{0x00000000f81f5db8}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeSpecial(java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000f81f5db8) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 804]
+Event: 0.354 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NoSuchMethodError'{0x00000000f8462840}: 'java.lang.Object java.lang.invoke.Invokers$Holder.invokeExact_MT(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000f8462840) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 804]
+Event: 0.415 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f84b0c28}> (0x00000000f84b0c28) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.470 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f84fd500}> (0x00000000f84fd500) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.471 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f84fd7e0}> (0x00000000f84fd7e0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.471 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f84fdac0}> (0x00000000f84fdac0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.472 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f8503198}> (0x00000000f8503198) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.476 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f8514b30}> (0x00000000f8514b30) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.476 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f8514e10}> (0x00000000f8514e10) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.476 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f85150f0}> (0x00000000f85150f0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.476 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NullPointerException'{0x00000000f85153d0}> (0x00000000f85153d0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 1416]
+Event: 0.528 Thread 0x0000017e5c501d40 Exception <a 'java/lang/NoSuchMethodError'{0x00000000f85a3bd0}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000f85a3bd0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 804]
+
+VM Operations (2 events):
+Event: 0.395 Executing non-safepoint VM operation: HandshakeAllThreads (Deoptimize)
+Event: 0.395 Executing non-safepoint VM operation: HandshakeAllThreads (Deoptimize) done
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (11 events):
+Event: 0.049 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5c501d40
+Event: 0.068 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca8f5c0
+Event: 0.068 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca90f10
+Event: 0.069 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca92c60
+Event: 0.069 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca93ac0
+Event: 0.069 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca95690
+Event: 0.069 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca96250
+Event: 0.069 Thread 0x0000017e5c501d40 Thread added: 0x0000017e5ca9b200
+Event: 0.070 Thread 0x0000017e5c501d40 Thread added: 0x0000017e75f31800
+Event: 0.079 Thread 0x0000017e5c501d40 Thread added: 0x0000017e75ff7250
+Event: 0.081 Thread 0x0000017e5c501d40 Thread added: 0x0000017e76000f50
+
+
+Dynamic libraries:
+0x00007ff7114b0000 - 0x00007ff7114be000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.exe
+0x00007ff8cd520000 - 0x00007ff8cd787000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ff8cb470000 - 0x00007ff8cb539000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ff8ca810000 - 0x00007ff8cabff000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ff8cae00000 - 0x00007ff8caf4b000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ff897750000 - 0x00007ff897766000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\jli.dll
+0x00007ff8cb8a0000 - 0x00007ff8cba65000 	C:\WINDOWS\System32\USER32.dll
+0x00007ff897730000 - 0x00007ff89774e000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\VCRUNTIME140.dll
+0x00007ff8ca7e0000 - 0x00007ff8ca807000 	C:\WINDOWS\System32\win32u.dll
+0x00007ff8ad9c0000 - 0x00007ff8adc53000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.7309_none_3e05feeae336a044\COMCTL32.dll
+0x00007ff8cd3c0000 - 0x00007ff8cd3eb000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ff8caf50000 - 0x00007ff8cb07c000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ff8cbbe0000 - 0x00007ff8cbc89000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ff8cacc0000 - 0x00007ff8cad63000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ff8cb7e0000 - 0x00007ff8cb811000 	C:\WINDOWS\System32\IMM32.DLL
+0x0000000075440000 - 0x000000007544c000 	C:\Program Files (x86)\360\Total Security\safemon\SafeWrapper.dll
+0x00007ff8cb710000 - 0x00007ff8cb7c4000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ff8cd180000 - 0x00007ff8cd226000 	C:\WINDOWS\System32\sechost.dll
+0x00007ff8cb2c0000 - 0x00007ff8cb3d8000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ff88e100000 - 0x00007ff88e1ac000 	C:\Program Files (x86)\360\Total Security\safemon\libzdtp64.dll
+0x00007ff8cc590000 - 0x00007ff8ccce3000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ff8ca670000 - 0x00007ff8ca7da000 	C:\WINDOWS\System32\wintypes.dll
+0x00007ff8cc120000 - 0x00007ff8cc4a6000 	C:\WINDOWS\System32\combase.dll
+0x00007ff8cbfb0000 - 0x00007ff8cc016000 	C:\WINDOWS\System32\SHLWAPI.dll
+0x00007ff8ca150000 - 0x00007ff8ca15b000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ff89f150000 - 0x00007ff89f15c000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\vcruntime140_1.dll
+0x00007ff884f50000 - 0x00007ff884fdd000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\msvcp140.dll
+0x00007ff80aff0000 - 0x00007ff80bf16000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\server\jvm.dll
+0x00007ff8cd340000 - 0x00007ff8cd3b4000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ff8ca4d0000 - 0x00007ff8ca52e000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ff8c1ae0000 - 0x00007ff8c1b15000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ff8ca4b0000 - 0x00007ff8ca4c4000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ff8c93b0000 - 0x00007ff8c93cb000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ff89dc50000 - 0x00007ff89dc5a000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\jimage.dll
+0x00007ff8c7520000 - 0x00007ff8c7762000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ff8cbed0000 - 0x00007ff8cbfa6000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ff8ac120000 - 0x00007ff8ac15c000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ff8cac10000 - 0x00007ff8cacb5000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ff886940000 - 0x00007ff88695e000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\java.dll
+0x00007ff8cb540000 - 0x00007ff8cb6d7000 	C:\WINDOWS\System32\ole32.dll
+0x00007ff8c81e0000 - 0x00007ff8c8a3e000 	C:\WINDOWS\SYSTEM32\windows.storage.dll
+0x00007ff8cc020000 - 0x00007ff8cc115000 	C:\WINDOWS\System32\SHCORE.dll
+0x00007ff8ca590000 - 0x00007ff8ca5b9000 	C:\WINDOWS\SYSTEM32\profapi.dll
+0x00007ff886850000 - 0x00007ff886861000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\net.dll
+0x00007ff8c9920000 - 0x00007ff8c998b000 	C:\WINDOWS\system32\mswsock.dll
+0x00007ff8855d0000 - 0x00007ff8855e6000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\nio.dll
+0x00007ff884f30000 - 0x00007ff884f47000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\zip.dll
+0x0000000069ac0000 - 0x0000000069ae4000 	C:\Users\User_01\AppData\Local\Temp\jansi-2.4.0-208256ced5fa4d10-jansi.dll
+0x00007ff88bee0000 - 0x00007ff88bef0000 	C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\verify.dll
+
+JVMTI agents: none
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.7309_none_3e05feeae336a044;C:\Program Files (x86)\360\Total Security\safemon;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin\server;C:\Users\User_01\AppData\Local\Temp
+
+VM Arguments:
+jvm_args: -Xms64m -Xmx128m -XX:+UseSerialGC -XX:MaxHeapFreeRatio=70 -XX:MinHeapFreeRatio=30 -Dmaven.home= -Dmaven.multiModuleProjectDirectory=C:\Users\User_01\projet_Greencore 
+java_command: org.apache.maven.wrapper.MavenWrapperMain javafx:run
+java_class_path (initial): C:\Users\User_01\projet_Greencore\.mvn\wrapper\maven-wrapper.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+   size_t InitialHeapSize                          = 67108864                                  {product} {command line}
+    uintx MaxHeapFreeRatio                         = 70                                     {manageable} {command line}
+   size_t MaxHeapSize                              = 134217728                                 {product} {command line}
+   size_t MaxNewSize                               = 44695552                                  {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 196608                                    {product} {ergonomic}
+    uintx MinHeapFreeRatio                         = 30                                     {manageable} {command line}
+   size_t MinHeapSize                              = 67108864                                  {product} {command line}
+   size_t NewSize                                  = 22347776                                  {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5832704                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122945536                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122880000                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 134217728                              {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+     bool UseSerialGC                              = true                                      {product} {command line}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Release file:
+IMPLEMENTOR="Eclipse Adoptium" 
+IMPLEMENTOR_VERSION="Temurin-25.0.1+8" 
+JAVA_RUNTIME_VERSION="25.0.1+8-LTS" 
+JAVA_VERSION="25.0.1" 
+JAVA_VERSION_DATE="2025-10-21" 
+LIBC="default" 
+MODULES="java.base java.compiler java.datatransfer java.xml java.prefs java.desktop java.instrument java.logging java.management java.security.sasl java.naming java.rmi java.management.rmi java.net.http java.scripting java.security.jgss java.transaction.xa java.sql java.sql.rowset java.xml.crypto java.se java.smartcardio jdk.accessibility jdk.internal.jvmstat jdk.attach jdk.charsets jdk.internal.opt jdk.zipfs jdk.compiler jdk.crypto.cryptoki jdk.crypto.ec jdk.crypto.mscapi jdk.dynalink jdk.internal.ed jdk.editpad jdk.internal.vm.ci jdk.graal.compiler jdk.graal.compiler.management jdk.hotspot.agent jdk.httpserver jdk.incubator.vector jdk.internal.le jdk.internal.md jdk.jartool jdk.javadoc jdk.jcmd jdk.management jdk.management.agent jdk.jconsole jdk.jdeps jdk.jdwp.agent jdk.jdi jdk.jfr jdk.jlink jdk.jpackage jdk.jshell jdk.jsobject jdk.jstatd jdk.localedata jdk.management.jfr jdk.naming.dns jdk.naming.rmi jdk.net jdk.nio.mapmode jdk.sctp jdk.security.auth jdk.security.jgss jdk.unsupported jdk.unsupported.desktop jdk.xml.dom" 
+OS_ARCH="x86_64" 
+OS_NAME="Windows" 
+SOURCE=".:git:61d6a2c1b35e" 
+BUILD_SOURCE="git:839fa0b45d809157cffd3dc8515aad262a4a1776"
+BUILD_SOURCE_REPO="https://github.com/adoptium/temurin-build.git"
+SOURCE_REPO="https://github.com/adoptium/jdk25u.git"
+FULL_VERSION="25.0.1+8-LTS"
+SEMANTIC_VERSION="25.0.1+8"
+BUILD_INFO="OS: Windows Server 2022 Version: 10.0"
+JVM_VARIANT="Hotspot"
+JVM_VERSION="25.0.1+8-LTS"
+IMAGE_TYPE="JDK"
+
+Environment Variables:
+JAVA_HOME=C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot
+PATH=C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\xampp\php;C:\composer;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\cursor\resources\app\bin;C:\Program Files\Git\cmd;C:\Users\User_01\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Users\User_01\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\User_01\AppData\Local\Programs\Python\Python312\;C:\Users\User_01\scoop\shims;C:\Users\User_01\AppData\Local\Microsoft\WindowsApps;C:\Users\User_01\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\User_01\AppData\Roaming\Composer\vendor\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2024.1.2\bin;;C:\Program Files\JetBrains\PhpStorm 2024.2.1\bin;C:\Users\User_01\AppData\Local\Programs\Windsurf\bin
+USERNAME=User_01
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 140 Stepping 2, GenuineIntel
+TMP=C:\Users\User_01\AppData\Local\Temp
+TEMP=C:\Users\User_01\AppData\Local\Temp
+
+
+
+
+Compilation memory statistics disabled.
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 26100 (10.0.26100.7623)
+OS uptime: 1 days 7:32 hours
+Hyper-V role detected
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 140 stepping 2 microcode 0x3a, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, avx512f, avx512dq, avx512cd, avx512bw, avx512vl, sha, fma, vzeroupper, avx512_vpopcntdq, avx512_vpclmulqdq, avx512_vaes, avx512_vnni, clflush, clflushopt, clwb, avx512_vbmi2, avx512_vbmi, hv, rdtscp, rdpid, fsrm, gfni, avx512_bitalg, f16c, cet_ibt, cet_ss, avx512_ifma
+Processor Information for processor 0
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 1
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 2
+  Max Mhz: 2496, Current Mhz: 1198, Mhz Limit: 2496
+Processor Information for processor 3
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 4
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 5
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 6
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+Processor Information for processor 7
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+
+Memory: 4k page, system-wide physical 12071M (627M free)
+TotalPageFile size 21464M (AvailPageFile size 0M)
+current process WorkingSet (physical memory assigned to process): 56M, peak: 56M
+current process commit charge ("private bytes"): 104M, peak: 104M
+
+vm_info: OpenJDK 64-Bit Server VM (25.0.1+8-LTS) for windows-amd64 JRE (25.0.1+8-LTS), built on 2025-10-21T00:00:00Z with unknown MS VC++:1942
+
+END.

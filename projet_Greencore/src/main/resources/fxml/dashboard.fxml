@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="784.0" prefWidth="1607.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+    <children>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- SIDEBAR                                 -->
+        <!-- ═══════════════════════════════════════ -->
+        <AnchorPane prefHeight="784.0" prefWidth="244.0" style="-fx-background-color: #2e7d32;">
+            <children>
+
+                <!-- Logo -->
+                <Label layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="216.0" style="-fx-text-fill: white;" text="Dashboard">
+                    <font>
+                        <Font name="Cambria Bold Italic" size="37.0" />
+                    </font>
+                </Label>
+
+                <!-- Séparateur -->
+                <Separator layoutX="14" layoutY="68" prefWidth="216" style="-fx-background-color: #4caf50;" />
+
+                <!-- ── Navigation principale ── -->
+                <Label layoutX="14" layoutY="82" style="-fx-text-fill: #81c784;                               -fx-font-size: 10;                               -fx-font-weight: bold;" text="NAVIGATION" />
+
+                <Button fx:id="btnHome" layoutX="12.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleHomeAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: white;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Home">
+                    <font><Font name="Cambria Bold Italic" size="18.0" /></font>
+                </Button>
+
+                <Button fx:id="btnGererUtilisateur" layoutX="12.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleGererUtilisateurAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #a5d6a7;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Gérer utilisateur">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <Button fx:id="btnGererEvenement" layoutX="12.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleGererEvenementAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #a5d6a7;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Gérer événement">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- ✅ Bouton Application ajouté ici -->
+                <Button fx:id="btnApplication" layoutX="24.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleApplicationAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #a5d6a7;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="Satistiques">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Séparateur APIs -->
+                <Separator layoutX="14.0" layoutY="325.0" prefWidth="216" style="-fx-background-color: #4caf50;" />
+
+                <!-- ── Section API ── -->
+                <Label layoutX="14.0" layoutY="337.0" style="-fx-text-fill: #81c784;                               -fx-font-size: 10;                               -fx-font-weight: bold;" text="APIs" />
+
+                <!-- Chat IA -->
+                <Button fx:id="btnChat" layoutX="12.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleChatAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #90caf9;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Chat IA">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Météo -->
+                <Button fx:id="btnMeteo" layoutX="12.0" layoutY="395.0" mnemonicParsing="false" onAction="#handleMeteoAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #ffcc80;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Météo">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Mailing -->
+                <Button fx:id="btnMailing" layoutX="12.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleMailingAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #80cbc4;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Mailing">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Paiement -->
+                <Button fx:id="btnPaiement" layoutX="12.0" layoutY="475.0" mnemonicParsing="false" onAction="#handlePaiementAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #ce93d8;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  Paiement">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Avancé -->
+                <Button fx:id="btnAvance" layoutX="12.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleAvanceAction" prefHeight="36.0" prefWidth="220.0" style="-fx-text-fill: #f48fb1;                                -fx-cursor: hand;                                -fx-border-color: transparent;                                -fx-background-color: transparent;                                -fx-alignment: center-left;                                -fx-padding: 0 0 0 12;" text="  QR · Stats · ICS">
+                    <font><Font name="Cambria Bold Italic" size="16.0" /></font>
+                </Button>
+
+                <!-- Séparateur bas -->
+                <Separator layoutX="14" layoutY="562" prefWidth="216" style="-fx-background-color: #4caf50;" />
+
+                <!-- Utilisateur connecté -->
+                <Label layoutX="14" layoutY="574" style="-fx-text-fill: #81c784;                               -fx-font-size: 10;                               -fx-font-weight: bold;" text="CONNECTÉ" />
+
+                <Label fx:id="labelUtilisateur" layoutX="14" layoutY="592" prefWidth="216" style="-fx-text-fill: white; -fx-font-size: 14;" text="Administrateur">
+                    <font><Font name="Cambria Bold Italic" size="14.0" /></font>
+                </Label>
+
+                <Label fx:id="labelRole" layoutX="14" layoutY="614" style="-fx-text-fill: #4caf50;                               -fx-font-size: 11;                               -fx-font-weight: bold;" text="ADMIN" />
+
+                <!-- Bouton déconnexion -->
+                <Button fx:id="btnDeconnexion" layoutX="12" layoutY="638" mnemonicParsing="false" onAction="#handleDeconnexionAction" prefHeight="32" prefWidth="220" style="-fx-background-color: #c62828;                                -fx-text-fill: white;                                -fx-cursor: hand;                                -fx-border-radius: 4;                                -fx-background-radius: 4;                                -fx-font-size: 13;" text="Se déconnecter">
+                    <font><Font name="Cambria Bold Italic" size="13.0" /></font>
+                </Button>
+
+                <!-- Version -->
+                <Label layoutX="14" layoutY="752" style="-fx-text-fill: #558b60; -fx-font-size: 10;" text="Greencore v2.0 — JavaFX 25" />
+
+            </children>
+        </AnchorPane>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- TOPBAR                                  -->
+        <!-- ═══════════════════════════════════════ -->
+        <AnchorPane layoutX="244.0" layoutY="0.0" prefHeight="70.0" prefWidth="1357.0" style="-fx-background-color: white;                            -fx-border-color: #e0e0e0;                            -fx-border-width: 0 0 1 0;">
+            <children>
+                <Label fx:id="labelTitrePage" layoutX="24" layoutY="14" style="-fx-text-fill: #2e7d32; -fx-font-size: 22;" text="Tableau de bord">
+                    <font><Font name="Cambria Bold Italic" size="22.0" /></font>
+                </Label>
+
+                <Label fx:id="labelDate" layoutX="1180" layoutY="24" style="-fx-text-fill: #555; -fx-font-size: 13;" text="" />
+                <Label fx:id="labelSousTitre" layoutX="24" layoutY="50" style="-fx-text-fill: #2e7d32; -fx-font-size: 16;" text="Bienvenue sur Greencore" />
+            </children>
+        </AnchorPane>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- CONTENT PANE                            -->
+        <!-- ═══════════════════════════════════════ -->
+        <AnchorPane fx:id="contentPane" layoutX="244.0" layoutY="70.0" prefHeight="714.0" prefWidth="1358.0" style="-fx-background-color: #f5f5f5;" />
+
+    </children>
+</AnchorPane>

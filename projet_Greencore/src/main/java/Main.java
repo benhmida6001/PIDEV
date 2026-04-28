@@ -1,48 +1,49 @@
-import services.UtilisateurService;
-import services.EvenementService;
-import models.Utilisateur;
-import models.Evenement;
-import java.util.Date;
-import java.util.List;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
-    public static void main(String[] args) {
+import java.io.IOException;
 
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
         try {
-            UtilisateurService su = new UtilisateurService();
-            EvenementService se = new EvenementService();
-
-            Utilisateur u = new Utilisateur("Ali", "Mahad", "ali" + System.currentTimeMillis() + "@gmail.com", "12345678",
-                    "Tunis", "client", "1234", 0);
-
-            su.ajouterUtilisateur(u);
+            System.out.println("Démarrage de l'application Greencore...");
             
-            // Ajouter un deuxième utilisateur
-            Utilisateur u2 = new Utilisateur("Sarah", "Ben", "sarah" + System.currentTimeMillis() + "@gmail.com", "98765432",
-                    "Sfax", "admin", "azerty", 50);
-
-            su.ajouterUtilisateur(u2);
-
-            Evenement e = new Evenement("Nettoyage plage", new Date(), "Sousse",
-                    "Evenement écologique", 100, 20);
-
-            se.ajouterEvenement(e);
-
-            System.out.println(" LISTE DES UTILISATEURS");
-            List<Utilisateur> utilisateurs = su.afficherUtilisateurs();
-            for (Utilisateur utilisateur : utilisateurs) {
-                System.out.println(utilisateur);
-            }
+            // Charger le fichier FXML du login simplifié
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            Parent root = loader.load();
             
-            System.out.println(" LISTE DES ÉVÉNEMENTS");
-            List<Evenement> evenements = se.afficherEvenements();
-            for (Evenement evenement : evenements) {
-                System.out.println(evenement);
-            }
+            // Créer la scène avec une taille initiale
+            Scene scene = new Scene(root, 600, 400);
             
-        } catch (Exception ex) {
-            System.err.println("Erreur lors de l'exécution : " + ex.getMessage());
-            ex.printStackTrace();
+            // Configuration de la fenêtre avec redimensionnement
+            primaryStage.setTitle("Greencore - Login");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(true); // Permettre le redimensionnement
+            primaryStage.setMinWidth(500);   // Taille minimale
+            primaryStage.setMinHeight(350);
+            primaryStage.show();
+            
+            System.out.println("Application démarrée avec succès !");
+            
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Erreur inattendue: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        // Configuration JVM minimale
+        System.out.println("Configuration JVM: " + System.getProperty("java.vm.name"));
+        System.out.println("Mémoire disponible: " + (Runtime.getRuntime().freeMemory() / 1024 / 1024) + "MB");
+        
+        launch(args);
     }
 }

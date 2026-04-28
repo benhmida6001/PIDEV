@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="766.0" style="-fx-background-color: #4caf50;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RechercherUtilisateurController">
+   <children>
+      <Label layoutX="150.0" layoutY="30.0" prefHeight="24.0" prefWidth="314.0" text="Rechercher Utilisateur" textFill="WHITE">
+         <font>
+            <Font name="Cambria Bold Italic" size="26.0" />
+         </font>
+      </Label>
+      
+      <!-- Search Section -->
+      <Label layoutX="50.0" layoutY="80.0" text="ID Utilisateur:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfIdRecherche" layoutX="150.0" layoutY="75.0" prefHeight="25.0" prefWidth="200.0" />
+      
+      <Button fx:id="btnRechercher" layoutX="150.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleRechercher" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Rechercher">
+         <font>
+            <Font name="Cambria Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <Button fx:id="btnEffacer" layoutX="270.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleEffacer" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Effacer">
+         <font>
+            <Font name="Cambria Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <!-- Result Section -->
+      <Label fx:id="lblResultat" layoutX="150.0" layoutY="170.0" text="" />
+      
+      <!-- User Info Section (initially hidden) -->
+      <VBox fx:id="vboxUserInfo" layoutX="50.0" layoutY="200.0" prefHeight="150.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 15;">
+         <children>
+            <Label fx:id="lblNom" text="Nom: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPrenom" text="Prénom: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblEmail" text="Email: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblRole" text="Rôle: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPoints" text="Points: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

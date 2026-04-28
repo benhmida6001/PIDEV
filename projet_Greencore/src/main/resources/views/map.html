@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GreenCore - Carte des Événements</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .controls button {
+            margin: 5px;
+            padding: 8px 12px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .controls button:hover {
+            background: #45a049;
+        }
+        
+        .info-window {
+            max-width: 250px;
+        }
+        
+        .info-window h3 {
+            margin: 0 0 5px 0;
+            color: #4caf50;
+        }
+        
+        .info-window p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="controls">
+        <button onclick="refreshMap()">🔄 Actualiser</button>
+        <button onclick="centerOnDefault()">📍 Centrer</button>
+    </div>
+
+    <script>
+        let map;
+        let markers = [];
+        let geocoder;
+        let infoWindow;
+
+        // Initialize the map
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 36.8065, lng: 10.1815 }, // Default: Tunis
+                zoom: 10,
+                styles: [
+                    {
+                        "featureType": "all",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#f5f5f5" }]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#c9e8f7" }]
+                    }
+                ]
+            });
+
+            geocoder = new google.maps.Geocoder();
+            infoWindow = new google.maps.InfoWindow();
+
+            // Notify Java that JavaScript is ready
+            if (typeof javaApp !== 'undefined') {
+                console.log("JavaScript ready, notifying Java");
+            }
+        }
+
+        // Geocode address and add marker
+        function geocodeAndAddMarker(id, title, location, description) {
+            geocoder.geocode({ 'address': location }, function(results, status) {
+                if (status === 'OK' && results[0]) {
+                    addMarker(id, title, results[0].geometry.location, description, location);
+                } else {
+                    console.warn('Geocode failed for: ' + location + ' - ' + status);
+                }
+            });
+        }
+
+        // Add marker to map
+        function addMarker(id, title, position, description, address) {
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 8,
+                    fillColor: '#4caf50',
+                    fillOpacity: 0.8,
+                    strokeColor: '#ffffff',
+                    strokeWeight: 2
+                }
+            });
+
+            const infoContent = `
+                <div class="info-window">
+                    <h3>${title}</h3>
+                    <p><strong>Lieu:</strong> ${address}</p>
+                    <p>${description || 'Aucune description'}</p>
+                    <button onclick="viewEventDetails(${id})" style="
+                        background: #4caf50;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                    ">Voir détails</button>
+                </div>
+            `;
+
+            marker.addListener('click', function() {
+                infoWindow.setContent(infoContent);
+                infoWindow.open(map, marker);
+                
+                // Notify Java if available
+                if (typeof javaApp !== 'undefined') {
+                    javaApp.onMarkerClicked(id);
+                }
+            });
+
+            markers.push(marker);
+        }
+
+        // Clear all markers
+        function clearMarkers() {
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+        }
+
+        // Center map on location
+        function centerMapOnLocation(location) {
+            geocoder.geocode({ 'address': location }, function(results, status) {
+                if (status === 'OK' && results[0]) {
+                    map.setCenter(results[0].geometry.location);
+                    map.setZoom(15);
+                }
+            });
+        }
+
+        // Refresh map
+        function refreshMap() {
+            clearMarkers();
+            if (typeof javaApp !== 'undefined') {
+                javaApp.refreshMap();
+            }
+        }
+
+        // Center on default location
+        function centerOnDefault() {
+            map.setCenter({ lat: 36.8065, lng: 10.1815 });
+            map.setZoom(10);
+        }
+
+        // View event details (call Java method)
+        function viewEventDetails(eventId) {
+            if (typeof javaApp !== 'undefined') {
+                // You can implement this to show event details dialog
+                console.log('View details for event: ' + eventId);
+            }
+        }
+
+        // Error handler for Google Maps
+        function gm_authFailure() {
+            console.error('Google Maps authentication failed');
+            document.body.innerHTML = `
+                <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+                    <h2>❌ Erreur de chargement de la carte</h2>
+                    <p>Impossible de charger Google Maps. Veuillez vérifier votre connexion internet.</p>
+                    <p>Si le problème persiste, contactez l'administrateur.</p>
+                </div>
+            `;
+        }
+
+        // Load Google Maps API
+        function loadGoogleMaps() {
+            // Try to load without API key first (works for development)
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?v=3&callback=initMap';
+            script.async = true;
+            script.defer = true;
+            
+            script.onerror = function() {
+                console.error('Failed to load Google Maps API');
+                document.body.innerHTML = `
+                    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+                        <h2>🌍 Carte indisponible</h2>
+                        <p>Impossible de charger Google Maps.</p>
+                        <p>Veuillez vérifier votre connexion internet.</p>
+                        <button onclick="location.reload()" style="
+                            background: #4caf50;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin-top: 20px;
+                        ">Réessayer</button>
+                    </div>
+                `;
+            };
+            
+            document.head.appendChild(script);
+        }
+
+        // Initialize when page loads
+        window.onload = loadGoogleMaps;
+    </script>
+</body>
+</html>

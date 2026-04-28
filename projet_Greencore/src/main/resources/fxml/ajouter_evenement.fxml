@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="624.0" prefWidth="716.0" style="-fx-background-color: #4caf50;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouterEvenementController">
+   <children>
+      <Label layoutX="244.0" layoutY="24.0" text="Ajouter Événement" textFill="WHITE">
+         <font>
+            <Font name="Cambria Bold Italic" size="27.0" />
+         </font>
+      </Label>
+      
+      <!-- Form Fields -->
+      <Label layoutX="75.0" layoutY="77.0" text="Nom:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <TextField fx:id="tfNomEvent" layoutX="200.0" layoutY="75.0" prefHeight="30.0" prefWidth="462.0" />
+      
+      <Label layoutX="75.0" layoutY="117.0" text="Date:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <DatePicker fx:id="dpDateEvent" layoutX="200.0" layoutY="115.0" prefHeight="30.0" prefWidth="462.0" />
+      
+      <Label layoutX="75.0" layoutY="157.0" text="Lieu:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <TextField fx:id="tfLieuEvent" layoutX="200.0" layoutY="155.0" prefHeight="30.0" prefWidth="300.0" />
+      <Button fx:id="btnMap" layoutX="510.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleOuvrirMap" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #2196f3; -fx-text-fill: white;" text="📍 Ouvrir Map">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      
+      <Label layoutX="75.0" layoutY="196.0" text="Description:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <TextField fx:id="tfDescription" layoutX="200.0" layoutY="195.0" prefHeight="30.0" prefWidth="462.0" />
+      
+      <Label layoutX="75.0" layoutY="237.0" text="Capacité Max:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <TextField fx:id="tfCapaciteMax" layoutX="200.0" layoutY="235.0" prefHeight="30.0" prefWidth="462.0" />
+      
+      <Label layoutX="75.0" layoutY="277.0" text="Points Offerts:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <TextField fx:id="tfPointsOfferts" layoutX="200.0" layoutY="275.0" prefHeight="30.0" prefWidth="462.0" />
+      
+      <!-- Buttons -->
+      <Button fx:id="btnAjouter" layoutX="200.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleAjouterEvenement" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: green; -fx-text-fill: white;" text="Ajouter">
+         <font>
+            <Font name="Cambria Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <Button fx:id="btnRetour" layoutX="330.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleRetour" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Retour">
+         <font>
+            <Font name="Cambria Bold" size="14.0" />
+         </font>
+      </Button>
+      
+      <!-- Status Label -->
+      <Label fx:id="lblStatus" layoutX="75.0" layoutY="380.0" text="" textFill="#FFFFFF">
+         <font>
+            <Font name="System" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

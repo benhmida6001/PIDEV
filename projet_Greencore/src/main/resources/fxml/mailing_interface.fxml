@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="703.0" prefWidth="1394.0"
+            style="-fx-background-color: #f5f5f5;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MailingController">
+    <children>
+
+        <!-- Header -->
+        <AnchorPane layoutX="0" layoutY="0" prefWidth="1394" prefHeight="70"
+                    style="-fx-background-color: #2e7d32;">
+            <children>
+                <Label layoutX="24" layoutY="14" text="Mailing — GreenCore"
+                       style="-fx-text-fill: white;">
+                    <Font name="Cambria Bold Italic" size="26"/>
+                </Label>
+                <Label layoutX="24" layoutY="46"
+                       text="Envoi d'emails via SMTP Gmail"
+                       style="-fx-text-fill: #a5d6a7; -fx-font-size: 12;"/>
+            </children>
+        </AnchorPane>
+
+        <!-- Onglets actions -->
+        <TabPane fx:id="tabPane"
+                 layoutX="0" layoutY="70"
+                 prefWidth="1394" prefHeight="633"
+                 tabClosingPolicy="UNAVAILABLE"
+                 style="-fx-background-color: #f5f5f5;">
+            <tabs>
+
+                <!-- Onglet 1 : Invitation événement -->
+                <Tab text="Invitation Événement">
+                    <content>
+                        <AnchorPane style="-fx-background-color: #f5f5f5;">
+                            <children>
+
+                                <Label layoutX="24" layoutY="24"
+                                       text="Envoyer invitation à tous les utilisateurs"
+                                       style="-fx-font-size: 16; -fx-text-fill: #2e7d32;">
+                                    <Font name="Cambria Bold Italic" size="16"/>
+                                </Label>
+
+                                <Label layoutX="24" layoutY="66"
+                                       text="Événement :"
+                                       style="-fx-font-size: 14; -fx-text-fill: #333;"/>
+                                <ComboBox fx:id="comboEvenementInvit"
+                                          layoutX="140" layoutY="62"
+                                          prefWidth="400" prefHeight="32"
+                                          promptText="Sélectionnez un événement..."/>
+
+                                <Label layoutX="24" layoutY="114"
+                                       text="Aperçu de l'email :"
+                                       style="-fx-font-size: 13; -fx-text-fill: #555;"/>
+                                <TextArea fx:id="txtApercuInvit"
+                                          layoutX="24" layoutY="136"
+                                          prefWidth="900" prefHeight="300"
+                                          editable="false" wrapText="true"
+                                          style="-fx-font-size: 13;
+                                                 -fx-border-color: #c8e6c9;
+                                                 -fx-border-radius: 6;"/>
+
+                                <Button fx:id="btnApercuInvit"
+                                        layoutX="548" layoutY="62"
+                                        prefWidth="140" prefHeight="32"
+                                        text="Aperçu email"
+                                        onAction="#handleApercuInvitation"
+                                        style="-fx-background-color: #4caf50;
+                                               -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                                <Button fx:id="btnEnvoyerInvit"
+                                        layoutX="24" layoutY="454"
+                                        prefWidth="220" prefHeight="40"
+                                        text="Envoyer invitations"
+                                        onAction="#handleEnvoyerInvitation"
+                                        style="-fx-background-color: #2e7d32;
+                                               -fx-text-fill: white; -fx-cursor: hand;
+                                               -fx-font-size: 14; -fx-font-weight: bold;"/>
+
+                                <Label fx:id="labelResultatInvit"
+                                       layoutX="260" layoutY="462"
+                                       text=""
+                                       style="-fx-font-size: 13; -fx-text-fill: #4caf50;"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- Onglet 2 : Rappel événement -->
+                <Tab text="Rappel Événement">
+                    <content>
+                        <AnchorPane style="-fx-background-color: #f5f5f5;">
+                            <children>
+                                <Label layoutX="24" layoutY="24"
+                                       text="Envoyer rappel aux participants"
+                                       style="-fx-font-size: 16; -fx-text-fill: #2e7d32;">
+                                    <Font name="Cambria Bold Italic" size="16"/>
+                                </Label>
+
+                                <Label layoutX="24" layoutY="66" text="Événement :"
+                                       style="-fx-font-size: 14; -fx-text-fill: #333;"/>
+                                <ComboBox fx:id="comboEvenementRappel"
+                                          layoutX="140" layoutY="62"
+                                          prefWidth="400" prefHeight="32"
+                                          promptText="Sélectionnez un événement..."/>
+
+                                <Button fx:id="btnEnvoyerRappel"
+                                        layoutX="560" layoutY="62"
+                                        prefWidth="160" prefHeight="32"
+                                        text="Envoyer rappels"
+                                        onAction="#handleEnvoyerRappel"
+                                        style="-fx-background-color: #2e7d32;
+                                               -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                                <Label fx:id="labelResultatRappel"
+                                       layoutX="24" layoutY="112"
+                                       text=""
+                                       style="-fx-font-size: 13; -fx-text-fill: #4caf50;"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- Onglet 3 : Email de bienvenue -->
+                <Tab text="Email Bienvenue">
+                    <content>
+                        <AnchorPane style="-fx-background-color: #f5f5f5;">
+                            <children>
+                                <Label layoutX="24" layoutY="24"
+                                       text="Envoyer email de bienvenue"
+                                       style="-fx-font-size: 16; -fx-text-fill: #2e7d32;">
+                                    <Font name="Cambria Bold Italic" size="16"/>
+                                </Label>
+
+                                <Label layoutX="24" layoutY="66" text="Utilisateur :"
+                                       style="-fx-font-size: 14; -fx-text-fill: #333;"/>
+                                <ComboBox fx:id="comboUtilisateurBienvenue"
+                                          layoutX="140" layoutY="62"
+                                          prefWidth="400" prefHeight="32"
+                                          promptText="Sélectionnez un utilisateur..."/>
+
+                                <Button fx:id="btnEnvoyerBienvenue"
+                                        layoutX="560" layoutY="62"
+                                        prefWidth="180" prefHeight="32"
+                                        text="Envoyer bienvenue"
+                                        onAction="#handleEnvoyerBienvenue"
+                                        style="-fx-background-color: #2e7d32;
+                                               -fx-text-fill: white; -fx-cursor: hand;"/>
+
+                                <Label fx:id="labelResultatBienvenue"
+                                       layoutX="24" layoutY="112"
+                                       text=""
+                                       style="-fx-font-size: 13; -fx-text-fill: #4caf50;"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- Onglet 4 : Email groupé -->
+                <Tab text="Email Groupé">
+                    <content>
+                        <AnchorPane style="-fx-background-color: #f5f5f5;">
+                            <children>
+                                <Label layoutX="24" layoutY="24"
+                                       text="Envoyer email à tous les utilisateurs"
+                                       style="-fx-font-size: 16; -fx-text-fill: #2e7d32;">
+                                    <Font name="Cambria Bold Italic" size="16"/>
+                                </Label>
+
+                                <Label layoutX="24" layoutY="66" text="Sujet :"
+                                       style="-fx-font-size: 14; -fx-text-fill: #333;"/>
+                                <TextField fx:id="txtSujetGroupe"
+                                           layoutX="90" layoutY="62"
+                                           prefWidth="700" prefHeight="32"
+                                           promptText="Sujet de l'email..."
+                                           style="-fx-border-color: #c8e6c9;
+                                                  -fx-border-radius: 4;"/>
+
+                                <Label layoutX="24" layoutY="112" text="Message :"
+                                       style="-fx-font-size: 14; -fx-text-fill: #333;"/>
+                                <TextArea fx:id="txtBodyGroupe"
+                                          layoutX="24" layoutY="136"
+                                          prefWidth="900" prefHeight="280"
+                                          wrapText="true"
+                                          promptText="Corps de l'email..."
+                                          style="-fx-border-color: #c8e6c9;
+                                                 -fx-border-radius: 6;"/>
+
+                                <Button fx:id="btnEnvoyerGroupe"
+                                        layoutX="24" layoutY="432"
+                                        prefWidth="220" prefHeight="40"
+                                        text="Envoyer à tous"
+                                        onAction="#handleEnvoyerGroupe"
+                                        style="-fx-background-color: #2e7d32;
+                                               -fx-text-fill: white; -fx-cursor: hand;
+                                               -fx-font-size: 14; -fx-font-weight: bold;"/>
+
+                                <Label fx:id="labelResultatGroupe"
+                                       layoutX="260" layoutY="442"
+                                       text=""
+                                       style="-fx-font-size: 13; -fx-text-fill: #4caf50;"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
+
+    </children>
+</AnchorPane>
