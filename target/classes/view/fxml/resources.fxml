@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.greencore.controller.ResourcesController" spacing="30" style="-fx-background-color: #F5F5F5; -fx-padding: 40;">
+    
+    <!-- Page Title -->
+    <Label text="Resources" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2E7D32; -fx-padding: 0 0 20 0;">
+    </Label>
+    
+    <!-- Gradient Cards Container -->
+    <GridPane hgap="30" vgap="30">
+        <!-- Materiels Management Card -->
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" 
+             style="-fx-background-radius: 16; -fx-background-color: linear-gradient(to bottom, #9C27B0, #7B1FA2); -fx-padding: 40; -fx-pref-width: 280; -fx-pref-height: 200;" 
+             alignment="CENTER" spacing="15">
+            <Label text="📋" style="-fx-font-size: 48; -fx-text-fill: white;"/>
+            <Label text="Materiels" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Manage all materiels and equipment" style="-fx-font-size: 14; -fx-text-fill: rgba(255,255,255,0.9); -fx-text-alignment: center;"/>
+            <Button fx:id="materielsButton" text="Manage Materiels" 
+                    style="-fx-background-color: white; -fx-text-fill: #9C27B0; -fx-background-radius: 25; -fx-font-weight: bold; -fx-padding: 12 25; -fx-cursor: hand;"/>
+        </VBox>
+        
+        <!-- Borrow Card -->
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" 
+             style="-fx-background-radius: 16; -fx-background-color: linear-gradient(to bottom, #4CAF50, #2E7D32); -fx-padding: 40; -fx-pref-width: 280; -fx-pref-height: 200;" 
+             alignment="CENTER" spacing="15">
+            <Label text="📦" style="-fx-font-size: 48; -fx-text-fill: white;"/>
+            <Label text="Borrow" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Find and borrow available equipment" style="-fx-font-size: 14; -fx-text-fill: rgba(255,255,255,0.9); -fx-text-alignment: center;"/>
+            <Button fx:id="borrowButton" text="Browse Equipment" 
+                    style="-fx-background-color: white; -fx-text-fill: #2E7D32; -fx-background-radius: 25; -fx-font-weight: bold; -fx-padding: 12 25; -fx-cursor: hand;"/>
+        </VBox>
+        
+        <!-- Share Card -->
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" 
+             style="-fx-background-radius: 16; -fx-background-color: linear-gradient(to bottom, #FF9800, #F57C00); -fx-padding: 40; -fx-pref-width: 280; -fx-pref-height: 200;" 
+             alignment="CENTER" spacing="15">
+            <Label text="🤝" style="-fx-font-size: 48; -fx-text-fill: white;"/>
+            <Label text="Share" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Share your equipment with community" style="-fx-font-size: 14; -fx-text-fill: rgba(255,255,255,0.9); -fx-text-alignment: center;"/>
+            <Button fx:id="shareButton" text="Share Equipment" 
+                    style="-fx-background-color: white; -fx-text-fill: #F57C00; -fx-background-radius: 25; -fx-font-weight: bold; -fx-padding: 12 25; -fx-cursor: hand;"/>
+        </VBox>
+        
+        <!-- Repair Card -->
+        <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" 
+             style="-fx-background-radius: 16; -fx-background-color: linear-gradient(to bottom, #2196F3, #1976D2); -fx-padding: 40; -fx-pref-width: 280; -fx-pref-height: 200;" 
+             alignment="CENTER" spacing="15">
+            <Label text="🔧" style="-fx-font-size: 48; -fx-text-fill: white;"/>
+            <Label text="Repair" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Request repairs for your equipment" style="-fx-font-size: 14; -fx-text-fill: rgba(255,255,255,0.9); -fx-text-alignment: center;"/>
+            <Button fx:id="repairButton" text="Request Repair" 
+                    style="-fx-background-color: white; -fx-text-fill: #1976D2; -fx-background-radius: 25; -fx-font-weight: bold; -fx-padding: 12 25; -fx-cursor: hand;"/>
+        </VBox>
+    </GridPane>
+    
+    <stylesheets>
+        <URL value="@../css/style.css"/>
+    </stylesheets>
+</VBox>

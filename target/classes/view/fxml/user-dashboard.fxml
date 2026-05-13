@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.greencore.controller.UserDashboardController" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 30;">
+    
+    <!-- Welcome Banner -->
+    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: linear-gradient(to right, #4CAF50, #2E7D32); -fx-padding: 30; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label fx:id="welcomeLabel" text="Welcome back!" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label fx:id="subtitleLabel" text="Manage your equipment sharing activities" style="-fx-font-size: 16px; -fx-text-fill: rgba(255,255,255,0.9);"/>
+        </VBox>
+        <Button fx:id="refreshButton" text="🔄 Refresh" style="-fx-background-color: white; -fx-text-fill: #2E7D32; -fx-background-radius: 20; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 10 20;"/>
+    </HBox>
+    
+    <!-- Stats Cards -->
+    <GridPane hgap="20" vgap="20">
+        <!-- Total Items Card -->
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-pref-width: 200;">
+            <Label fx:id="totalItemsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;"/>
+            <Label text="Total Items" style="-fx-font-size: 14px; -fx-text-fill: #666666;"/>
+            <ProgressBar fx:id="totalProgress" progress="0.0" style="-fx-accent: #2E7D32;"/>
+        </VBox>
+        
+        <!-- Shared Items Card -->
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-pref-width: 200;">
+            <Label fx:id="sharedItemsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+            <Label text="Shared Items" style="-fx-font-size: 14px; -fx-text-fill: #666666;"/>
+            <ProgressBar fx:id="sharedProgress" progress="0.0" style="-fx-accent: #4CAF50;"/>
+        </VBox>
+        
+        <!-- Borrowed Items Card -->
+        <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-pref-width: 200;">
+            <Label fx:id="borrowedItemsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2196F3;"/>
+            <Label text="Borrowed Items" style="-fx-font-size: 14px; -fx-text-fill: #666666;"/>
+            <ProgressBar fx:id="borrowedProgress" progress="0.0" style="-fx-accent: #2196F3;"/>
+        </VBox>
+        
+        <!-- Pending Requests Card -->
+        <VBox GridPane.columnIndex="3" GridPane.rowIndex="0" spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-pref-width: 200;">
+            <Label fx:id="pendingRequestsLabel" text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #FF9800;"/>
+            <Label text="Pending Requests" style="-fx-font-size: 14px; -fx-text-fill: #666666;"/>
+            <ProgressBar fx:id="pendingProgress" progress="0.0" style="-fx-accent: #FF9800;"/>
+        </VBox>
+    </GridPane>
+    
+    <!-- Recent Activity Section -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Recent Activity" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="viewAllButton" text="View All" style="-fx-background-color: transparent; -fx-text-fill: #2E7D32; -fx-border-color: #2E7D32; -fx-border-radius: 20; -fx-cursor: hand; -fx-padding: 8 16;"/>
+        </HBox>
+        
+        <TableView fx:id="activityTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="activityTypeColumn" text="Type" prefWidth="120"/>
+                <TableColumn fx:id="activityItemColumn" text="Item" prefWidth="200"/>
+                <TableColumn fx:id="activityUserColumn" text="User" prefWidth="150"/>
+                <TableColumn fx:id="activityDateColumn" text="Date" prefWidth="150"/>
+                <TableColumn fx:id="activityStatusColumn" text="Status" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+    
+    <stylesheets>
+        <URL value="@../css/style.css"/>
+    </stylesheets>
+</VBox>
